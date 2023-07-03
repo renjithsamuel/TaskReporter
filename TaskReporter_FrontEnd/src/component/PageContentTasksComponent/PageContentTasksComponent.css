@@ -1,0 +1,44 @@
+
+.projectContentTop{
+    display: flex;
+    justify-content: space-between;
+}
+
+.projectContentName{
+    margin-left: 2vw;
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.sortByTime{
+    display: flex;
+    font-size: larger;
+    font-weight: 500;
+    padding-top: 0.5vh;
+
+}
+
+#downArrow{
+    /* margin-top: 1vh; */
+}
+
+.tasksCategoryWise{
+    display: flex;
+    padding: 2vh;
+    flex-wrap: wrap;
+}
+
+.singleCategoryWrapper{
+    margin-right: 2vw;
+    margin-top: 2vh;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    padding: 1.5vh;
+    border-radius: 10px;
+    width: 30%;
+}
+
+.categoryName{
+    font-size: larger;
+    font-weight: 600;
+}

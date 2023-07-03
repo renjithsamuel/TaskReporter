@@ -1,0 +1,22 @@
+.LeftNavWrapper{
+    width: 15%;
+    border-radius: 10px;
+    padding: 2vh;
+    border: 1px solid var(--border-color);
+    margin-right: 2vw;
+}
+
+.titleBar{
+        margin-bottom: 3vh;
+        display: flex;
+        justify-content: start;
+}
+
+.titleBar img{
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+
+.bottomOfLeftNav{
+    margin-top: 45vh;
+}

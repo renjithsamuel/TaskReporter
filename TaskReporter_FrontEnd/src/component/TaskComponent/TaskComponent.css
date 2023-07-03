@@ -1,0 +1,24 @@
+.taskComponent{
+    background-color: var(--primary-color);
+    padding: 1vh;
+    margin: 1vh;
+    border-radius: 5px;
+
+}
+
+.taskComponent:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 20px 0 var(--shadow-color);
+}
+
+.topOfTaskComp{
+    display: flex;  
+    margin-bottom: 1vh;
+}
+
+.taskName{
+    text-indent: 1vw;
+    font-size: medium;
+    font-weight: 600;
+}
+

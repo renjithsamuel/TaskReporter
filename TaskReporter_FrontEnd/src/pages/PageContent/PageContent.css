@@ -1,0 +1,20 @@
+
+.taskAddButton{
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;;
+    top:87vh;
+    left:94vw;
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+.taskAddButton:hover{
+    cursor: pointer;
+    background-color: var(--hover-color);
+    filter: drop-shadow(1px 0.5px 15px var(--shadow-color));
+}

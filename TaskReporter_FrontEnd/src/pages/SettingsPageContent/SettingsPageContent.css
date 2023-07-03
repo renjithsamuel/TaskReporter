@@ -1,0 +1,17 @@
+
+.themeSwitcher{
+    margin-left: 5vw;
+    width: 10vw;
+    height: 3vh;
+    padding: 1vh;
+    border-radius: 10px;
+    text-align: center;
+    text-justify: auto;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+}
+
+.themeSwitcher:hover{
+    cursor: pointer;
+    background-color: var(--hover-color);
+}

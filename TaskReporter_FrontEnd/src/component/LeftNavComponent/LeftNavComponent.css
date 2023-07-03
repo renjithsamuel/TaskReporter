@@ -1,0 +1,20 @@
+.LeftNavComponentWrapper{
+    display:flex;
+    padding:1vh;
+    align-items:center;
+    width: 90%;
+    border-radius: 10px;
+    transition: 0.3s all ease-in-out;
+    margin-top: 2vh;
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+
+.LeftNavComponentWrapper:hover{
+    box-shadow: 1px 8px 15px 0 var(--hover-color);
+    cursor: pointer;
+}
+
+.NavIcon{
+    margin-right: 1vw;
+}
