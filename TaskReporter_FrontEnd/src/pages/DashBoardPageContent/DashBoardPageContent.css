@@ -1,0 +1,25 @@
+.dashBoardContentWrapper{
+    display: flex;
+}
+
+.dashBoardContentLeft{
+    margin-left: 2vw;
+}
+
+.dashBoardTimeLineElement{
+    margin-top: 2vh;
+    margin-bottom: 3vh;   
+}
+
+.DashBoardTaskElements{
+    margin-top: 3vh;
+}
+.dashBoardReportsLabel{
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.dashBoardContentRight{
+    margin: 2vh;
+    margin-left: 4vw;
+}

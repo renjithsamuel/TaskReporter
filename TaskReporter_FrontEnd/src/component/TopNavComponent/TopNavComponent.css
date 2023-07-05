@@ -3,7 +3,7 @@
     padding: 1vh;
     margin: 1vw;
     background-color: var(--primary-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     justify-content: space-between;
     width: 80vw;
     height: 7vh;
@@ -15,7 +15,7 @@
     display: flex;
     width: 15vw;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     background-color: var(--primary-color);
 }
 
@@ -56,22 +56,30 @@
 
 .notifications{
     margin-right: 0.5vw;
-    border-radius: 10px;
-    padding: 0.5vh;
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3vw;
+    height: 3vw;
 }
 
 .userNameTop{
     margin-top: 0.5vh;
     margin-right: 0.5vw;
-    border-radius: 10px;
-    padding: 0.5vh;
+    border-radius: var(--border-radius);
+    padding: 1vh;
 }
 .userNameIcon{
     margin-top: 0.5vh;
-    border-radius: 50px;
-    padding: 0.5vh;
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3vw;
+    height: 3vw;
 }
- .userNameTop:hover ,.notifications:hover , .userNameIcon:hover{
+.notifications:hover , .userNameIcon:hover{
     cursor: pointer;
     box-shadow: 1px 2px 20px 0 var(--hover-color);
 }

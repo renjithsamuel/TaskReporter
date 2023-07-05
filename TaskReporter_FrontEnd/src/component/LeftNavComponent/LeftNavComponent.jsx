@@ -12,7 +12,7 @@ function LeftNavComponent({compName,compIcon,svgIcon,selectedNavElem , setSelect
 
     return (
         <div className="LeftNavComponentWrapper" 
-                style={{backgroundColor:(selectedNavElem==compName)?'var(--secondary-color)':'var(--primary-color)' , color:(theme=='light')?(selectedNavElem==compName)?'white':'black' : (selectedNavElem!=compName)?'white':'black'}} 
+                style={{backgroundColor:(selectedNavElem==compName)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==compName)?'var(--border-color)':'var(--primary-color)' }} 
                 onClick={()=>{ setSelectedNavElem(compName) }}
                 >
             <div className="NavIcon">

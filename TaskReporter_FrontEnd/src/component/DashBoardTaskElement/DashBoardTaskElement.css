@@ -1,0 +1,58 @@
+.dashBoardTaskElementWrapper{
+    display: flex;
+    align-items: center;
+    width: 40vw;
+    height: 13vh;
+    padding: 2vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+}
+
+.dashBoardTaskElementWrapper:hover{
+    filter: drop-shadow(1px 5px 5px var(--shadow-color));
+    cursor: pointer;
+}
+
+.categoryDetails{
+    align-self: flex-start;
+    width: 60%;
+}
+
+.categoryTitle{
+    text-indent: 1vw;
+    font-size: large;
+    font-weight: 600;
+}
+
+.categoryDescription{
+    text-indent: 3vw;
+    font-size: medium;
+    font-weight: 500;
+}
+
+.progressIndicator{
+    width: 25%;
+    align-self: center;
+}
+
+.categoryRemainder{
+    width: 15%;
+}
+
+.resumeButton{
+    margin-left: 2vw;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.resumeButton:hover{
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 5px 10px var(--shadow-color));
+}

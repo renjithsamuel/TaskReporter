@@ -1,6 +1,6 @@
 .LeftNavWrapper{
     width: 15%;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     padding: 2vh;
     border: 1px solid var(--border-color);
     margin-right: 2vw;
@@ -18,5 +18,5 @@
 }
 
 .bottomOfLeftNav{
-    margin-top: 45vh;
+    margin-top: 40vh;
 }

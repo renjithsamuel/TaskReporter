@@ -28,17 +28,80 @@
     flex-wrap: wrap;
 }
 
+.tasklists{
+    margin-top: 1vh;
+}
+
 .singleCategoryWrapper{
     margin-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
     margin-top: 2vh;
     border: 1px solid var(--border-color);
     text-align: center;
     padding: 1.5vh;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     width: 30%;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--bg-color);
+}
+
+.singleCategoryWrapper:hover{
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+    /* background-color: var(--primary-hover-color); */
+    
 }
 
 .categoryName{
     font-size: larger;
     font-weight: 600;
+}
+
+.categoryName:hover{
+cursor: pointer;
+}
+
+.taskBottomElems{
+    display: flex;
+    width: 80%;
+    height: 7vh;
+}
+
+
+.addTaskButton{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15vw;
+    height: 6vh;
+    margin: 1vh ;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+}
+
+.addTaskButton:hover{
+    cursor: pointer;
+    background-color: var(--hover-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+.goToReportPageFromTask{
+    width: 3vw;
+    height: 6vh;
+    margin: 1vh ;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    
+}
+
+.goToReportPageFromTask:hover{
+    cursor: pointer;
+    background-color: var(--hover-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
 }

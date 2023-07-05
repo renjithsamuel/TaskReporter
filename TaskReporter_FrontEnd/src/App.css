@@ -1,20 +1,26 @@
 :root{
     --bg-color : #ffffff;
     --primary-color : #ebebeb;
-    --secondary-color : #737373;
-    --hover-color : #9d9d9d;
+    --primary-hover-color : #f6f6f6;
+    --secondary-color : #acacac;
+    --secondary-light-color : #d5d5d5;
+    --hover-color : #b5b5b5;
     --text-color : #000000;
     --border-color : #000000;
+    --graph-bg-color : #f6f6f6;
     --shadow-color :  #737373b4;
+    --border-radius : 5px;
 }
 
 [data-theme = 'dark']{
   --bg-color : #292929;
   --primary-color : #464646;
-  --secondary-color : #e5a684;
-  --hover-color : #e5a684b1;
+  --primary-hover-color : #737373;
+  --secondary-color : #fe8040;
+  --hover-color : #e67c4798;
   --text-color : #f2fcf4;
   --border-color : #f2fcf4;
+  --graph-bg-color : #f2fcf4;
   --shadow-color :  #6e6e6eae;;
 }
 

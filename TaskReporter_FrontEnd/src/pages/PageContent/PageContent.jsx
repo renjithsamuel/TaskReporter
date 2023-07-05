@@ -18,7 +18,7 @@ function PageContent({theme}) {
     return (
     <div className="pageContentWrapper">
         <TopNavComponent currPage={"Tasks"} theme={theme}/>
-        <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList}/> 
+        <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme}/> 
         <div className="taskAddButton">
                     <lord-icon
                     src="https://cdn.lordicon.com/ynwbvguu.json"
