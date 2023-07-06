@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import './PageContent.css'
-import PageContentTasksComponent from "../../component/PageContentTasksComponent/PageContentTasksComponent";
+import PageContentTasksComponent from "../../component/TasksPageComponents/PageContentTasksComponent/PageContentTasksComponent";
 import TopNavComponent from "../../component/TopNavComponent/TopNavComponent";
 
 function PageContent({theme}) {
 
 
-    const [categoryList,setCategoryList] = useState(["My Tasks","Office","completed"]);
+    const [categoryList,setCategoryList] = useState(["Task Reporter","Placement"]);
     const [taskList , setTaskList] = useState([
-        {key : 0,taskName  : "Design", TaskDescription : "We need 2 different design concepts!" , category : "My Tasks" , prevCategory:'My Tasks',completed : false},
-        {key: 1,taskName  : "Design2", TaskDescription : "We need 4 different design concepts!" ,category : "My Tasks" , prevCategory:'My Tasks', completed : false},
-        {key : 2,taskName  : "Design", TaskDescription : "We need 2 different design concepts!" , category : "Office" , prevCategory:'Office', completed : false},
-        {key : 3 , taskName  : "Design2", TaskDescription : "We need 4 different design concepts!" ,category : "Office", prevCategory:'Office' , completed : false},
+        {key : 0,taskName  : "Front End", TaskDescription : "Finish the front end" , category : "Task Reporter" ,completed : false},
+        {key: 1,taskName  : "Back End", TaskDescription : "Complete the back end" ,category : "Task Reporter" ,completed : false},
+        {key : 2,taskName  : "Aptitude", TaskDescription : "Learn aptitude through india bix!" , category : "Placement" , completed : false},
+        {key : 3 , taskName  : "Algorithms", TaskDescription : "learn the most important algorithms!" ,category : "Placement", completed : false},
     ]); 
 
     

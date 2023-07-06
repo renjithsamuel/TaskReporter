@@ -1,6 +1,6 @@
 import './DashBoardTaskElement.css'
-import playLight from '../../assets/play-light.svg';
-import playDark from '../../assets/play-dark.svg';
+import playLight from '../../../assets/play-light.svg';
+import playDark from '../../../assets/play-dark.svg';
 import { Line } from 'rc-progress';
 import { useState } from 'react';
 
@@ -20,7 +20,7 @@ function DashBoardTaskElement({theme}) {
             <div className="progressIndicator">
                 <div className="progressInPercent">{progress}% complete</div>
                  <div className="progressInBar">
-                     <Line percent={progress} strokeWidth={4} strokeColor={(theme=='light')?'#000000':"#fe8040"} /> 
+                     <Line percent={progress} strokeWidth={4} strokeColor={(theme=='light')?'#000000':"#27374D"} /> 
                  </div>
             </div>
             <div className="CategoryRemainder">

@@ -1,7 +1,7 @@
 .dashBoardTaskElementWrapper{
     display: flex;
     align-items: center;
-    width: 40vw;
+    width: 50vw;
     height: 13vh;
     padding: 2vh;
     border-radius: var(--border-radius);

@@ -39,13 +39,14 @@
     justify-content: start;
     align-items: center;
     margin-top: 2vh;
-    border: 1px solid var(--border-color);
+    /* border: 1px solid var(--border-color); */
     text-align: center;
     padding: 1.5vh;
     border-radius: var(--border-radius);
     width: 30%;
     transition: all 0.3s ease-in-out;
-    background-color: var(--bg-color);
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+    background-color: var(--primary-hover-color);
 }
 
 .singleCategoryWrapper:hover{
@@ -54,32 +55,39 @@
     
 }
 
+.categoryTopNav{
+    display: flex;
+    padding-left: 2vw;
+}
+
 .categoryName{
-    font-size: larger;
+    font-size: large;
     font-weight: 600;
+    display: flex;
+    align-items: center;
 }
 
 .categoryName:hover{
-cursor: pointer;
+    cursor: pointer;
 }
 
 .taskBottomElems{
+    margin-left: 5vw;
     display: flex;
-    width: 80%;
     height: 7vh;
 }
 
 
 .addTaskButton{
-    
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15vw;
+    width: 3vw;
     height: 6vh;
     margin: 1vh ;
     border-radius: var(--border-radius);
     background-color: var(--primary-color);
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
 .addTaskButton:hover{
@@ -97,10 +105,49 @@ cursor: pointer;
     justify-content: center;
     align-items: center;
     background-color: var(--primary-color);
-    
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
 .goToReportPageFromTask:hover{
+    cursor: pointer;
+    background-color: var(--hover-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+
+.switchCompletedOrPending   {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh;
+    margin-top: 2vh;
+}
+
+.switchSeparator{
+    width: 0.5vw;
+    height: 100%;
+    background-color: var(--primary-color);
+}
+
+.switchPending,.switchCompleted{
+    width: 7vw;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-light-color);
+}
+
+.switchPending{
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+.switchCompleted{
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.switchPending:hover,.switchCompleted:hover{
     cursor: pointer;
     background-color: var(--hover-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));

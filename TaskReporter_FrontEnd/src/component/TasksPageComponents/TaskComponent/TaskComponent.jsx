@@ -9,7 +9,7 @@ function TaskComponent({taskName,taskDescription,elem,setTaskList,taskList}) {
         console.log(taskCompleted);
         if(taskCompleted==false){
             setTaskCompleted(true);
-            let tempElem = {...elem,category : 'completed',completed:true};
+            let tempElem = {...elem,completed:true};
             let tempTaskList =  taskList.map((task)=>{
                 if(task.key!=tempElem.key){
                     return task;
@@ -22,7 +22,7 @@ function TaskComponent({taskName,taskDescription,elem,setTaskList,taskList}) {
         }
         else if(taskCompleted==true){
             setTaskCompleted(false);
-            let tempElem = {...elem,category : elem.prevCategory,completed:false};
+            let tempElem = {...elem,completed:false};
             let tempTaskList =  taskList.map((task)=>{
                 if(task.key!=tempElem.key){
                     return task;

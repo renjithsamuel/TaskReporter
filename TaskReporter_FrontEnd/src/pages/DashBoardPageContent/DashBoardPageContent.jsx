@@ -1,8 +1,8 @@
 import './DashBoardPageContent.css'
-import DashBoardTimeLineComponent from '../../component/DashBoardTimeLineComponent/DashBoardTimeLineComponent'
-import DashBoardTaskElement from '../../component/DashBoardTaskElement/DashBoardTaskElement'
+import DashBoardTimeLineComponent from '../../component/DashBoardComponents/DashBoardTimeLineComponent/DashBoardTimeLineComponent'
+import DashBoardTaskElement from '../../component/DashBoardComponents/DashBoardTaskElement/DashBoardTaskElement'
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
-import NotificationComponent from '../../component/DashBoardNotifications/NotificationComponent';
+import NotificationComponent from '../../component/NotificationsComponent/NotificationComponent';
 
 function DashBoardPageContent({theme}) {
     return ( <>

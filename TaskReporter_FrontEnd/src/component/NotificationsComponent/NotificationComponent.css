@@ -1,5 +1,5 @@
 .notificationsWrapper{
-    width: 30vw;
+    width: 20vw;
     height: 75vh;
     padding: 2vh;
     display: flex;
@@ -39,9 +39,9 @@
 }
 
 .singleNotificationWrapper{
-    margin: 2vh;
-    width: 28vw;
-    height: 15vh;
+    margin: 1vh;
+    width: 19vw;
+    height: auto;
     padding: 1vh;
     display: flex;
     justify-content: center;
@@ -59,9 +59,9 @@
 
 .notificationDetails{
     height: 8vh;
-    width: 75%;
-    padding-left: 1vw;
-    padding-right: 1vw;
+    width: 50%;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
     margin-top: 1vh;
     align-self: flex-start;
 }
@@ -79,7 +79,7 @@
 
 .singleNotificaitonControlElem{
     display: flex;
-    width: 25%;
+    width: 30%;
 }
 
 .notificationAcceptBtn , .notificationRejectBtn{

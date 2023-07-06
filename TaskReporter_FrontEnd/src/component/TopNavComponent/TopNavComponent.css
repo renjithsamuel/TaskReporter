@@ -38,6 +38,11 @@
     color: var(--text-color);
 }
 
+#searchBarInp::placeholder {
+    color: var(--text-color);
+    opacity: 1;
+  }
+
 #searchBarInp:focus{
     outline: none;
     color: var(--text-color);

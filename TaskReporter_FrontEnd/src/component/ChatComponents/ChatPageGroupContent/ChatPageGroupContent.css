@@ -1,0 +1,92 @@
+.chatPageGroupContentWrapper{
+    margin-left: 2vw; 
+
+}
+
+.currentChatsWrapper{
+    width: 50vw;
+    height: 65vh;
+    background-color: var(--primary-color);
+    margin: 1vh;
+    padding: 2vh;
+    border-radius: var(--border-radius);
+}
+
+.sendMessageBar{
+    margin: 1vh;
+    padding: 2vh;
+    width: 50vw;
+    height: 6vh;
+    display: flex;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+}
+
+#messageBoxInput{
+    color: var(--text-color);
+    border: none;
+    text-indent: 1vw;
+    height: 6vh;
+    width: 45vw;
+    margin-right: 1.5vw;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+}
+
+#messageBoxInput::placeholder {
+    color: var(--text-color);
+    opacity: 1;
+  }
+
+#messageBoxInput:active , #messageBoxInput:focus{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.messageSendButton{
+    width: 3vw;
+    height: 3vw;
+    background-color: var(--secondary-light-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+}
+
+.messageSendButton:hover{
+    cursor: pointer;
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+
+
+
+.messageElementWrapper{
+    width: 9vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 10vh;
+    padding-left: 1vw;
+    margin-top: 2vh;
+    border-radius: var(--border-radius);
+    background-color: var(--hover-color);
+    border: 2px solid transparent;
+}
+
+.senderName{
+    font-size: large;
+    font-weight: 500;
+}
+
+.message{
+    font-size: medium;
+    font-weight: 400;
+}
+
