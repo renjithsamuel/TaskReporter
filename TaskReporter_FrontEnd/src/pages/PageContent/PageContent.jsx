@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import './PageContent.css'
 import PageContentTasksComponent from "../../component/TasksPageComponents/PageContentTasksComponent/PageContentTasksComponent";
 import TopNavComponent from "../../component/TopNavComponent/TopNavComponent";
+import AddCategoryPopUpComponent from "../../component/PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent";
+
 
 function PageContent({theme}) {
-
-
     const [categoryList,setCategoryList] = useState(["Task Reporter","Placement"]);
     const [taskList , setTaskList] = useState([
         {key : 0,taskName  : "Front End", TaskDescription : "Finish the front end" , category : "Task Reporter" ,completed : false},
@@ -19,17 +19,12 @@ function PageContent({theme}) {
     <div className="pageContentWrapper">
         <TopNavComponent currPage={"Tasks"} theme={theme}/>
         <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme}/> 
-        <div className="taskAddButton">
-                    <lord-icon
-                    src="https://cdn.lordicon.com/ynwbvguu.json"
-                    trigger="hover"
-                    colors={(theme=='light')?"primary:#121331" : 'primary:#ffffff'}
-                    style={{width:30,height:30  }}
-                    >
-                </lord-icon>
-            </div>
+        <AddCategoryPopUpComponent theme={theme}/>
     </div>
     );
 }
 
 export default PageContent;
+
+
+

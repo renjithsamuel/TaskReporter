@@ -1,0 +1,22 @@
+{
+  "name": "taskreporter_backend",
+  "version": "1.0.0",
+  "description": "task reporting application ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "task",
+    "reporting"
+  ],
+  "author": "renjith samuel g s",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "mongoose": "^7.3.2"
+  }
+}

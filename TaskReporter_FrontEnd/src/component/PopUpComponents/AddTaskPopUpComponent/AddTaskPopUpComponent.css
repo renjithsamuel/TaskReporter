@@ -1,0 +1,128 @@
+.addTaskPopUpBackDrop{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    overflow: hidden;
+    top: -1vh;
+    left: -16.5vw;
+    background-color: var(--popup-cover-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.addTaskContentWrapper{
+    width: 40vw;
+    height: max-content;
+    backdrop-filter: blur(10px);    
+    background-color: var(--cover-color);
+    padding: 4vh;
+    border-radius: var(--border-radius);
+}
+
+
+.titleAddTask{
+    display: flex;
+    width:90%;
+    align-items: center;
+}
+
+.addTaskName{
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.closeAddTaskBtn{
+    width: 3vw;
+    height: 3vw;
+    margin-left: 22vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background-color: var(--hover-color);
+    border-radius: 50%;
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+}
+
+.closeAddTaskBtn:hover{
+    cursor: pointer;
+    background-color: var(--shadow-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+.addTaskInputWrapper{
+    width: 80%;
+    display: flex;
+    padding: 1vh;
+}
+
+.addTaskLabelLeft{
+    width: 40%;
+    font-size: large;
+    text-align: end;
+}
+
+.addTaskInputRight{
+    width: 70%;
+    text-align: start;
+    margin-left: 1vw;
+}
+
+.addTaskInputs{
+    border: none;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-hover-color);
+    width: 100%;
+    margin-right: 1vw;
+    color: var(--text-color);
+}
+
+.addTaskInputs:focus , .addTaskInputs:active{
+    outline: none;
+}
+
+.addTaskInputs::placeholder{
+    color: var(--text-color);
+    opacity: 1;
+}
+
+
+.addTaskControlElem{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: auto;
+}
+
+.submitAddTaskBtn{
+    width: 8vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);    
+    margin-right: 3vw;
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+}
+
+.cancelAddTaskBtn{
+    width: 5vw;
+    height: 5vh;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancelAddTaskBtn:hover , .submitAddTaskBtn:hover{
+    cursor: pointer;
+    background-color: var(--shadow-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}

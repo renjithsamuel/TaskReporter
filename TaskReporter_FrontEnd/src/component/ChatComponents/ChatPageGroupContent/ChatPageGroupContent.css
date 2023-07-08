@@ -1,6 +1,6 @@
 .chatPageGroupContentWrapper{
     margin-left: 2vw; 
-
+    
 }
 
 .currentChatsWrapper{
@@ -10,6 +10,7 @@
     margin: 1vh;
     padding: 2vh;
     border-radius: var(--border-radius);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
 }
 
 .sendMessageBar{
@@ -20,6 +21,7 @@
     display: flex;
     background-color: var(--primary-color);
     border-radius: var(--border-radius);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
 }
 
 #messageBoxInput{

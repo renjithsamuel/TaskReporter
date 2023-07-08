@@ -7,10 +7,12 @@ import addIconDark from '../../../assets/add-dark.svg';
 import arrowRightLight from '../../../assets/arrow-right-light.svg'
 import arrowRightDark from '../../../assets/arrow-right-dark.svg'
 import { useEffect, useState } from 'react';
+import AddTaskPopUpComponent from '../../PopUpComponents/AddTaskPopUpComponent/AddTaskPopUpComponent';
 
 function PageContentTasksComponent({taskList,categoryList,setTaskList,theme}) {
     
     const [showCompleted,setShowCompleted] = useState([]);
+    const [isAddTaskPopUpOpen,setIsAddTaskPopUpOpen] = useState({isOpen : false , category : ''});
 
     useEffect(() => {
         setShowCompleted(Array(categoryList.length).fill(false));
@@ -27,57 +29,60 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme}) {
 
 
     return ( 
-    <div className="PageContentTaskWrapper">
-            <div className="projectContentTop">
-                <div className="projectContentName">
-                        Projects
+    <>  
+        {(isAddTaskPopUpOpen.isOpen)?<AddTaskPopUpComponent theme={theme} setIsAddTaskPopUpOpen={setIsAddTaskPopUpOpen} category={isAddTaskPopUpOpen.category}/>:''}
+        <div className="PageContentTaskWrapper">
+                <div className="projectContentTop">
+                    <div className="projectContentName">
+                            Projects
+                    </div>
+                    <div className="sortByTime">
+                        This week <img src={(theme=='light')?downArrowLight:downArrowDark} alt="^" height={30} width={30} id='downArrow' />
+                    </div>
                 </div>
-                <div className="sortByTime">
-                    This week <img src={(theme=='light')?downArrowLight:downArrowDark} alt="^" height={30} width={30} id='downArrow' />
-                </div>
-            </div>
-            <div className="tasksCategoryWise">
-
-                {categoryList.map((category ,cateindex)=>{
-                
-                        return (
-                        <div className='singleCategoryWrapper' key={cateindex}> 
-                                <div className="categoryTopNav">
-                                        <div className="categoryName">{category}</div>
-                                        <div className="taskBottomElems">
-                                             <div className="addTaskButton"><img src={(theme=='light')?addIconLight:addIconDark} alt="add" height={30} width={30} /></div>
-                                             <div className="goToReportPageFromTask"><img src={(theme=='light')?arrowRightLight:arrowRightDark} alt="projectView" height={30} /></div>
-                                        </div>
-                       
-                                </div>
-                                <div className="switchCompletedOrPending">
-                                    <div className="switchPending" onClick={()=>{handleSwitchCompleted(cateindex)}} style={{backgroundColor:(showCompleted[cateindex]!=true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
-                                        Pending
-                                    </div>
-                                    <div className="switchSeparator">
-
-                                    </div>
-                                    <div className="switchCompleted" onClick={()=>{handleSwitchCompleted(cateindex)}}    style={{backgroundColor:(showCompleted[cateindex]==true)?'var(--hover-color)':'var(--secondary-light-color)'}}> 
-                                        Completed
-                                    </div>
-                                </div>
-                                <div className="tasklists">
-                                {
-                                    taskList.map((elem,index)=>{
-                                        if(category == elem.category && ((showCompleted[cateindex]==false && elem.completed==false) || (showCompleted[cateindex]==true && elem.completed==true))){
-                                        return <TaskComponent  key={elem.key} taskName={elem.taskName} taskDescription={elem.TaskDescription} elem={elem} setTaskList={setTaskList} taskList={taskList}/>}
-                                    })
-                                }
-                                </div>
-
-                        </div>)
-                        }
-                    )
-                }
-            </div>
-            
+                <div className="tasksCategoryWise">
+                    {categoryList.map((category ,cateindex)=>{
         
-    </div> 
+                            return (
+        
+                            <div className='singleCategoryWrapper' key={cateindex}>
+                                    <div className="categoryTopNav">
+                                            <div className="categoryName">{category}</div>
+                                            <div className="taskBottomElems">
+                                                 <div className="addTaskButton" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:true});}}>
+                                                    <img src={(theme=='light')?addIconLight:addIconDark} alt="add" height={30} width={30} />
+                                                </div>
+                                                 <div className="goToReportPageFromTask"><img src={(theme=='light')?arrowRightLight:arrowRightDark} alt="projectView" height={30} /></div>
+                                            </div>
+        
+                                    </div>
+                                    <div className="switchCompletedOrPending">
+                                        <div className="switchPending" onClick={()=>{handleSwitchCompleted(cateindex)}} style={{backgroundColor:(showCompleted[cateindex]!=true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
+                                            Pending
+                                        </div>
+                                        <div className="switchSeparator">
+                                        </div>
+                                        <div className="switchCompleted" onClick={()=>{handleSwitchCompleted(cateindex)}}    style={{backgroundColor:(showCompleted[cateindex]==true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
+                                            Completed
+                                        </div>
+                                    </div>
+                                    <div className="tasklists">
+                                    {
+                                        taskList.map((elem,index)=>{
+                                            if(category == elem.category && ((showCompleted[cateindex]==false && elem.completed==false) || (showCompleted[cateindex]==true && elem.completed==true))){
+                                            return <TaskComponent  key={elem.key} taskName={elem.taskName} taskDescription={elem.TaskDescription} elem={elem} setTaskList={setTaskList} taskList={taskList}/>}
+                                        })
+                                    }
+                                    </div>
+                            </div>)
+                            }
+                        )
+                    }
+                </div>
+        
+        
+        </div>
+    </>
     );
 }
 

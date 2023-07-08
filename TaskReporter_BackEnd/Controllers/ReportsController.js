@@ -1,0 +1,205 @@
+const reports = require('../Models/Reports.js');
+
+// api handlers
+// Get all reports 
+exports.getReports = async (req,res,next) =>{
+    try{
+        const allReportsData = await reports.find();
+        if(!allReportsData){
+            return res.status(400).json({
+                success : false,
+                message : "something went wrong while getting Reports!"
+            });
+        }
+        return res.status(200).json({
+            success : true,
+            data : allReportsData,
+            count : allReportsData.length
+        });
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!" + err
+        })
+    }
+}
+
+// Get specific Report
+exports.getUniqueReportById = async (req,res,next) => {
+    const ReportID  = req.params.id;
+        // if data not in db:
+        let dataInDB = await reports.findById({_id:ReportID})
+        if(!dataInDB){
+            return res.status(404).json({
+                message : "cannot find document",
+                success : false 
+            })
+        }
+
+    try{
+        // single level population : 
+        // const ReportData = await reports.findById(ReportID).populate('chats').populate('categories');
+        // multi level population : 
+        const ReportsData = await reports.findById(ReportID).populate('reportedBy').populate('taskCompleted').populate('taskCompletedBy').populate('category');
+
+        if(!ReportsData){
+            return res.status(400).json({
+                success : false,
+                message: "something went wrong while fetching Report!"
+            })
+        }
+        return res.status(200).json({
+            success : true , 
+            data : ReportsData,
+            count : ReportsData.length
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!" + err,
+        })
+    }
+}
+
+
+exports.postReport = async (req,res,next) => {
+    if(req.body.reportedDate == null || req.body.reportStatement == null || req.body.taskCompleted == null || req.body.taskCompletedBy == null || req.body.category == null || req.body.reportedBy == null   ){
+        return res.status(404).json({
+            success : false,
+            message: "send valid details!"
+        })
+    }
+    const postableData = {
+        reportedDate : req.body.reportedDate,
+        reportStatement : req.body.reportStatement , 
+        reportedBy : req.body.reportedBy , 
+        taskCompleted : req.body.taskCompleted ,
+        taskCompletedBy : req.body.taskCompletedBy ,
+        category : req.body.category
+      };
+
+    try{
+        const postedData = await reports.create(postableData);
+        if(!postedData){
+            return res.status(400).json({
+                success : false,
+                message : "something went wrong while posting!"
+            })
+        };
+        return res.status(200).json({
+            success : true ,
+            data : postedData ,
+            count : postedData.length
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!"  ,  err
+        })
+    }
+}
+
+// patch Reports
+exports.patchReportById = async (req,res,next) => {
+    if(!req.params.id){
+        return res.status(404).json({
+            success : false,
+            message : "enter valid ReportID",
+        })
+    }
+
+    const ReportID = req.params.id;
+
+    // if data not in db:
+    let dataInDB = await reports.findById({_id:ReportID});
+    if(!dataInDB){
+        return res.status(404).json({
+            message : "cannot find document",
+            success : false 
+        })
+    }
+    
+    if(req.body.reportedDate == null && req.body.reportStatement == null && req.body.reportedBy == null && req.body.taskCompleted == null && req.body.taskCompletedBy == null && req.body.category == null ){
+        return res.status(404).json({
+            success : false,
+            message : "send valid data to patch!"
+        })
+    }
+    // fetching Report data 
+    let ReportData;
+    try{
+        ReportData = await reports.findById(ReportID);
+    }catch(err){
+        return res.status(500).json({
+            success : false, 
+            message : "Internal server error while fetching Reports",err
+        })
+    }
+    const patchableData = {
+        reportedDate :  req.body.reportedDate || ReportData.reportedDate,
+        reportStatement : req.body.reportStatement  || ReportData.reportStatement,
+        reportedBy : req.body.reportedBy || ReportData.reportedBy,
+        taskCompleted : req.body.taskCompleted || ReportData.taskCompleted,
+        taskCompletedBy : req.body.taskCompletedBy || ReportData.taskCompletedBy,
+        category :  req.body.category || ReportData.category
+    }
+    try{
+        const patchedData = await reports.findByIdAndUpdate(ReportID , { $set: { ...patchableData } }, {new : true});
+        if(!patchedData){
+            return res.status(400).json({
+                success : false,
+                message : "something went wrong while patching Report!"
+            })
+        }
+        return res.status(200).json({
+            success : true,
+            data : patchedData ,
+            count : patchedData.length
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!",err
+        })
+    }
+}
+
+
+// delete Reports 
+exports.deleteReportById = async (req,res,next) => {
+    const ReportID = req.params.id;
+    if(!ReportID){
+        return res.status(404).json({
+            success : false,
+            message : "send valid ReportId"
+        })
+    }
+    // if data not in db:
+    let dataInDB = await reports.findById({_id:ReportID});
+    if(!dataInDB){
+        return res.status(404).json({
+            message : "cannot find document",
+            success : false 
+        })
+    }
+
+    try{
+        const deletedReportData = await reports.findByIdAndDelete(ReportID);
+        if(!deletedReportData){
+            return res.status(400).json({
+                success : false,
+                message : "something went wrong while deleting Report!"
+            })
+        }
+        return res.status(200).json({
+            success : true,
+            data : deletedReportData,
+            count : deletedReportData.length
+        })    
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message  : "Internal server error ",err
+        })
+    }
+}

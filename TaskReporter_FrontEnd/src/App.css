@@ -1,4 +1,16 @@
 :root{
+    /* --bg-color : #ffffff;
+    --primary-color : #ebebeb;
+    --primary-hover-color : #f6f6f6;
+    --secondary-color : #acacac;
+    --secondary-light-color : #d5d5d5;
+    --hover-color : #b5b5b5;
+    --text-color : #000000;
+    --border-color : #000000;
+    --graph-bg-color : #f6f6f6;
+    --shadow-color :  #737373b4; */
+    --border-radius : 5px;
+    /* new pallete */
     --bg-color : #ffffff;
     --primary-color : #ebebeb;
     --primary-hover-color : #f6f6f6;
@@ -9,10 +21,12 @@
     --border-color : #000000;
     --graph-bg-color : #f6f6f6;
     --shadow-color :  #737373b4;
-    --border-radius : 5px;
+    --popup-cover-color : #4d4c4c5e;
+    --cover-color : #ffffffc9;
 }
 
 [data-theme = 'dark']{
+  /* orange pallete */
   /* --bg-color : #292929;
   --primary-color : #464646;
   --primary-hover-color : #737373;
@@ -24,16 +38,29 @@
   --graph-bg-color : #f2fcf4;
   --shadow-color :  #6e6e6eae; */
  /*  new pallete ink blue */
-  --bg-color : #27374D;
-  --primary-color : #526D82;
-  --primary-hover-color : #6f889b;
-  --secondary-color : #7495aa;
-  --secondary-light-color : #9DB2BF;
-  --hover-color : #3f7eb1;
+  /* --bg-color : #27374D;
+  --primary-color : #4a6981;
+  --primary-hover-color : #678398;
+  --secondary-color : #5785a2;
+  --secondary-light-color : #7998ab;
+  --hover-color : #3271a5;
   --text-color : #f2fcf4;
   --border-color : #f2fcf4;
-  --graph-bg-color : #f2fcf4;
-  --shadow-color :  #9db2bf66;;
+  --graph-bg-color : #19293e;
+  --shadow-color :  #9db2bf66;; */
+  /* new neon pallete */
+  --bg-color : #222831;
+  --primary-color : #393E46;
+  --primary-hover-color : #2d343f;
+  --secondary-color : #007177;
+  --secondary-light-color : #00757d;
+  --hover-color : #00ADB5;
+  --text-color : #f2fcf4;
+  --border-color : #f2fcf4;
+  --graph-bg-color : #29303a;
+  --shadow-color :  #9db2bf66;
+  --popup-cover-color : #4d4c4c5e;
+  --cover-color : #007177;
 }
 
 *{
@@ -63,6 +90,7 @@ body{
 ::-webkit-scrollbar {
     /* display: none; */
     width: 2px;
+    height: 2px;
     border-radius: 30px;
   }
   

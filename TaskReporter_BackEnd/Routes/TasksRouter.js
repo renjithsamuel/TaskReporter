@@ -1,0 +1,16 @@
+const express = require('express');
+const router = express.Router();
+const cors = require('cors');
+
+router.use(cors({origin : '*'}));
+
+const {getTasks,getUniqueTaskById,postTask,patchTaskById,deleteTaskById} = require('../Controllers/TasksController');
+
+router.get('/getTasks',getTasks);
+router.get('/getUniqueTaskById/:id',getUniqueTaskById);
+router.post('/postTask',postTask);
+router.patch('/patchTaskById/:id',patchTaskById);
+router.delete('/deleteTaskById/:id',deleteTaskById);
+
+
+module.exports = router;
