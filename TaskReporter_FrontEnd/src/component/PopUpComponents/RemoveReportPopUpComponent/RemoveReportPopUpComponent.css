@@ -1,45 +1,42 @@
-
-.popUpBackDropAddCategory{
+.removeReportPopUpBackDrop{
     width: 100vw;
     height: 100vh;
     position: absolute;
     overflow: hidden;
-    top: -1vh;
-    left: -16.5vw;
+    top: -45.5vh;
+    left: -17.7vw;
     background-color: var(--popup-cover-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 5;
+    z-index: 2;
 }
 
-.popUpContentAddCategoryWrapper{
+.removeReportContentWrapper{
     width: 40vw;
     height: max-content;
     backdrop-filter: blur(10px);    
     background-color: var(--cover-color);
     padding: 4vh;
     border-radius: var(--border-radius);
-    z-index: 5;
 }
 
-.titleOfAddCategory{
+
+.titleRemoveReport{
     display: flex;
     width:90%;
     align-items: center;
 }
 
-
-
-.addCategoryName{
+.removeReportName{
     font-size: x-large;
     font-weight: 600;
 }
 
-.closeAddCategoryBtn{
+.closeRemoveReportBtn{
     width: 3vw;
     height: 3vw;
-    margin-left: 22vw;
+    margin-left: 25vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,13 +46,20 @@
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
-.closeAddCategoryBtn:hover{
+.closeRemoveReportBtn:hover{
     cursor: pointer;
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
 }
 
-.addCategoryControlElem{
+.areYouSureToRemoveReport{
+    font-size: larger;
+    font-weight: 500;
+    margin-top: 3vh;
+}
+
+
+.removeReportControlElem{
     margin-top: 2vh;
     display: flex;
     justify-content: center;
@@ -63,9 +67,9 @@
     width: auto;
 }
 
-.submitAddCategoryBtn{
+.submitRemoveReportBtn{
     width: 10vw;
-    height: 5vh;
+    height: 6vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,9 +79,9 @@
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
-.cancelAddCategoryBtn{
+.cancelRemoveReportBtn{
     width: 5vw;
-    height: 5vh;
+    height: 6vh;
     background-color: var(--secondary-color);
     border-radius: var(--border-radius);
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
@@ -86,70 +90,7 @@
     align-items: center;
 }
 
-.cancelAddCategoryBtn:hover , .submitAddCategoryBtn:hover{
-    cursor: pointer;
-    background-color: var(--shadow-color);
-    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
-}
-
-
-.addCategoryInputWrapper{
-    width: 80%;
-    display: flex;
-        padding: 1vh;
-}
-
-.addCategoryLabelLeft{
-    width: 40%;
-    font-size: medium;
-    text-align: end;
-}
-
-.addCategoryInputRight{
-    width: 70%;
-    text-align: start;
-    margin-left: 1vw;
-}
-
-.addCategoryInputs{
-    border: none;
-    padding: 1vh;
-    border-radius: var(--border-radius);
-    background-color: var(--primary-hover-color);
-    width: 100%;
-    margin-right: 1vw;
-    color: var(--text-color);
-}
-
-.addCategoryInputs:focus , .addCategoryInputs:active{
-    outline: none;
-    
-}
-.addCategoryInputs::placeholder {
-    color: var(--text-color);
-    opacity: 1;
-}
-
-
-.colaboratorsInputComponentWrapper{
-    display: flex;
-    margin-bottom: 1vh;
-}
-
-
-.addBtnColaborator{
-    width: 5vw;
-    height: 5vh;
-    padding: 0.2vh;
-    background-color: var(--secondary-color);
-    border-radius: var(--border-radius);
-    filter: drop-shadow(1px 2px 2px var(--shadow-color));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.addBtnColaborator:hover {
+.cancelRemoveReportBtn:hover , .submitRemoveReportBtn:hover{
     cursor: pointer;
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));

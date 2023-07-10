@@ -4,10 +4,10 @@ import ChatPageGroupLeft from '../../component/ChatComponents/ChatPageGroupLeft/
 import ChatPageGroupContent from '../../component/ChatComponents/ChatPageGroupContent/ChatPageGroupContent';
 
 
-function ChatPageContent({theme}) {
+function ChatPageContent({theme,currentUser}) {
     return ( <>
         <div className="chatPageContentWrapper">
-            <TopNavComponent currPage={"Chat"} theme={theme}/>
+            <TopNavComponent currPage={"Chat"} theme={theme}  currentUser={currentUser}/>
             <div className="chatPageMainContent">
                 <div className="chatPageGroupsLeft">
                     <ChatPageGroupLeft/>

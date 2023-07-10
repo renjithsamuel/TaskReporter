@@ -7,7 +7,7 @@ import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 defineElement(lottie.loadAnimation);    
 
-function TopNavComponent({currPage,theme}) {
+function TopNavComponent({currPage,theme,currentUser}) {
     return ( 
     <div className="TopNavComponent">
         <div className="topNavLeft">
@@ -38,16 +38,22 @@ function TopNavComponent({currPage,theme}) {
                 </lord-icon>
             </div>
             <div className="userNameTop">
-                Renjith samuel
+                {currentUser.username}
             </div>
             <div className="userNameIcon">
-                <lord-icon
-                    src="https://cdn.lordicon.com/bhfjfgqz.json"
-                    trigger="hover"
-                    colors={(theme=='light')?"primary:#121331" : 'primary:#ffffff'}
-                    style={{width:30,height:30  }}
-                >
-                </lord-icon>
+                {
+                    (currentUser==null)?
+                        <lord-icon
+                            src="https://cdn.lordicon.com/bhfjfgqz.json"
+                            trigger="hover"
+                            colors={(theme=='light')?"primary:#121331" : 'primary:#ffffff'}
+                            style={{width:30,height:30  }}
+                        >
+                        </lord-icon>
+                    :
+                        <img src={localStorage.getItem('userImageLink')} alt="user" height={40} width={40} />
+
+                }
             </div>
         </div>
     </div> );

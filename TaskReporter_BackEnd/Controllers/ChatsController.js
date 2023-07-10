@@ -63,14 +63,14 @@ exports.getUniqueChatById = async (req,res,next) => {
 
 
 exports.postChat = async (req,res,next) => {
-    if(req.body.chatName == null || req.body.category == null || req.body.chatContent == null || req.body.createdBy == null  ){
+    if(req.body.chatName == null || req.body.category == null  || req.body.createdBy == null  ){
         return res.status(404).json({
             success : false,
             message: "send valid details!"
         })
     }
     const postableData = {chatName : req.body.chatName, category : req.body.category , 
-                        chatContent : req.body.chatContent , createdBy : req.body.createdBy };
+                        createdBy : req.body.createdBy };
 
     try{
         const postedData = await chats.create(postableData);
@@ -113,7 +113,7 @@ exports.patchChatById = async (req,res,next) => {
         })
     }
     
-    if(req.body.chatName == null && req.body.category == null && req.body.chatContent == null && req.body.createdBy == null){
+    if(req.body.chatName == null && req.body.category == null  && req.body.createdBy == null){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -132,7 +132,6 @@ exports.patchChatById = async (req,res,next) => {
     const patchableData = {
         chatName :  req.body.chatName || ChatData.chatName,
         category : req.body.category || ChatData.category,
-        chatContent : req.body.chatContent || ChatData.chatContent,
         createdBy : req.body.createdBy || ChatData.createdBy,
     }
     try{

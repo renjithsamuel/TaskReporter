@@ -1,0 +1,111 @@
+.loginWithGoogleBackDrop{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    overflow: hidden;
+    top: -1vh;
+    left: -0.5vw;
+    background-color: var(--popup-cover-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.loginWithGoogleWrapper{
+    width: 35vw;
+    height: max-content;
+    backdrop-filter: blur(10px);    
+    background-color: var(--cover-color);
+    padding: 4vh;
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.taskReporterAppDetails{
+    display: flex;
+    width:90%;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskReporterIcon{
+    width: 2vw;
+    height: 2vw;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.taskReporterAppName{
+    font-size: larger;
+    font-weight: 600;
+    margin-left:1vw;
+    align-self: center;
+}
+
+.loginTitle{
+    font-size: larger;
+    font-weight: 500;
+    margin: 3vh;
+}
+
+
+.loginWithGoogle{
+    z-index: 5;
+}
+
+
+.googleBtn{
+    font-size: small;
+    border-radius: 50%;
+    padding: 1.5vh;
+    width: 6vw;
+    background-color: var(--primary-color);
+    display: flex;
+    height: 4vh;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+    margin-right: 0.7vw;
+    /* margin-top: 0.2vh; */
+    z-index: 5;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
+}
+
+.googleBtn:active{
+    background-color: var(--secondary-color);
+    transform: scale(1.5)  translateY(4px);  
+}
+
+.googleBtn:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 4px 4px var(--hover-color);
+}
+
+#loginWord{
+    margin-left: 1vw;
+    margin-right: 0.2vw;
+    font-weight: 600;
+    font-size: large;
+    color: var(--text-color);
+}
+
+.connectingToServerElement{
+    display: flex;
+    font-size: larger;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    margin: 3vh;
+}
+
+.loadingToServerConnection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

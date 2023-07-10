@@ -1,21 +1,35 @@
 import './AddTaskPopUpComponent.css'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
+import { postTask } from '../../../utils/ApiHandlers';
 import { useState } from 'react';
 
-function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen}) {
+function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,setTaskList}) {
 
     const [addTaskElementsInput,setAddTaskElementsInput ] = useState([]);
+    const [addTaskObject,setAddTaskObject] = useState({category : categoryId,completed: false});
 
     useState(()=>{
         const newArr = [
-                        {inputLabel : "Task Name : " , inputPlaceHolder : " Enter task Name : " , inputType : "text",id : "taskNameInput"},
-                        {inputLabel : "Description : " , inputPlaceHolder : " Enter Description : " , inputType : "text",id:"taskDescriptionInput"},
-                        {inputLabel : "Weight/Importance Of Task : " , inputPlaceHolder : " Enter task Weight : " , inputType : "text",id:"taskStartDateInput"},
-                        {inputLabel : "End Date : " , inputPlaceHolder : " Enter task End Date : " , inputType : "Date" , id:"taskEndDateInput"},
+                        {keyForDB : 'taskName',inputLabel : "Task Name : " , inputPlaceHolder : " Enter task Name " , inputType : "text",id : "taskNameInput"},
+                        {keyForDB : 'description',inputLabel : "Description : " , inputPlaceHolder : " Enter Description " , inputType : "text",id:"taskDescriptionInput"},
+                        {keyForDB : 'weight',inputLabel : "Weight/Importance Of Task : " , inputPlaceHolder : " Enter task Weight " , inputType : "text",id:"taskStartDateInput"},
+                        {keyForDB : 'endDate',inputLabel : "End Date : " , inputPlaceHolder : " Enter task End Date " , inputType : "Date" , id:"taskEndDateInput"},
                         ];
-        setAddTaskElementsInput (newArr);
+        setAddTaskElementsInput(newArr);
     },[]);
+
+    const handleAddTaskInputChange = (keyForDB,value) => {
+        let updatedAddTaskObj = {...addTaskObject}
+        updatedAddTaskObj[keyForDB] = value ;
+        setAddTaskObject(updatedAddTaskObj);
+        console.log(addTaskObject);
+    }
+
+    const handleSubmitAddtask = ()=>{
+        postTask(addTaskObject,setTaskList);
+        setIsAddTaskPopUpOpen(false);
+    }
 
     return ( 
     <>
@@ -37,14 +51,14 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen}) {
                                     {elem.inputLabel}
                                 </div>
                                 <div className="addTaskInputRight">
-                                    <input type={elem.inputType} placeholder={elem.placeholder} id={elem.id}  className='addTaskInputs' />
+                                    <input type={elem.inputType} placeholder={elem.inputPlaceHolder} id={elem.id}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
                                 </div>
                             </div>
                         )
                     })
                 }
                 <div className="addTaskControlElem">
-                    <div className="submitAddTaskBtn">
+                    <div className="submitAddTaskBtn" onClick={()=>{handleSubmitAddtask()}}>
                         Add Task
                     </div>
                     <div className="cancelAddTaskBtn" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>

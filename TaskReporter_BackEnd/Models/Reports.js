@@ -6,7 +6,7 @@ const reportsSchema = mongoose.Schema({
     category : {type :  mongoose.Schema.Types.ObjectId,ref : 'categories'},
     reportedBy : {type :  mongoose.Schema.Types.ObjectId,ref : 'users'},
     taskCompleted : {type : mongoose.Schema.Types.ObjectId,ref : 'tasks'},
-    taskCompletedBy : [{type :  mongoose.Schema.Types.ObjectId,ref : 'users'}]
+    // taskCompletedBy : [{type :  mongoose.Schema.Types.ObjectId,ref : 'users'}]
 },{timestamps : true});
 
 module.exports = mongoose.model('reports',reportsSchema);

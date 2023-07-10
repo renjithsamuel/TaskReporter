@@ -4,10 +4,10 @@ import DashBoardTaskElement from '../../component/DashBoardComponents/DashBoardT
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import NotificationComponent from '../../component/NotificationsComponent/NotificationComponent';
 
-function DashBoardPageContent({theme}) {
+function DashBoardPageContent({theme,currentUser}) {
     return ( <>
         <div className="dashBoardComponentWrapper">
-            <TopNavComponent currPage={"Dashboard"} theme={theme}/>
+            <TopNavComponent currPage={"Dashboard"} theme={theme}  currentUser={currentUser}/>
             <div className="dashBoardContentWrapper">
                 <div className="dashBoardContentLeft">
                     <div className="dashBoardTimeLineElement">

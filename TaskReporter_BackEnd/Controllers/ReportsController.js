@@ -40,7 +40,7 @@ exports.getUniqueReportById = async (req,res,next) => {
         // single level population : 
         // const ReportData = await reports.findById(ReportID).populate('chats').populate('categories');
         // multi level population : 
-        const ReportsData = await reports.findById(ReportID).populate('reportedBy').populate('taskCompleted').populate('taskCompletedBy').populate('category');
+        const ReportsData = await reports.findById(ReportID).populate('reportedBy').populate('taskCompleted').populate('category');
 
         if(!ReportsData){
             return res.status(400).json({
@@ -63,7 +63,7 @@ exports.getUniqueReportById = async (req,res,next) => {
 
 
 exports.postReport = async (req,res,next) => {
-    if(req.body.reportedDate == null || req.body.reportStatement == null || req.body.taskCompleted == null || req.body.taskCompletedBy == null || req.body.category == null || req.body.reportedBy == null   ){
+    if(req.body.reportedDate == null || req.body.reportStatement == null || req.body.taskCompleted == null  || req.body.category == null || req.body.reportedBy == null   ){
         return res.status(404).json({
             success : false,
             message: "send valid details!"
@@ -74,7 +74,6 @@ exports.postReport = async (req,res,next) => {
         reportStatement : req.body.reportStatement , 
         reportedBy : req.body.reportedBy , 
         taskCompleted : req.body.taskCompleted ,
-        taskCompletedBy : req.body.taskCompletedBy ,
         category : req.body.category
       };
 
@@ -119,7 +118,7 @@ exports.patchReportById = async (req,res,next) => {
         })
     }
     
-    if(req.body.reportedDate == null && req.body.reportStatement == null && req.body.reportedBy == null && req.body.taskCompleted == null && req.body.taskCompletedBy == null && req.body.category == null ){
+    if(req.body.reportedDate == null && req.body.reportStatement == null && req.body.reportedBy == null && req.body.taskCompleted == null && req.body.category == null ){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -140,7 +139,6 @@ exports.patchReportById = async (req,res,next) => {
         reportStatement : req.body.reportStatement  || ReportData.reportStatement,
         reportedBy : req.body.reportedBy || ReportData.reportedBy,
         taskCompleted : req.body.taskCompleted || ReportData.taskCompleted,
-        taskCompletedBy : req.body.taskCompletedBy || ReportData.taskCompletedBy,
         category :  req.body.category || ReportData.category
     }
     try{
@@ -200,6 +198,43 @@ exports.deleteReportById = async (req,res,next) => {
         return res.status(500).json({
             success : false,
             message  : "Internal server error ",err
+        })
+    }
+}
+
+
+exports.deleteReportByTaskId = async (req,res,next) => {
+    const taskId = req.params.id;
+    if(taskId==null){
+        return res.status(400).json({
+            success : false,
+            message : "send valid task Id"
+        })
+    }
+
+    try{
+        const checkReportWithTaskId = await reports.findOne({taskCompleted : taskId});
+        if(!checkReportWithTaskId){
+            return res.status(404).json({
+                success : false,
+                message : "cannot find document!"
+            })
+        }
+        const deletedReportData = await reports.findOneAndDelete({taskCompleted : taskId});
+        if(!deletedReportData){
+            return res.status(400).json({
+                success : false,
+                message : "something else went wrong!"
+            })
+        }
+        return res.status(200).json({
+            success : true,
+            data : deletedReportData
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error" , err
         })
     }
 }

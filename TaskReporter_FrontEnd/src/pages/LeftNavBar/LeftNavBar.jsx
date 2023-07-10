@@ -49,3 +49,12 @@ function LeftNavBar({selectedNavElem,setSelectedNavElem,theme}) {
 }
 
 export default LeftNavBar;
+
+
+// const count = useSelector((state) => state.count);
+// const dispatcher = useDispatch();
+// return (
+//   <div>
+//     <p>Count: {count}</p>
+//     <button onClick={() => dispatcher({ type: 'INCREMENT' })}>Increment</button>
+//     <button onClick={() => dispatcher({ type: 'DECREMENT' })}>Decrement</button>

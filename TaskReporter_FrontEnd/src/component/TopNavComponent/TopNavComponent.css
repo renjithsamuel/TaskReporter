@@ -84,6 +84,11 @@
     width: 3vw;
     height: 3vw;
 }
+
+.userNameIcon img{
+    border-radius: 50%;
+}
+
 .notifications:hover , .userNameIcon:hover{
     cursor: pointer;
     box-shadow: 1px 2px 20px 0 var(--hover-color);

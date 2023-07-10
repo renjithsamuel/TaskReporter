@@ -24,6 +24,78 @@ exports.getUsers = async (req,res,next) =>{
     }
 }
 
+exports.getUserByData = async (req,res,next) =>{
+    // console.log(req.body);
+    if(req.body.username ==null || req.body.emailId == null){
+        return res.status(400).json({
+            success : false,
+            message : "send valid details"
+        })
+    }
+    try{
+        const currentUserData = await users.findOne({username : req.body.username , emailId : req.body.emailId}).populate('invites')
+        // .populate({
+        //     path: 'categories',
+        //     populate: [
+        //     { path: 'colaborators', model: 'users' },
+        //     { path: 'tasks', model: 'tasks' , populate : [{path : 'category',model : 'categories'}]}
+        //     ]
+        // }).populate({
+        //     path: 'chats',
+        //     populate: [
+        //     { path: 'category', model: 'categories' },
+        //     { path: 'createdBy', model: 'users' }
+        //     ]
+        // });
+          
+        if(!currentUserData){
+            return res.status(400).json({
+                success : false,
+                message : "No such user exist or something went wrong!"
+            });
+        }
+        return res.status(200).json({
+            success : true,
+            data : currentUserData,
+            count : currentUserData.length
+        });
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!" + err
+        })
+    }
+}
+
+exports.getUserByEmail = async (req,res,next) =>{
+    // console.log(req.body);
+    if(req.body.emailId == null){
+        return res.status(400).json({
+            success : false,
+            message : "send valid email"
+        })
+    }
+    try{
+        const currentUserData = await users.findOne({emailId : req.body.emailId},{_id:1});
+        if(!currentUserData){
+            return res.status(400).json({
+                success : false,
+                message : "No such user exist or something went wrong!"
+            });
+        }
+        return res.status(200).json({
+            success : true,
+            data : currentUserData,
+            count : currentUserData.length
+        });
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!" + err
+        })
+    }
+}
+
 // Get specific user
 exports.getUniqueUserById = async (req,res,next) => {
     const userID  = req.params.id;
@@ -39,19 +111,21 @@ exports.getUniqueUserById = async (req,res,next) => {
         // single level population : 
         // const userData = await users.findById(userID).populate('chats').populate('categories');
         // multi level population : 
-        const userData = await users.findById(userID).populate({
-            path: 'categories',
-            populate: [
-              { path: 'colaborators', model: 'users' },
-              { path: 'tasks', model: 'tasks' }
-            ]
-          }).populate({
-            path: 'chats',
-            populate: [
-              { path: 'category', model: 'categories' },
-              { path: 'createdBy', model: 'users' }
-            ]
-          });
+        const userData = await users.findById(userID).populate('invites')
+        // .populate({
+        //     path: 'categories',
+        //     populate: [
+        //       { path: 'colaborators', model: 'users' },
+        //       { path: 'tasks', model: 'tasks' },
+        //       { path: 'createdBy', model: 'users' }
+        //     ]
+        //   }).populate({
+        //     path: 'chats',
+        //     populate: [
+        //       { path: 'category', model: 'categories' },
+        //       { path: 'createdBy', model: 'users' }
+        //     ]
+        //   });
 
         if(!userData){
             return res.status(400).json({
@@ -74,6 +148,7 @@ exports.getUniqueUserById = async (req,res,next) => {
 
 
 exports.postUser = async (req,res,next) => {
+    // console.log(req.body);
     if(req.body.username == null || req.body.emailId == null){
         return res.status(404).json({
             success : false,
@@ -122,7 +197,7 @@ exports.patchUserById = async (req,res,next) => {
             })
         }
     
-    if(req.body.username == null && req.body.emailId == null && req.body.categories == null && req.body.chats == null ){
+    if(req.body.username == null && req.body.emailId == null  && req.body.invites == null){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -141,8 +216,7 @@ exports.patchUserById = async (req,res,next) => {
     const patchableData = {
         username :  req.body.username || userData.username, 
         emailId : req.body.emailId || userData.emailId,
-        categories : req.body.categories || userData.categories,
-        chats : req.body.chats || userData.chats
+        invites : req.body.invites || userData.invites
     }
     try{
         const patchedData = await users.findByIdAndUpdate(userID , { $set: { ...patchableData } }, {new : true});
@@ -163,6 +237,42 @@ exports.patchUserById = async (req,res,next) => {
             message : "Internal server error!",err
         })
     }
+}
+
+exports.patchManyUserWithInvites = async (req,res,next) => {
+    console.log(req.body.colaborators , req.body.categoryId);
+    if (!Array.isArray(req.body.colaborators) || req.body.categoryId == null) {
+        return res.status(400).json({
+          success: false,
+          error: "Send a valid response! Patching many requires an array of colaborators."
+        });
+      }
+      try {
+        const data = await Promise.all(req.body.colaborators.map(async (colaboratorId) => {
+          // Update colaborator with new invites
+          const userInvites = await users.findOne({_id: colaboratorId},{invites: 1});
+          const updatedColaborator = await users.updateOne(
+            { _id: colaboratorId },
+            { $set: { invites: [...(userInvites.invites), req.body.categoryId] } }
+          );
+    
+          return {
+            _id: colaboratorId,
+            updatedColaborator: updatedColaborator.nModified > 0,
+          };
+        }));
+    
+        return res.status(200).json({
+          success: true,
+          data
+        });
+
+      } catch (err) {
+        return res.status(500).json({
+          success: false,
+          error: "Something went wrong while updating invites!"  + err
+        });
+      }
 }
 
 

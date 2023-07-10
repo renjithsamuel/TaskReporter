@@ -44,7 +44,7 @@ exports.getUniqueTaskById = async (req,res,next) => {
             path: 'category',
             populate: [
               { path: 'colaborators', model: 'users' },
-              { path: 'tasks', model: 'tasks' }
+              { path: 'createdBy', model: 'users' }
             ]
           });
 
@@ -52,6 +52,34 @@ exports.getUniqueTaskById = async (req,res,next) => {
             return res.status(400).json({
                 success : false,
                 message: "something went wrong while fetching task!"
+            })
+        }
+        return res.status(200).json({
+            success : true , 
+            data : tasksData,
+            count : tasksData.length
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!" + err,
+        })
+    }
+}
+
+// Get tasks  by categoryId
+exports.getTasksByCategoryId = async (req,res,next) => {
+    const categoryId  = req.params.id;
+    try{
+        // single level population : 
+        // const taskData = await tasks.findById(taskID).populate('chats').populate('categories');
+        // multi level population : 
+        const tasksData = await tasks.find({category : categoryId}).populate("category");
+
+        if(!tasksData){
+            return res.status(400).json({
+                success : false,
+                message: "something went wrong while fetching task! or cannot find document"
             })
         }
         return res.status(200).json({
@@ -146,7 +174,7 @@ exports.patchTaskById = async (req,res,next) => {
         description : req.body.description || taskData.description ,
         endDate : req.body.endDate || taskData.endDate ,
         weight : req.body.weight || taskData.weight ,
-        completed : req.body.completed || taskData.completed ,
+        completed : (req.body.completed!=null)?req.body.completed:taskData.completed ,
     }
     try{
         const patchedData = await tasks.findByIdAndUpdate(taskID , { $set: { ...patchableData } }, {new : true});

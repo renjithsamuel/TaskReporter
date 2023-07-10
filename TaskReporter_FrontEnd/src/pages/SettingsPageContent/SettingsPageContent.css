@@ -1,9 +1,12 @@
 
 .themeSwitcher{
+    display: flex;
     margin-left: 5vw;
-    width: 10vw;
-    height: 3vh;
-    padding: 1vh;
+    justify-content: start;
+    align-items: center;
+    height: 5vh;
+    width: 27vw;
+    padding: 3vh;
     border-radius: var(--border-radius);
     text-align: center;
     text-justify: auto;
@@ -11,7 +14,15 @@
     background-color: var(--primary-color);
 }
 
-.themeSwitcher:hover{
+.themeSelectorsRight{
+    border: 2px solid var(--border-color) ;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    margin-left: 2vw;
+}
+
+.themeSelectorsRight:hover{
     cursor: pointer;
-    background-color: var(--hover-color);
+    filter: drop-shadow(1px 5px 5px var(--shadow-color));
 }

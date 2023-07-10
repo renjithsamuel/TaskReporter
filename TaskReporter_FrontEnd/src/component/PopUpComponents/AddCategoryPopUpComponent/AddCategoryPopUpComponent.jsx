@@ -6,42 +6,41 @@ import minusIconLight from '../../../assets/minus-light.svg'
 import minusIconDark from '../../../assets/minus-dark.svg'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
+import { postCategory } from '../../../utils/ApiHandlers';
 
-function AddCategoryPopUpComponent({theme}) {
-    const [isOpened,setIsOpened] = useState(false);
+function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpened}) {
 
     const [addCategoryElements,setAddCategoryElements ] = useState([]);
 
     useState(()=>{
-        const newArr = [{inputLabel : "Category/Project Name : " , inputPlaceHolder : " Enter Category/Project Name : " , inputType : "text",id : "categoryNameInput"},
-                        {inputLabel : "Description : " , inputPlaceHolder : " Enter Description : " , inputType : "text",id:"categoryDescriptionInput"},
-                        {inputLabel : "Start Date : " , inputPlaceHolder : " Enter Start Date : " , inputType : "Date",id:"categoryStartDateInput"},
-                        {inputLabel : "End Date : " , inputPlaceHolder : " Enter End Date : " , inputType : "Date" , id:"categoryEndDateInput"},
-                        {inputLabel : "Add Colaborators Email Id : " , inputPlaceHolder : " Enter Email ID : " , inputType : "text" , id:"categoryColaboratorsInput"},
+        const newArr = [{keyForDB : "categoryName",inputLabel : "Category/Project Name : " , inputPlaceHolder : " Enter Category/Project Name  " , inputType : "text",id : "categoryNameInput"},
+                        {keyForDB : "description",inputLabel : "Description : " , inputPlaceHolder : " Enter Description  " , inputType : "text",id:"categoryDescriptionInput"},
+                        {keyForDB : "startDate",inputLabel : "Start Date : " , inputPlaceHolder : " Enter Start Date  " , inputType : "Date",id:"categoryStartDateInput"},
+                        {keyForDB : "endDate",inputLabel : "End Date : " , inputPlaceHolder : " Enter End Date  " , inputType : "Date" , id:"categoryEndDateInput"},
+                        {keyForDB : "colaborators",inputLabel : "Add Colaborators Email Id : " , inputPlaceHolder : " Enter Email ID  " , inputType : "text" , id:"categoryColaboratorsInput"},
                         ];
         setAddCategoryElements(newArr);
     },[]);
 
-    return (
-        <div>
-            {(isOpened==true)?<PopUpContentAddCategory theme={theme} addCategoryElements={addCategoryElements} setIsOpened={setIsOpened}/>:''}
-            <div className="taskAddButton" onClick={()=>{setIsOpened(true)}}>
-                    <lord-icon
-                        src="https://cdn.lordicon.com/ynwbvguu.json"
-                        trigger="hover"
-                        colors={(theme=='light')?"primary:#121331" : 'primary:#ffffff'}
-                        style={{width:30,height:30  }}
-                        >
-                    </lord-icon>
-            </div>
-        </div>
-    )
-};
+    const [colaboratorEmails,setColaboratorEmails ] = useState(['']);
+    const [categoryData,setCategoryData] = useState({});
 
-export default AddCategoryPopUpComponent;
+    useEffect(()=>{
+        console.log(categoryData);
+    },[categoryData])
 
+    const handleInputChange = (keyForDB , value)=>{
+        setCategoryData((prevCategoryData)=>{
+            let updatedCategory = {...prevCategoryData};
+            updatedCategory[keyForDB] = value;
+            return updatedCategory;
+        })
+    }
 
-function PopUpContentAddCategory({addCategoryElements,theme,setIsOpened}) {
+    const handleCategorySubmit = ()=>{
+            postCategory(categoryData,colaboratorEmails,currentUser,setCategoryList);
+            setIsOpened(false);
+    }
 
     return ( <>
         <div className="popUpBackDropAddCategory" >
@@ -64,9 +63,9 @@ function PopUpContentAddCategory({addCategoryElements,theme,setIsOpened}) {
                                     </div>
                                     <div className="addCategoryInputRight">
                                         {(elem.id!='categoryColaboratorsInput')?
-                                           <input type={elem.inputType}  placeholder={elem.inputPlaceHolder}  id={elem.id} className='addCategoryInputs'/>
+                                           <input type={elem.inputType}  placeholder={elem.inputPlaceHolder}  id={elem.id} className='addCategoryInputs' onChange={(e)=>{handleInputChange(elem.keyForDB,e.target.value)}}/>
                                             :
-                                            <ColaboratorsInputComponent theme={theme}/>
+                                            <ColaboratorsInputComponent theme={theme} colaboratorEmails={colaboratorEmails} setColaboratorEmails={setColaboratorEmails}/>
                                         }
                                     </div>
                                 </div>
@@ -76,7 +75,7 @@ function PopUpContentAddCategory({addCategoryElements,theme,setIsOpened}) {
                 }
 
                 <div className="addCategoryControlElem">
-                    <div className="submitAddCategoryBtn">
+                    <div className="submitAddCategoryBtn" onClick={()=>{handleCategorySubmit();}}>
                         Add Category
                     </div>
                     <div className="cancelAddCategoryBtn" onClick={()=>{setIsOpened(false)}}>
@@ -87,12 +86,20 @@ function PopUpContentAddCategory({addCategoryElements,theme,setIsOpened}) {
             </div>
         </div>
     </> );
-}
+};
+
+export default AddCategoryPopUpComponent;
 
 
-function ColaboratorsInputComponent({theme}){
+// function PopUpContentAddCategory({addCategoryElements,theme,setIsOpened,currentUser,setCategoryList}) {
+
+    
+// }
+
+
+function ColaboratorsInputComponent({theme,colaboratorEmails,setColaboratorEmails}){
     const [colaboratorCount , setColaboratorCount] = useState(1);
-    const [colaboratorEmails, setColaboratorEmails] = useState(['']);
+
 
     const handleAddBtnColaborator = (currentColabCount) => {
         if(currentColabCount=='add'){

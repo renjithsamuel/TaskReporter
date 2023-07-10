@@ -6,7 +6,7 @@ const tasksSchema = mongoose.Schema({
     description : {type : String},
     endDate : {type : String},
     weight : {type : Number},
-    completed : {type : Boolean}
+    completed : {type : Boolean},
 },{timestamps : true});
 
 module.exports = mongoose.model('tasks',tasksSchema);

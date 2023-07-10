@@ -69,7 +69,9 @@ exports.postChatByDate = async (req,res,next) => {
         })
     }
     const postableData = {chatContentToday : req.body.chatContentToday,
-                             chatDate : req.body.chatDate };
+                             chatDate : req.body.chatDate ,
+                             chatGroup : req.body.chatGroup ,
+                            };
 
     try{
         const postedData = await chatByDates.create(postableData);
@@ -111,7 +113,7 @@ exports.patchChatByDateById = async (req,res,next) => {
             })
         }
     
-    if(req.body.chatContentToday == null && req.body.chatDate == null ){
+    if(req.body.chatContentToday == null && req.body.chatDate == null && req.body.chatGroup == null){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -130,6 +132,7 @@ exports.patchChatByDateById = async (req,res,next) => {
     const patchableData = {
         chatContentToday :  req.body.chatContentToday || userData.chatContentToday, 
         chatDate : req.body.chatDate || userData.chatDate,
+        chatGroup : req.body.chatGroup || userData.chatGroup
     }
     try{
         const patchedData = await chatByDates.findByIdAndUpdate(chatByDateID , { $set: { ...patchableData } }, {new : true});
