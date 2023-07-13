@@ -8,6 +8,7 @@
     width: 80vw;
     height: 7vh;
     align-items: center;
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
 

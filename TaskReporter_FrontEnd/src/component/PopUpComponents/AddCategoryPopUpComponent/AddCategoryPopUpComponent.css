@@ -7,10 +7,11 @@
     top: -1vh;
     left: -16.5vw;
     background-color: var(--popup-cover-color);
+    z-index: 5;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 5;
 }
 
 .popUpContentAddCategoryWrapper{
@@ -27,6 +28,8 @@
     display: flex;
     width:90%;
     align-items: center;
+    position: relative;
+    margin-bottom: 5vh  ;
 }
 
 
@@ -37,9 +40,11 @@
 }
 
 .closeAddCategoryBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
     width: 3vw;
     height: 3vw;
-    margin-left: 22vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,7 +61,8 @@
 }
 
 .addCategoryControlElem{
-    margin-top: 2vh;
+
+    margin-top: 3vh;
     display: flex;
     justify-content: center;
     height: auto;
@@ -94,7 +100,8 @@
 
 
 .addCategoryInputWrapper{
-    width: 80%;
+   
+    width: 90%;
     display: flex;
         padding: 1vh;
 }
@@ -116,15 +123,16 @@
     padding: 1vh;
     border-radius: var(--border-radius);
     background-color: var(--primary-hover-color);
-    width: 100%;
+    width: 90%;
     margin-right: 1vw;
     color: var(--text-color);
 }
 
 .addCategoryInputs:focus , .addCategoryInputs:active{
     outline: none;
-    
+    background-color: var(--secondary-light-color);
 }
+
 .addCategoryInputs::placeholder {
     color: var(--text-color);
     opacity: 1;
@@ -132,17 +140,18 @@
 
 
 .colaboratorsInputComponentWrapper{
+    
     display: flex;
     margin-bottom: 1vh;
 }
 
 
 .addBtnColaborator{
-    width: 5vw;
-    height: 5vh;
-    padding: 0.2vh;
+    width: 2vw;
+    height: 2vw;
+    padding: 0.5vh;
     background-color: var(--secondary-color);
-    border-radius: var(--border-radius);
+    border-radius: 50%;
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
     display: flex;
     justify-content: center;

@@ -13,8 +13,9 @@ import { useEffect, useState } from 'react';
 function LeftNavBar({selectedNavElem,setSelectedNavElem,theme}) {
     let LeftNavCompList = [
         {compName : "dashboard" , compIcon : `https://cdn.lordicon.com/usxfmtjg.json`},
-        {compName : "tasks" , compIcon :    `https://cdn.lordicon.com/egiwmiit.json`},
-        {compName : "chat" , compIcon :`https://cdn.lordicon.com/hpivxauj.json`}
+        {compName : "tasks" , compIcon : `https://cdn.lordicon.com/egiwmiit.json`},
+        {compName : "reports" , compIcon :`https://cdn.lordicon.com/iiixgoqp.json`},
+        {compName : "chat" , compIcon :`https://cdn.lordicon.com/hpivxauj.json`},
     ];
 
     const settingsIcon = `https://cdn.lordicon.com/hwuyodym.json`;
@@ -45,6 +46,7 @@ function LeftNavBar({selectedNavElem,setSelectedNavElem,theme}) {
                 <LeftNavComponent key={LeftNavCompList.length+2} theme={theme} compName={"logout"} compIcon={'null'} svgIcon={(theme=='light')?logoutIconLight:logoutIconDark} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem}/>
         </div>
     </div>
+    
     </> );
 }
 

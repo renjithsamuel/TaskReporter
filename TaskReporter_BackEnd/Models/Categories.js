@@ -7,7 +7,16 @@ const CategoriesSchema = mongoose.Schema({
     endDate : {type : String},
     createdBy : {type : mongoose.Schema.Types.ObjectId,ref : 'users'},
     colaborators : [{type : mongoose.Schema.Types.ObjectId,ref : 'users'}],
-    completedPercent : {type : Number}
+    weightsCompleted : {type : Number},
+    contributions: [{
+        emailId: { type: String },
+        weightContributed: { type: Number }
+    }], 
+    overAllWeight : { type : Number},
+    // contributions: [{
+    //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    //     percentage: { type: Number }
+    // }]
 },{timestamps : true});
 
 module.exports = mongoose.model('categories',CategoriesSchema);

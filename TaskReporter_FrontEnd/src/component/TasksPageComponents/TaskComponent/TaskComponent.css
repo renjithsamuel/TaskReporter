@@ -5,6 +5,7 @@
     width: 23vw;
     border-radius: var(--border-radius);
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
+    z-index: 0;
 }
 
 .taskComponent:hover{

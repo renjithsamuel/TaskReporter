@@ -3,13 +3,14 @@
     height: 100vh;
     position: absolute;
     overflow: hidden;
-    top: -45.5vh;
+    top: -0.5vh;
     left: -17.7vw;
     background-color: var(--popup-cover-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 5;
+    backdrop-filter: blur(10px);   
 }
 
 .removeReportContentWrapper{
@@ -19,24 +20,35 @@
     background-color: var(--cover-color);
     padding: 4vh;
     border-radius: var(--border-radius);
+    z-index: 5;
+ 
 }
 
 
 .titleRemoveReport{
     display: flex;
-    width:90%;
+    width:max-content;
     align-items: center;
+    position: relative;
+
 }
 
 .removeReportName{
+    width: max-content;
     font-size: x-large;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3vh;
 }
 
 .closeRemoveReportBtn{
+    position: absolute;
+    top: 0;
+    right:-30vw;
     width: 3vw;
     height: 3vw;
-    margin-left: 25vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,11 +72,12 @@
 
 
 .removeReportControlElem{
-    margin-top: 2vh;
+    margin-top: 3vh;
     display: flex;
     justify-content: center;
     height: auto;
     width: auto;
+
 }
 
 .submitRemoveReportBtn{

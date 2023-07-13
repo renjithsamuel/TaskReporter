@@ -2,9 +2,9 @@ import './AddTaskPopUpComponent.css'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
 import { postTask } from '../../../utils/ApiHandlers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,setTaskList}) {
+function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,setTaskList,setCategoryList}) {
 
     const [addTaskElementsInput,setAddTaskElementsInput ] = useState([]);
     const [addTaskObject,setAddTaskObject] = useState({category : categoryId,completed: false});
@@ -27,9 +27,16 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
     }
 
     const handleSubmitAddtask = ()=>{
-        postTask(addTaskObject,setTaskList);
+        if(addTaskObject.taskName == null || addTaskObject.category == null || addTaskObject.description==null || addTaskObject.endDate==null || addTaskObject.weight ==null || addTaskObject.completed == null){
+            alert('send valid details!');
+            console.log("send valid details!");
+            return;
+        }
+        postTask(addTaskObject,setTaskList,setCategoryList);
         setIsAddTaskPopUpOpen(false);
     }
+
+    useEffect(()=>{   console.log(addTaskObject);},[addTaskObject])
 
     return ( 
     <>
@@ -39,9 +46,9 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
                     <div className="addTaskName">
                         {category}
                     </div>
-                    <div className="closeAddTaskBtn" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>
+                    {/* <div className="closeAddTaskBtn" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div>
+                    </div> */}
                 </div>
                 {
                     addTaskElementsInput.map((elem,index)=>{
@@ -51,7 +58,11 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
                                     {elem.inputLabel}
                                 </div>
                                 <div className="addTaskInputRight">
-                                    <input type={elem.inputType} placeholder={elem.inputPlaceHolder} id={elem.id}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
+                                    {(elem.keyForDB=='weight')?
+                                        <WeightSelector setAddTaskObject={setAddTaskObject} addTaskObject={addTaskObject}/>
+                                        :
+                                        <input type={elem.inputType} placeholder={elem.inputPlaceHolder} id={elem.id}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
+                                    }
                                 </div>
                             </div>
                         )
@@ -71,3 +82,35 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
 }
 
 export default AddTaskPopUpComponent;
+
+
+function WeightSelector({setAddTaskObject,addTaskObject}) {
+
+    const handleWeightChange = (weight) =>{
+        setAddTaskObject((prevAddTaskObj)=>{
+            const updatedAddTaskObj= {...prevAddTaskObj,weight : weight};
+            return updatedAddTaskObj;
+        })
+    }
+
+    return ( <>
+        <div className="selectWeightWrapper">
+            {
+                Array.from({length : 10} , ( _ , index) => {
+                 return <SelectWeightElem key={index} handleWeightChange={handleWeightChange} num={index+1} addTaskObject={addTaskObject}/>})
+            }
+        </div>
+    </> );
+}
+
+
+
+function SelectWeightElem({handleWeightChange,num,addTaskObject}) {
+
+    return ( <>
+        <div className="selectWeight" onClick={()=>{handleWeightChange(num)}}
+         style={{backgroundColor:(addTaskObject.weight==num)?
+            'var(--secondary-light-color)':'var(--secondary-color)' ,
+                borderRadius : (addTaskObject.weight==num)?'50%' : ''}}>{num}</div>   
+    </> );
+}

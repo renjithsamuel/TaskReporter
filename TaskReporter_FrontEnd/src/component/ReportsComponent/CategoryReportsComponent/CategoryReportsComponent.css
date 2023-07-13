@@ -1,0 +1,97 @@
+.categoryReportContentWrapper{
+    width: 100%;
+    height: 100%;
+    padding: 1vh;
+    display: flex;
+    
+    flex-direction: column;
+    align-items: center;
+}
+
+.categoryReportCardSingleCardElement{
+    width: 90%;
+    height: auto;
+
+    margin: 1vh;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+}
+
+.categoryReportCardSingleCardElement:hover{
+    cursor: default;
+    background-color: var(--secondary-light-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.categoryReportCardDetais{
+    padding: 1vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--secondary-light-color);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.categoryReportCardReportedBy , .categoryReportCardReportedDate{
+    display: flex;
+    background-color: var(--shadow-color);
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+}
+
+.categoryReportCardReportedBy:hover , .categoryReportCardReportedDate:hover{
+    cursor: default;
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.categoryReportCardReportedByDate , .categoryReportCardReportedByName{
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 0.8vh;
+}
+
+.categoryReportCardReportedByNameValue , .categoryReportCardReportedByDateValue{
+    padding: 0.5vh;
+}
+
+.categoryReportCardReportStatementFor{
+    width: max-content;
+    height: max-content;
+    padding: 0.4vh;
+    margin:0.4vh; 
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh;
+}
+
+.reportStatementForName{
+    padding: 0.8vh;
+    font-size: medium;
+    text-align: center;
+}
+.reportStatementTaskName{
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    padding: 0.8vh;
+}
+.categoryReportCardStatement{
+    display: flex;
+    justify-content: center;
+    padding: 1vh;
+    background-color: var(--cover-color);
+    border-radius: var(--border-radius);
+}
+
+.categoryReportCardStatementContent{
+    margin: 1vh;
+}

@@ -1,15 +1,15 @@
 .addReportPopUpBackDrop{
     width: 100vw;
     height: 100vh;
-    position: absolute;
     overflow: hidden;
-    top: -45.5vh;
-    left: -17.7vw;
+    position: absolute;
+    top: -0.5vh;
+    left: -16.5vw;
     background-color: var(--popup-cover-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+    z-index: 5;
 }
 
 .addReportContentWrapper{
@@ -19,6 +19,7 @@
     background-color: var(--cover-color);
     padding: 4vh;
     border-radius: var(--border-radius);
+    position: relative;
 }
 
 
@@ -26,17 +27,23 @@
     display: flex;
     width:90%;
     align-items: center;
+    position: relative;
 }
 
 .addReportName{
-    font-size: x-large;
+    width: max-content;
+    font-size: large;
     font-weight: 600;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .closeAddReportBtn{
     width: 3vw;
     height: 3vw;
-    margin-left: 25vw;
+    position: relative;
+    right: -30vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,8 +68,11 @@
 
 .addReportLabelLeft{
     width: 40%;
-    font-size: large;
+    font-size: medium;
     text-align: end;
+        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .addReportInputRight{
@@ -83,6 +93,7 @@
 
 .addReportInputs:focus , .addReportInputs:active{
     outline: none;
+    background-color: var(--secondary-light-color);
 }
 
 .addReportInputs::placeholder{
@@ -92,7 +103,7 @@
 
 
 .addReportControlElem{
-    margin-top: 2vh;
+    margin-top: 3vh;
     display: flex;
     justify-content: center;
     height: auto;

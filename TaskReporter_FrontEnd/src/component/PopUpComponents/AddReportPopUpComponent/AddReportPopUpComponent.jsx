@@ -1,13 +1,13 @@
 import './AddReportPopUpComponent.css';
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
-import { patchTask, postReport } from '../../../utils/ApiHandlers';
+import { patchTask, postReport ,patchCategoryOnTaskCompletion} from '../../../utils/ApiHandlers';
 import { useState } from 'react';
 
-function AddReportPopUpComponent({theme,categoryId,currentUser,taskId,taskName,setAddReportEffectObj,setTaskList}) {
+function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList}) {
 
     const [addReportElementsInput,setAddReportElementsInput ] = useState([]);
-    const [addReportObject,setAddReportObject] = useState({category : categoryId,taskCompleted: taskId,reportedBy : currentUser._id,reportedDate : new Date()});
+    const [addReportObject,setAddReportObject] = useState({category : addReportEffectObj.categoryId,taskCompleted: addReportEffectObj.taskId,reportedBy : currentUser._id,reportedDate : new Date()});
 
     useState(()=>{
         const newArr = [
@@ -20,12 +20,17 @@ function AddReportPopUpComponent({theme,categoryId,currentUser,taskId,taskName,s
         let updatedAddReportObj = {...addReportObject}
         updatedAddReportObj[keyForDB] = value ;
         setAddReportObject(updatedAddReportObj);
-        console.log(addReportObject);
     }
 
     const handleSubmitAddReport = ()=>{
+        if(addReportObject.category == null || addReportObject.taskCompleted == null || addReportObject.reportedBy==null || addReportObject.reportedDate==null || addReportObject.reportStatement ==null){
+            alert('send valid details!');
+            console.log("send valid details!");
+            return;
+        }
         postReport(addReportObject);
-        patchTask(taskId,{completed : true},setTaskList);
+        patchTask(addReportEffectObj.taskId,{completed : true},setTaskList);
+        patchCategoryOnTaskCompletion('completed',currentUser.emailId,addReportEffectObj.weight,addReportEffectObj.categoryId,setCategoryList);
         setAddReportEffectObj((prev)=>{return {...prev,isOpen : false,success : true}});
     }
 
@@ -35,11 +40,11 @@ function AddReportPopUpComponent({theme,categoryId,currentUser,taskId,taskName,s
             <div className="addReportContentWrapper">
                 <div className="titleAddReport">
                     <div className="addReportName">
-                        {taskName}
+                        {addReportEffectObj.taskName}
                     </div>
-                    <div className="closeAddReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
+                    {/* <div className="closeAddReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div>
+                    </div> */}
                 </div>
                 {
                     addReportElementsInput.map((elem,index)=>{

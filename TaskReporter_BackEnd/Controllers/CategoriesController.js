@@ -69,7 +69,7 @@ exports.getCategoriesByUserId = async (req,res,next) => {
         // single level population : 
         // const CategoryData = await categories.findById(CategoryID).populate('chats').populate('categories');
         // multi level population : 
-        const CategoriesData = await categories.find({createdBy:userId}).populate('colaborators').populate('createdBy');
+        const CategoriesData = await categories.find({colaborators:userId}).populate('colaborators').populate('createdBy');
 
         if(!CategoriesData){
             return res.status(400).json({
@@ -103,7 +103,9 @@ exports.postCategory = async (req,res,next) => {
                            endDate : req.body.endDate ,
                            colaborators : req.body.colaborators,
                            createdBy : req.body.createdBy,
-                           completedPercent : 0,
+                           weightsCompleted : 0,
+                           contributions : [],
+                           overAllWeight : 0,
                         };
 
     try{
@@ -147,7 +149,10 @@ exports.patchCategoryById = async (req,res,next) => {
         })
     }
     
-    if(req.body.categoryName == null && req.body.description == null && req.body.startDate == null && req.body.endDate == null && req.body.colaborators == null &&  req.body.createdBy == null && req.body.completedPercent ==null){
+    if(req.body.categoryName == null && req.body.description == null && req.body.startDate == null
+         && req.body.endDate == null && req.body.colaborators == null &&  req.body.createdBy == null && 
+         req.body.weightsCompleted ==null && req.body.contributions ==null && req.body.overAllWeight == null
+        ){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -170,7 +175,9 @@ exports.patchCategoryById = async (req,res,next) => {
         endDate : req.body.endDate || CategoryData.endDate,
         taskCompletedBy : req.body.taskCompletedBy || CategoryData.taskCompletedBy,
         createdBy : req.body.createdBy || CategoryData.createdBy,
-        completedPercent : req.body.completedPercent || CategoryData.completedPercent
+        weightsCompleted : req.body.weightsCompleted || CategoryData.weightsCompleted,
+        contributions : req.body.contributions || CategoryData.contributions,
+        overAllWeight : req.body.overAllWeight || CategoryData.overAllWeight
     }
     try{
         const patchedData = await categories.findByIdAndUpdate(CategoryID ,{ $set: { ...patchableData } }, {new : true});

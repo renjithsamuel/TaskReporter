@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './AddCategoryPopUpComponent.css';
-import addIconLight from '../../../assets/add-light.svg'
-import addIconDark from '../../../assets/add-dark.svg'
+import addIconCircleLight from '../../../assets/add-circle-light.svg'
+import addIconCircleDark from '../../../assets/add-circle-dark.svg'
 import minusIconLight from '../../../assets/minus-light.svg'
 import minusIconDark from '../../../assets/minus-dark.svg'
 import closeLight from '../../../assets/close-light.svg'
@@ -25,10 +25,6 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
     const [colaboratorEmails,setColaboratorEmails ] = useState(['']);
     const [categoryData,setCategoryData] = useState({});
 
-    useEffect(()=>{
-        console.log(categoryData);
-    },[categoryData])
-
     const handleInputChange = (keyForDB , value)=>{
         setCategoryData((prevCategoryData)=>{
             let updatedCategory = {...prevCategoryData};
@@ -38,6 +34,11 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
     }
 
     const handleCategorySubmit = ()=>{
+            if(categoryData.categoryName == null || categoryData.description == null || categoryData.startDate == null || categoryData.endDate == null ){
+                console.log("Enter valid category details!");
+                alert('Enter valid category details!');
+                return;
+            }
             postCategory(categoryData,colaboratorEmails,currentUser,setCategoryList);
             setIsOpened(false);
     }
@@ -49,9 +50,9 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
                     <div className="addCategoryName">
                         Add Category
                     </div>
-                    <div className="closeAddCategoryBtn" onClick={()=>{setIsOpened(false)}}>
+                    {/* <div className="closeAddCategoryBtn" onClick={()=>{setIsOpened(false)}}>
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div>
+                    </div> */}
                 </div>
                 {
                     addCategoryElements.map((elem,index)=>{
@@ -91,12 +92,6 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
 export default AddCategoryPopUpComponent;
 
 
-// function PopUpContentAddCategory({addCategoryElements,theme,setIsOpened,currentUser,setCategoryList}) {
-
-    
-// }
-
-
 function ColaboratorsInputComponent({theme,colaboratorEmails,setColaboratorEmails}){
     const [colaboratorCount , setColaboratorCount] = useState(1);
 
@@ -114,7 +109,6 @@ function ColaboratorsInputComponent({theme,colaboratorEmails,setColaboratorEmail
     const handleEmailChange = (index, value) => {
         const updatedEmails = [...colaboratorEmails];
         updatedEmails[index] = value;
-        console.log(updatedEmails);
         setColaboratorEmails(updatedEmails);
       };
 
@@ -134,11 +128,11 @@ function ColaboratorsInputComponent({theme,colaboratorEmails,setColaboratorEmail
                         />
                         {(index==colaboratorCount-1)?
                             <div className="addBtnColaborator" onClick={()=>handleAddBtnColaborator('add')}>
-                                    <img src={(theme=='light')?addIconLight:addIconDark} alt={"add"} height={30} width={30} />
+                                    <img src={(theme=='light')?addIconCircleLight:addIconCircleDark} alt={"add"} height={25} width={25} />
                             </div>
                                     :
                             <div className="addBtnColaborator" onClick={()=>handleAddBtnColaborator('minus')}>
-                                <img src={(theme=='light')?minusIconLight:minusIconDark} alt={"minus"} height={30} width={30} />
+                                <img src={(theme=='light')?minusIconLight:minusIconDark} alt={"minus"} height={25} width={25} />
                             </div>
                             }
                     </div>)

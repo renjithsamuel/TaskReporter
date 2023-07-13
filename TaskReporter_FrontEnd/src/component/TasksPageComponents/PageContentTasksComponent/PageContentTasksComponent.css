@@ -1,4 +1,11 @@
 
+.popUpTasksPage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
 .PageContentTaskWrapper{
     z-index: 0;
 }
@@ -18,7 +25,7 @@
     font-size: larger;
     font-weight: 500;
     padding-top: 0.5vh;
-    z-index: 5;
+    z-index: 0;
 }
 
 .AddCategoryName{
@@ -38,6 +45,7 @@
     /* position: sticky;
     top:87vh;
     left:94vw; */
+    z-index: 0;
     position: relative;
     margin-right: 3vw;
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
@@ -54,7 +62,7 @@
 }
 
 .tasksCategoryWise{
-    z-index: -2;
+    z-index: 0;
     display: flex;
     padding: 2vh;
     flex-wrap: wrap;
@@ -62,6 +70,7 @@
 
 .tasklists{
     margin-top: 1vh;
+    z-index: 0;
 }
 
 .singleCategoryWrapper{
@@ -83,29 +92,39 @@
 }
 
 .singleCategoryWrapper:hover{
+    
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
     /* background-color: var(--primary-hover-color); */
     
 }
 
 .categoryTopNav{
+    z-index: 0;
     display: flex;
     padding-left: 2vw;
+    width: 100%;
 }
 
 .categoryName{
+    z-index: 0;
     font-size: large;
     font-weight: 600;
     display: flex;
+    width: 65%;
     align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .categoryName:hover{
+    z-index: 0;
     cursor: pointer;
 }
 
 .taskBottomElems{
-    margin-left: 5vw;
+    z-index: 0;
+    width: min-content;
     display: flex;
     height: 7vh;
 }
@@ -113,6 +132,7 @@
 
 
 .addTaskButton{
+    z-index: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,6 +151,7 @@
 }
 
 .goToReportPageFromTask{
+    z-index: 0;
     width: 3vw;
     height: 6vh;
     margin: 1vh ;
@@ -150,6 +171,7 @@
 
 
 .switchCompletedOrPending   {
+    z-index: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -158,12 +180,14 @@
 }
 
 .switchSeparator{
+    z-index: 0;
     width: 0.5vw;
     height: 100%;
     background-color: var(--primary-color);
 }
 
 .switchPending,.switchCompleted{
+    z-index: 0;
     width: 7vw;
     height: 7vh;
     display: flex;
@@ -173,6 +197,7 @@
 }
 
 .switchPending{
+    
     border-top-left-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
 }

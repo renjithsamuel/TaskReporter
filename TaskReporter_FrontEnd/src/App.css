@@ -22,7 +22,7 @@
     --graph-bg-color : #f6f6f6;
     --shadow-color :  #737373b4;
     --popup-cover-color : #4d4c4c5e;
-    --cover-color : #ffffffe1;
+    --cover-color : #d5d5d5e1;
 }
 
 [data-theme = 'light'][data-pallete = 'default']{
@@ -38,6 +38,8 @@
   --shadow-color :  #737373b4;
   --popup-cover-color : #4d4c4c5e;
   --cover-color : #ffffffe1;
+  --popup-cover-color : #4d4c4c5e;
+  --cover-color : #d5d5d5e1;
 }
 
 
@@ -53,6 +55,8 @@
   --border-color : #f2fcf4;
   --graph-bg-color : #f2fcf4;
   --shadow-color :  #6e6e6eae;
+  --popup-cover-color : #3d3d3d9a;
+  --cover-color : #464646e3;
 }
 
 [data-theme = 'dark'][data-pallete = 'inkBlue']{
@@ -66,7 +70,9 @@
   --text-color : #f2fcf4;
   --border-color : #f2fcf4;
   --graph-bg-color : #19293e;
-  --shadow-color :  #9db2bf66;;
+  --shadow-color :  #9db2bf66;
+  --popup-cover-color : #27374d88;
+  --cover-color : #233848ef;
 }
 
 [ data-theme = 'dark'][data-pallete = 'neon']{
@@ -83,6 +89,45 @@
   --shadow-color :  #9db2bf66;
   --popup-cover-color : #4d4c4c5e;
   --cover-color : #282f38;
+  --popup-cover-color : #1b20278b;
+  --cover-color : #393e46f2;
+}
+
+[ data-theme = 'light'][data-pallete = 'blueTimber']{
+  /* new neon pallete */
+  --bg-color : #19A7CE;
+  --primary-color : #f6fdfa;
+  --primary-hover-color : #d8d8d8;
+  --secondary-color : #03d5fc;
+  /* --secondary-color : #f6fdfa; */
+  --secondary-light-color : #03d5fc;
+  --hover-color : #2ca6df;
+  --text-color : #000000;
+  --border-color : #000000;
+  --graph-bg-color : #F6F1F1;
+  --shadow-color :  #0e4d5f;
+  --popup-cover-color : #19a7cea8;
+  --cover-color : #d8d8d8cb;
+  --popup-cover-color : #19a7ce8f;
+  --cover-color : #efefefe7;
+}
+
+[ data-theme = 'dark'][data-pallete = 'brownTimber']{
+  /* brownTimber pallete */
+  --bg-color: #DFD7BF;
+  --primary-color: #734615;
+  --primary-hover-color: #fff0c2;
+  --secondary-color: #7b460c;
+  --secondary-light-color: #cb7417;
+  --hover-color: #a35400;
+  --text-color: #ffffff;
+  --border-color: #f3f3f3;
+  --graph-bg-color: #f5F5F5;
+  --shadow-color: #DFD7BF;
+  --popup-cover-color: #F2EAD3;
+  --cover-color: #d8d8d8cb;
+  --popup-cover-color: #dfd7bfc1;
+  --cover-color: #5a3309a6;
 }
 
 
@@ -93,10 +138,15 @@
     font-family: 'Poppins';
 }
 
+html{
+  z-index: 0;
+}
+
 body{
   background-color: var(--bg-color);
   color: var(--text-color);
   z-index: 0;
+  margin: 0;
 }
 
 @keyframes slide-up {

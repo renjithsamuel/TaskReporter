@@ -5,38 +5,13 @@ import TopNavComponent from "../../component/TopNavComponent/TopNavComponent";
 import AddCategoryPopUpComponent from "../../component/PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent";
 import { getCategoriesByUserId , getTasksByCategoryId } from "../../utils/ApiHandlers";
 
-function PageContent({theme,currentUser}) {
-    // tasks states
-    const [categoryList,setCategoryList] = useState([]);
-    const [taskList , setTaskList] = useState([]);
+function PageContent({theme,currentUser,categoryList,setCategoryList,taskList,setTaskList}) {
 
-    useEffect(()=>{
-        console.log("current user At tasks, ",currentUser);
-        if(currentUser!=null){
-            getCategoriesByUserId(currentUser._id , setCategoryList);
-        }
-    },[]);
-
-    useEffect(()=>{
-        console.log("category list at tasks" , categoryList);
-        if(categoryList!=null){
-            categoryList.map((category) => {
-                   getTasksByCategoryId(category._id,setTaskList);
-            })
-        }
-    },[categoryList])
-
-    useEffect(()=>{
-        if(taskList!=null){
-            console.log("tasklist : " ,taskList);
-        }
-    },[taskList])
     
     return (
     <div className="pageContentWrapper">
         <TopNavComponent currPage={"Tasks"} theme={theme}  currentUser={currentUser}/>
         <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme} currentUser={currentUser} setCategoryList={setCategoryList}/> 
-        
     </div>
     );
 }

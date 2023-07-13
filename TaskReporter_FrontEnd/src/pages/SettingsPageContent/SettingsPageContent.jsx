@@ -1,13 +1,12 @@
+import { useEffect } from 'react';
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import './SettingsPageContent.css'
+import { toggleTheme } from '../../utils/ApiHandlers';
 
 function SettingsPageContent({theme,currentUser}) {
 
-    const toggleTheme = (newTheme,newPallete)=>{
-        theme[1](newTheme);
-        document.documentElement.setAttribute('data-theme',newTheme);
-        document.documentElement.setAttribute('data-pallete',newPallete);
-    }
+
+
 
     return ( 
     <>
@@ -17,16 +16,22 @@ function SettingsPageContent({theme,currentUser}) {
                         <div className="themeName">
                             Themes : 
                         </div>
-                        <div className="themeSelectorsRight" onClick={()=>{toggleTheme('light','default')}} style={{backgroundColor:'#ffffff'}}>
+                        <div className="themeSelectorsRight" onClick={()=>{toggleTheme('light','default',theme[1])}} style={{backgroundColor:'#ffffff'}}>
                                 
                         </div>
-                        <div className="themeSelectorsRight"  onClick={()=>{toggleTheme('dark','orange')}} style={{backgroundColor:'#fe8040'}}>
+                        <div className="themeSelectorsRight"  onClick={()=>{toggleTheme('dark','orange',theme[1])}} style={{backgroundColor:'#fe8040'}}>
 
                         </div>
-                        <div className="themeSelectorsRight"  onClick={()=>{toggleTheme('dark','inkBlue')}} style={{backgroundColor:'#27374D'}}>
+                        <div className="themeSelectorsRight"  onClick={()=>{toggleTheme('dark','inkBlue',theme[1])}} style={{backgroundColor:'#27374D'}}>
 
                         </div>
-                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('dark','neon')}} style={{backgroundColor:'#00ADB5'}}>
+                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('dark','neon',theme[1])}} style={{backgroundColor:'#222831'}}>
+
+                        </div>
+                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('light','blueTimber',theme[1]  )}} style={{backgroundColor:'#19A7CE'}}>
+
+                        </div>
+                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('dark','brownTimber',theme[1]  )}} style={{backgroundColor:'#5a3309'}}>
 
                         </div>
                     </div>

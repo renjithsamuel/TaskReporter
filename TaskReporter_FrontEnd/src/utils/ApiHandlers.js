@@ -44,6 +44,14 @@ export const connectToServerFunc = async (setConnectedToServer)=>{
     }
 }
 
+export const toggleTheme = (newTheme,newPallete,setTheme)=>{
+    localStorage.setItem('data-theme',newTheme);
+    localStorage.setItem('data-pallete',newPallete);
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme',newTheme);
+    document.documentElement.setAttribute('data-pallete',newPallete);
+}
+
 // get categories by userID
 export const getCategoriesByUserId = async (userId,setCategoryList) => {
     const getCategoriesByUserIdUrl = `http://localhost:3000/api/v1/categories/getCategoriesByUserId/${userId}`;
@@ -67,10 +75,13 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
     console.log(tasksResponseData,"tasksResponseData at get task by id");
     if(tasksResponseData && tasksResponseData.success == true){
         console.log("tasks fetched successfully!");
-        setTaskList((prevTaskList)=> {
-            let updatedTaskList =  [...prevTaskList,...tasksResponseData.data];
-            return updatedTaskList;         
-        });
+        setTaskList((prevTaskList) => {
+            const updatedTaskList = [
+              ...prevTaskList.filter((task) => !tasksResponseData.data.some((newTask) => newTask._id === task._id)),
+              ...tasksResponseData.data
+            ];
+            return updatedTaskList;
+          });
     }else if(tasksResponseData && tasksResponseData.success == false){
         console.log("error while fetching tasks " , tasksResponseData.message);
     }else{
@@ -98,7 +109,7 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
                     // validating fetched colaborator ID's
                     console.log(colaboratorEmails.length , colaboratorIdArray.length);
                     if(colaboratorEmails.length == colaboratorIdArray.length){
-                        updatedCategory['colaborators'] = colaboratorIdArray;
+                        updatedCategory['colaborators'] = [currentUser._id];
                     }else{
                         console.log("Something went wrong while adding colaborators!");
                         return;
@@ -116,7 +127,7 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
                 console.log(postedCategoryResponse.data);
                 // adding current user with new category
                 setCategoryList((prevCategoryData) => {
-                    let updatedData = [...prevCategoryData,...postedCategoryResponse.data];
+                    let updatedData = [...prevCategoryData,postedCategoryResponse.data];
                     return updatedData;
                 });
                 if(colaboratorEmails.length!=0){
@@ -177,7 +188,7 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
 
 
 // post Task --------------------------->
-export const postTask = async (addTaskObject,setTaskList) => {
+export const postTask = async (addTaskObject,setTaskList,setCategoryList) => {
     if(addTaskObject.taskName == null || addTaskObject.category == null || addTaskObject.description==null || addTaskObject.endDate==null || addTaskObject.weight ==null || addTaskObject.completed == null){
         alert('send valid details!');
         console.log("send valid details!");
@@ -192,12 +203,59 @@ export const postTask = async (addTaskObject,setTaskList) => {
     }else if(postedTaskResponse && postedTaskResponse.success == true){
         console.log("posted Task!");
         console.log(postedTaskResponse.data);
+        patchCategoryWithWeight(addTaskObject,setCategoryList);
         setTaskList((prevTaskList)=>{
-            let updatedTaskData = [...prevTaskList,...postedTaskResponse.data];
+            let updatedTaskData = [...prevTaskList.filter((task) => !postedTaskResponse.data_id),postedTaskResponse.data];
+            console.log(updatedTaskData);
             return updatedTaskData;
         });
     }else{
         console.log("Something else went wrong while posting Task!");
+    }
+}
+
+// patch category with overall weight increase and percentage decrease
+export const patchCategoryWithWeight = async (taskObject,setCategoryList) => {
+    if(taskObject==null){
+        console.log("send valid completed data");
+        return;
+    }
+    // getting category 
+    const getCategoryDataUrl = `http://localhost:3000/api/v1/categories/getUniqueCategoryById/${taskObject.category}`;
+    const responseObject = await sendHttpRequest(getCategoryDataUrl , 'GET');
+    console.log(responseObject,"checking gotten object");
+    if(responseObject && responseObject.success == false){
+        console.log("Something went wrong while getting object!");
+    }else if(responseObject && responseObject.success == true){
+        console.log("got object!");
+        console.log(responseObject.data);
+    }else{
+        console.log("Something else went wrong while patching Task!");
+    }
+
+    const updatedCategoryData = {overAllWeight : responseObject.data.overAllWeight + taskObject.weight }
+    const patchCategoryUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${taskObject.category}`;
+    console.log("category  check",updatedCategoryData);
+    const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);
+    console.log(patchedCategoryResponse,"checking patch category");
+    if(patchedCategoryResponse && patchedCategoryResponse.success == false){
+        console.log("Something went wrong while patching category!");
+    }else if(patchedCategoryResponse && patchedCategoryResponse.success == true){
+        console.log("patched category!");
+        console.log(patchedCategoryResponse.data);
+        setCategoryList((prevCategoryList)=>{
+            // let updatedCategoryList = [...prevCategoryList,patchedCategoryResponse.data];
+            let updatedCategoryList = prevCategoryList.map((category)=>{
+                if(category._id!=patchedCategoryResponse.data._id){
+                    return category;
+                }else{
+                    return patchedCategoryResponse.data;
+                }
+            });
+            return updatedCategoryList;
+        })
+    }else{
+        console.log("Something else went wrong while patching category!");
     }
 }
 
@@ -211,21 +269,26 @@ export const patchTask = async (taskId , patchableData,setTaskList) => {
     const patchTaskUrl = `http://localhost:3000/api/v1/tasks/patchTaskById/${taskId}`;
     console.log("task  check",patchableData);
     const patchedTaskResponse = await sendHttpRequest(patchTaskUrl , 'PATCH' , patchableData);
-    console.log(patchedTaskResponse,"checking post task");
+    console.log(patchedTaskResponse,"checking patch task");
     if(patchedTaskResponse && patchedTaskResponse.success == false){
-        console.log("Something went wrong while posting Task!");
+        console.log("Something went wrong while patching Task!");
     }else if(patchedTaskResponse && patchedTaskResponse.success == true){
-        console.log("posted Task!");
+        console.log("patched Task!");
         console.log(patchedTaskResponse.data);
-        // setTaskList((prevTaskList)=>{
-        //     let updatedTaskData = [...prevTaskList,(patchedTaskResponse.data)];
-        //     return updatedTaskData;
-        // });
+        setTaskList((prevTaskList)=>{
+            let updatedTaskList = prevTaskList.map((task)=>{
+                if(task._id!=patchedTaskResponse.data._id){
+                    return task;
+                }else{
+                    return patchedTaskResponse.data;
+                }
+            })
+            return updatedTaskList;
+        });
     }else{
         console.log("Something else went wrong while patching Task!");
     }
 }
-
 
 // post report while completing a task
 export const postReport = async (addReportObj) =>{
@@ -243,6 +306,7 @@ export const postReport = async (addReportObj) =>{
     }else if(postedReportResponse && postedReportResponse.success == true){
         console.log("posted report!");
         console.log(postedReportResponse.data);
+        // setReportList
     }else{
         console.log("Something else went wrong while posting report!");
     }
@@ -258,9 +322,85 @@ export const deleteReport = async (taskId) =>{
     const gottenResponse = await sendHttpRequest(deleteReportUrl,'DELETE');
     if(gottenResponse && gottenResponse.success == true){
         console.log("transaction succesful", gottenResponse.data);
+        // setReportList
     }else if(gottenResponse && gottenResponse.success == false){
         console.log("error during transaction",gottenResponse.message);
     }else {
         console.log("something else went wrong in the server");
     }
 }
+
+// updating category with weightsCompleted and contributors : 
+export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , weight, categoryId,setCategoryList) => {
+    if(status==null || updationEmailId ==null || weight == null || categoryId == null){
+        console.log("send valid completed data");
+        return;
+    }
+    // getting category
+    const getCategoryDataUrl = `http://localhost:3000/api/v1/categories/getUniqueCategoryById/${categoryId}`;
+    const responseObject = await sendHttpRequest(getCategoryDataUrl , 'GET');
+    console.log(responseObject,"checking gotten object");
+    if(responseObject && responseObject.success == false){
+        console.log("Something went wrong while getting object!");
+    }else if(responseObject && responseObject.success == true){
+        console.log("got object!");
+        console.log(responseObject.data);
+    }else{
+        console.log("Something else went wrong while patching Task!");
+    }
+ 
+    let updatedCategoryData = {};
+    if(status != 'completed'){
+        updatedCategoryData.contribution = responseObject.data.contributions.map((contribution)=>{
+            if(contribution.emailId != updationEmailId ){
+                return  contribution;
+            }else if(contribution.emailId == updationEmailId){
+                let updatedContribution = {emailId : emailId , weightContributed : contribution.weightContributed - weight};
+                return updatedContribution;
+            }     
+        });
+    }else {
+        // let tempOverallWeight = (responseObject.data.weightsCompleted==null)?0 : responseObject.data.weightsCompleted + weight;
+        let flag = false;
+        updatedCategoryData.contribution = responseObject.data.contributions.map((contribution)=>{
+            if(contribution.emailId != updationEmailId ){
+                return  contribution;
+            }else if(contribution.emailId == updationEmailId){
+                let updatedContribution = {emailId : emailId ,  weightContributed : contribution.weightContributed + weight};
+                flag = true;
+                return updatedContribution;
+            }     
+        })
+        if(flag==false){
+        updatedCategoryData.contribution = [...responseObject.data.contributions,{emailId : updationEmailId , weightContributed  : weight }]
+        }
+    }
+
+     updatedCategoryData.overAllWeight =  (status ==  'completed')?(responseObject.data.weightsCompleted + weight) 
+                                                                        : (responseObject.data.weightsCompleted - weight);
+    const patchCategoryUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${categoryId}`;
+    console.log("task  check",updatedCategoryData);
+    const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);
+    console.log(patchedCategoryResponse,"checking patch category");
+    if(patchedCategoryResponse && patchedCategoryResponse.success == false){
+        console.log("Something went wrong while patching category!");
+    }else if(patchedCategoryResponse && patchedCategoryResponse.success == true){
+        console.log("patched category with overallweight and contribution!");
+        console.log(patchedCategoryResponse.data);
+        setCategoryList((prevCategoryList)=>{
+            // let updatedCategoryList = [...prevCategoryList,patchedCategoryResponse.data];
+            let updatedCategoryList = prevCategoryList.map((category)=>{
+                if(category._id!=patchedCategoryResponse.data._id){
+                    return category;
+                }else{
+                    return patchedCategoryResponse.data;
+                }
+            });
+            return updatedCategoryList;
+        })
+    }else{
+        console.log("Something else went wrong while patching category!");
+    }
+}
+
+

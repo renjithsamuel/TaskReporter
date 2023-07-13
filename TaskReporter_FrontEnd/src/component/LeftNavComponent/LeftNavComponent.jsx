@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-
+import {  Link } from "react-router-dom";
 import './LeftNavComponent.css'
 // lottie
 import lottie from 'lottie-web';
@@ -11,6 +11,7 @@ function LeftNavComponent({compName,compIcon,svgIcon,selectedNavElem , setSelect
     useEffect(()=>{console.log(compName);},[]);
 
     return (
+        <Link to={(compName!='tasks')?"/"+compName:'/'} style={{textDecoration:'none',color:'var(--text-color)'}}>
         <div className="LeftNavComponentWrapper" 
                 style={{backgroundColor:(selectedNavElem==compName)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==compName)?'var(--border-color)':'var(--primary-color)' }} 
                 onClick={()=>{ setSelectedNavElem(compName) }}
@@ -31,6 +32,7 @@ function LeftNavComponent({compName,compIcon,svgIcon,selectedNavElem , setSelect
                 {compName}
             </div>
         </div> 
+        </Link>
     );
 }
 
