@@ -59,9 +59,7 @@ function TaskComponent({taskName,taskDescription,elem,setTaskList,taskList,addRe
                 </div>
             </div>
             <div className="taskDescription" style={{textDecoration:(elem.completed)?'line-through':''}}>
-                <ul>
-                    <li>{taskDescription}</li>
-                </ul>
+                {taskDescription}
             </div>
         </div>
         </>

@@ -1,0 +1,60 @@
+.contributionsComponentWrapper{
+    height: 100%;
+    width: 100%;
+    padding: 1vh;
+}
+
+.individualContributionsWrapper,.overallCompletionWrapper{
+    padding: 1vh;
+}
+
+.individualContributionName,.overallCompletionName{
+    font-size: larger;
+    font-weight: 600;
+    background-color: var(--secondary-color);
+    width: max-content;
+    height: min-content;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+}
+
+.contributionCardComponentWrapper{
+    width: 90%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    padding: 1.5vh;
+    margin: 2vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-hover-color);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+}
+
+.contributionCardComponentWrapper:hover{ 
+    cursor: default;
+    background-color: var(--secondary-light-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.contributionCardName{
+    width: 30%;
+    margin-right: 1vw;
+    text-align: start  ;
+}
+
+.contributionCardPercentIndicator{
+    width: 30%;
+    margin-right: 1vw;
+    text-align: end;
+}
+
+.contributionCardTasksCountIndicator{
+    width: 30%;
+    margin-right: 1vw;
+    text-align: center;
+}
+
+.contributionCardTasksCountName{
+    font-size: medium;
+    font-weight: 600;
+}

@@ -1,16 +1,7 @@
-.showReportsPopUpBackDrop{
-    background-color: var(--popup-cover-color);
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .showReportContentWrapper{
-
     height: auto;
     display: flex;
+    backdrop-filter: blur(10px);
 }
 
 .showReportContentLeftWrapper{
@@ -42,6 +33,32 @@
     font-weight: 600;
     border-radius: var(--border-radius);
     background-color: var(--primary-hover-color);
+}
+
+
+.showReportContentEachCategory{
+    background-color: var(--secondary-light-color);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+    cursor: pointer;
+}
+
+.showReportContentCategoriesListSelector{
+    padding: 1vh;
+}
+
+.showReportContentEachCategory{
+    margin-top: 0.5vh;
+    font-size: large;
+    font-weight: 400;
+    padding: 0.5vh;
+    text-align: center;
+    background-color: var(--secondary-light-color);
+}
+
+.showReportContentEachCategory:hover{
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+    cursor: pointer;
+    background-color: var(--secondary-color);
 }
 
 .showReportContentRightWrapper{

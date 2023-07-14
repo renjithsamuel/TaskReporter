@@ -5,20 +5,43 @@ import rejectLight from '../../assets/reject-light.svg'
 import rejectDark from '../../assets/reject-dark.svg'
 import acceptLight from '../../assets/accept-light.svg'
 import acceptDark from '../../assets/accept-dark.svg'
+import closeLight from '../../assets/close-light.svg'
+import closeDark from '../../assets/close-dark.svg'
+import { useEffect } from 'react';
+import { acceptInvite,rejectInvite } from '../../utils/ApiHandlers';
 
 
+function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage,setCategoryList}) {
 
-function NotificationComponent({theme}) {
+    useEffect(()=>{
+        console.log("invites check ",currentUser);
+    },[])
+
+
     return ( <>
         <div className="notificationsWrapper">
-            <div className="notificationsTitleWrapper">Notifications</div>
-            <div className="notificationControlElems">
-                <div className="clearAllButton">
-                    <img src={(theme=='light')?clearAllLight:clearAllDark} alt="clear" height={30}  width={30}/>
+            <div className="notificationsTopNav">
+                <div className="notificationsTitleWrapper">Notifications</div>
+                <div className="notificationControlElems">
+                    <div className="closeShowNotoficationsBtn"
+                        onClick={()=>{setIsNotificationOpen(false)}}
+                        style={{visibility:(fromPage=='Dashboard')?'hidden':'none'}}
+                        >
+                        <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
+                    </div>
+                    <div className="clearAllButton">
+                        <img src={(theme=='light')?clearAllLight:clearAllDark} alt="clear" height={30}  width={30}/>
+                    </div>
                 </div>
             </div>
             <div className="allNotifications">
-                <SingleNotificationComponent  theme={theme}/>
+                {
+                    (currentUser && (Array.isArray(currentUser.invites) && currentUser.invites.length > 0))?(
+                        currentUser.invites.map((invite,index)=>{
+                           return <SingleNotificationComponent key={index}  theme={theme} currentUser={currentUser} invitedCategoryId={invite._id} invitedBy={invite.createdBy.username} categoryName={invite.categoryName} setCategoryList={setCategoryList}/>
+                        })
+                    ):(<h3>No Notifications</h3>)
+                }
             </div>
         </div>
     </> );
@@ -27,22 +50,24 @@ function NotificationComponent({theme}) {
 export default NotificationComponent;
 
 
-function SingleNotificationComponent({theme}) {
+function SingleNotificationComponent({theme,invitedBy,categoryName,invitedCategoryId,currentUser,setCategoryList}) {
+
+
     return ( <>
         <div className="singleNotificationWrapper">
             <div className="notificationDetails">
                 <div className="notificationSender">
-                    Renjith Samuel
+                    {invitedBy}
                 </div>
                 <div className="notificationCategoryName">
-                    SIH Project
+                    {categoryName}
                 </div>
             </div>
             <div className="singleNotificaitonControlElem">
-                <div className="notificationAcceptBtn">
+                <div className="notificationAcceptBtn" onClick={()=>{acceptInvite(currentUser,invitedCategoryId,setCategoryList)}}>
                     <img src={(theme=='light')?acceptLight:acceptDark} alt="accept" height={30} width={30} />
                 </div>
-                <div className="notificationRejectBtn">
+                <div className="notificationRejectBtn" onClick={()=>{rejectInvite(currentUser,invitedCategoryId)}}>
                     <img src={(theme=='light')?rejectLight:rejectDark} alt="reject" height={30} width={30} />
                 </div>      
             </div>

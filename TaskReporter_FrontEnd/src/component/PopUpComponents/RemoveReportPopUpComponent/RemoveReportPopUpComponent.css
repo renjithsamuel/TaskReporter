@@ -4,13 +4,14 @@
     position: absolute;
     overflow: hidden;
     top: -0.5vh;
-    left: -17.7vw;
+    left: -17.2vw;
     background-color: var(--popup-cover-color);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 5;
-    backdrop-filter: blur(10px);   
+    backdrop-filter: blur(10px);  
+    overflow: hidden; 
 }
 
 .removeReportContentWrapper{

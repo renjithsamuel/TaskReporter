@@ -5,13 +5,15 @@
     position: absolute;
     overflow: hidden;
     top: -1vh;
-    left: -16.5vw;
+    left: -17.2vw;
     background-color: var(--popup-cover-color);
     z-index: 5;
     overflow: hidden;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .popUpContentAddCategoryWrapper{

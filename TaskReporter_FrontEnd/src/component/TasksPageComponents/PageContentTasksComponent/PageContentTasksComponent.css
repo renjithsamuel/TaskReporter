@@ -85,14 +85,13 @@
     text-align: center;
     padding: 1.5vh;
     border-radius: var(--border-radius);
-    width: 30%;
+    width: 29%;
     transition: all 0.3s ease-in-out;
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
     background-color: var(--primary-hover-color);
 }
 
 .singleCategoryWrapper:hover{
-    
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
     /* background-color: var(--primary-hover-color); */
     
@@ -128,8 +127,6 @@
     display: flex;
     height: 7vh;
 }
-
-
 
 .addTaskButton{
     z-index: 0;
@@ -210,4 +207,19 @@
     cursor: pointer;
     background-color: var(--hover-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+.showReportsPopUpBackDrop{
+    position: absolute;
+    top: 0;
+    left: -17.2vw;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--popup-cover-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }

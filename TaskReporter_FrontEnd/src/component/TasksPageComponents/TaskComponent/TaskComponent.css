@@ -3,6 +3,7 @@
     padding: 1vh;
     margin: 1vh;
     width: 23vw;
+    height: auto;
     border-radius: var(--border-radius);
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
     z-index: 0;
@@ -20,8 +21,14 @@
 }
 
 .taskName{
-    text-indent: 1vw;
+    text-indent: 0.5vw;
     font-size: medium;
     font-weight: 600;
 }
 
+.taskDescription{
+    overflow-wrap: break-word;
+    padding: 1vh;
+    margin-left: 1.5vw;
+    text-align: start;
+}

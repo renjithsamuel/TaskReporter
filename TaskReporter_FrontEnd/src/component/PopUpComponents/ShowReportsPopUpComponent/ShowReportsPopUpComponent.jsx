@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ShowReportsPopUpComponent.css';
 import CategoryDetailsComponent from '../../ReportsComponent/CategoryDetailsComponent/CategoryDetailsComponent'
 import CategoryReportsComponent from '../../ReportsComponent/CategoryReportsComponent/CategoryReportsComponent'
@@ -7,25 +7,41 @@ import DeadlinesComponent from '../../ReportsComponent/DeadlinesComponent/Deadli
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
 
-function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',categoryList}) {
+function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',categoryList,setIsReportObjectOpen,fromPage}) {
 
     const [currentReportTab , setCurrentReportTab] = useState(`${defaultReportPage}`);
+    const [currentSelectedCategoryId, setCurrentSelectedCategoryId] = useState(0);
 
+    useEffect(()=>{
+        if(categoryList!=null && categoryList[0] && categoryList[0]._id!=undefined){
+                setCurrentSelectedCategoryId(categoryList[0]._id);
+        }
+    },[])
+    
+//     handle category selection
+    const handleCategorySelectionClick = (categoryId) =>{
+        setCurrentSelectedCategoryId(categoryId);
+    }
 
     return ( <>
                     <div className="showReportContentWrapper" >
                                 <div className="showReportContentLeftWrapper">
                                         <div className="showReportContentLeftName">
+                                                        Categories
+                                        </div>
+                                        <div className="showReportContentCategoriesListSelector">
                                                 {
                                                         categoryList.map((category,categoryIndex)=>{
                                                                 return (
-                                                                        <div className="showReportContentEachCategory" key={categoryIndex}>
-                                                                                {category}
+                                                                        <div className="showReportContentEachCategory" 
+                                                                        key={categoryIndex} onClick={()=>handleCategorySelectionClick(category._id)} 
+                                                                        style={{backgroundColor:(currentSelectedCategoryId == category._id) ? 'var(--secondary-color)':'var(--secondary-light-color)'}}>
+                                                                                {category.categoryName}
                                                                         </div>
                                                                 )
                                                         })
                                                 }
-                                        </div>     
+                                        </div>
                                 </div> 
                                 <div className="showReportContentRightWrapper">
                                         <div className="reportTopNavWrapper">
@@ -44,7 +60,8 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                                         </div>
                                                 </div>
                                                 <div className="closeShowReportsBtn"
-                                                        // onClick={()=>{setShowReportPopUpOpen(false)}}
+                                                        onClick={()=>{setIsReportObjectOpen((prevState)=>{return {...prevState,isOpen:false}})}}
+                                                        style={{display:(fromPage=='reportsContent')?'none':'flex'}}
                                                         >
                                                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
                                                 </div>
@@ -52,14 +69,14 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                         <div className="reportContentWrapper">
                                                 <div className="reportContentBar">
                                                         {(currentReportTab=='categoryDetails')?
-                                                                <CategoryDetailsComponent />
+                                                                <CategoryDetailsComponent theme={theme}/>
                                                                 : (currentReportTab=='reports')?
-                                                                <CategoryReportsComponent />
+                                                                <CategoryReportsComponent theme={theme}/>
                                         
                                                                 : (currentReportTab == 'contributions')?
-                                                                <ContributionsComponent />
+                                                                <ContributionsComponent theme={theme}/>
                                                                 : (currentReportTab == 'deadlines')?
-                                                                <DeadlinesComponent />
+                                                                <DeadlinesComponent theme={theme}/>
                                                                 : ''
                                                         }
                                                 </div>

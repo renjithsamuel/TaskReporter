@@ -6,12 +6,14 @@ import AddCategoryPopUpComponent from "../../component/PopUpComponents/AddCatego
 import { getCategoriesByUserId , getTasksByCategoryId } from "../../utils/ApiHandlers";
 
 function PageContent({theme,currentUser,categoryList,setCategoryList,taskList,setTaskList}) {
-
+    useEffect(()=>{
+        console.log("categories list at page content final : ");
+    },[categoryList])
     
     return (
     <div className="pageContentWrapper">
-        <TopNavComponent currPage={"Tasks"} theme={theme}  currentUser={currentUser}/>
-        <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme} currentUser={currentUser} setCategoryList={setCategoryList}/> 
+        <TopNavComponent currPage={"Tasks"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>
+       {categoryList!=null && <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme} currentUser={currentUser} setCategoryList={setCategoryList}/> }
     </div>
     );
 }

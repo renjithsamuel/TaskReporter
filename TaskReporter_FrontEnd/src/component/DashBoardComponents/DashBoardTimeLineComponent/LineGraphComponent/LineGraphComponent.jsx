@@ -14,8 +14,8 @@ const LineGraphComponent = ({ theme }) => {
   return (
     <div className="lineGraphWrapper" style={{ color: 'var(--text-color)' }}>
       <LineChart
-        width={760}
-        height={250}
+        width={740}
+        height={240}
         data={data2} // Replace data with data2
         margin={{
           top: 5,

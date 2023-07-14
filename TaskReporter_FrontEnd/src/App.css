@@ -48,7 +48,7 @@
   --bg-color : #292929;
   --primary-color : #464646;
   --primary-hover-color : #737373;
-  --secondary-color : #fe8040;
+  --secondary-color : #db7746;
   --secondary-light-color : #7d7d7d;
   --hover-color : #a7a7a7be;
   --text-color : #f2fcf4;
@@ -136,6 +136,7 @@
     transition: all 0.3s ease-in-out;
     scroll-behavior: smooth;
     font-family: 'Poppins';
+    /* box-sizing: border-box !important */
 }
 
 html{

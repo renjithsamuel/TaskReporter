@@ -4,10 +4,10 @@ import ChatPageGroupLeft from '../../component/ChatComponents/ChatPageGroupLeft/
 import ChatPageGroupContent from '../../component/ChatComponents/ChatPageGroupContent/ChatPageGroupContent';
 
 
-function ChatPageContent({theme,currentUser}) {
+function ChatPageContent({theme,currentUser,setCategoryList}) {
     return ( <>
         <div className="chatPageContentWrapper">
-            <TopNavComponent currPage={"Chat"} theme={theme}  currentUser={currentUser}/>
+            <TopNavComponent currPage={"Chat"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>
             <div className="chatPageMainContent">
                 <div className="chatPageGroupsLeft">
                     <ChatPageGroupLeft/>

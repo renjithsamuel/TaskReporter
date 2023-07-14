@@ -15,10 +15,13 @@ import ReportsPageContent from './pages/ReportsPageContent/ReportsPageContent';
 import LoginWithGooglePopUpComponent from './component/PopUpComponents/LoginWithGooglePopUpComponent/LoginWithGooglePopUpComponent';
 
 // importing functions from utils.js
-import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId} from './utils/ApiHandlers';
+import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests} from './utils/ApiHandlers';
 
 
 import ShowReportsPopUpComponent from './component/PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
+
+export let isOnline = false;
+
 
 function App(){
   const [connectedToServer,setConnectedToServer] = useState(false);
@@ -31,6 +34,13 @@ function App(){
   const [gotUser,setGotUser] = useState(false);
 
 
+  useEffect(()=>{
+    const queuedRequests = JSON.parse(localStorage.getItem('queuedRequests')) || [];
+
+    if ((isOnline && queuedRequests.length > 0)) {
+      executeQueuedRequests();
+    }
+  },[isOnline])
 
   useEffect(()=>{
       connectToServerFunc(setConnectedToServer);
@@ -51,9 +61,6 @@ function App(){
       }
   },[isLoggedIn]);
 
-  useEffect(()=>{
-    console.log("current user" , currentUser);
-  },[currentUser]);
 
 
   // tasks states
@@ -61,11 +68,13 @@ function App(){
   const [taskList , setTaskList] = useState([]);
 
   useEffect(()=>{
+
+      console.log("current user" , currentUser);
       console.log("current user At tasks, ",currentUser);
-      if(currentUser!=null){
+      if(currentUser && currentUser._id!=undefined){
           getCategoriesByUserId(currentUser._id , setCategoryList);
       }
-  },[]);
+  },[currentUser]);
 
   useEffect(()=>{
       console.log("category list at tasks" , categoryList);
@@ -81,13 +90,35 @@ function App(){
           console.log("tasklist : " ,taskList);
       }
   },[taskList]);
+    
+    //   to check current online status
+    isOnline = useOnlineStatus();
+    // isOnline = false ;
+    function useOnlineStatus() {
+        const [isOnline, setIsOnline] = useState(true);
+        useEffect(() => {
+        function handleOnline() {
+            setIsOnline(true);
+        }
+        function handleOffline() {
+            setIsOnline(false);
+        }
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+        }, []);
+        return isOnline;
+    };
 
 
   return (
     <>
-    {(!gotUser)?<LoginWithGooglePopUpComponent theme={theme} setIsLoggedIn={setIsLoggedIn} connectedToServer={connectedToServer}/>:''}
+    {(!gotUser  )?<LoginWithGooglePopUpComponent theme={theme} setIsLoggedIn={setIsLoggedIn} connectedToServer={connectedToServer}/>:''}
     <div className='AppWrapper'>
-          <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme}/>
+          <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme} setCurrentUser={setCurrentUser}/>
           {/* {(selectedNavElem=='tasks')?    
             <PageContent theme={theme} currentUser={currentUser}/>
             :(selectedNavElem=='chat')?
@@ -99,13 +130,15 @@ function App(){
             :'Logging out!'
           } */}
           <Routes>
-              <Route path='/' element={<PageContent theme={theme} currentUser={currentUser}/>}/>
-              <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser}/>}/>
-              <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser}/>}/>
-              <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser}/>}/>
-              <Route path='/reports' element={<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList}/>}/>
+              <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn}/>}/>
+              <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
+              <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>}/>
+              <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
+              <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} />}/>
           </Routes>
     </div>
+
+
     </>
     // <ShowReportsPopUpComponent theme={theme} />
   );

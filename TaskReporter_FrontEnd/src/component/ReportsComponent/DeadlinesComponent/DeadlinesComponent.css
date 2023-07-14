@@ -1,0 +1,36 @@
+.deadlinesComponentWrapper{
+    padding: 2vh;
+    width: 100%;
+    height: 100%;
+}
+
+.overallDeadlineName , .tasksDeadlineName{
+    font-size: larger;
+    font-weight: 600;
+    width: max-content;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-color);
+}
+
+.deadlineSingleCardComponentWrapper{
+    width: 85% ;
+    height: auto;
+    display: flex;
+    padding: 2vh;
+    margin: 2vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-hover-color);
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+}
+
+.deadlineSingleCardComponentWrapper:hover{ 
+    cursor: default;
+    background-color: var(--secondary-light-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.deadlineTaskName , .deadlineEndDate , .deadlineDaysMore {
+    width: 33%;
+    text-align: center;
+}

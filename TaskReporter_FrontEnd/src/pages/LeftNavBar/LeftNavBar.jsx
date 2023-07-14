@@ -10,7 +10,7 @@ import logoutIconLight from '../../assets/logout-light.svg'
 import logoutIconDark from '../../assets/logout-dark.svg'
 import { useEffect, useState } from 'react';
 
-function LeftNavBar({selectedNavElem,setSelectedNavElem,theme}) {
+function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
     let LeftNavCompList = [
         {compName : "dashboard" , compIcon : `https://cdn.lordicon.com/usxfmtjg.json`},
         {compName : "tasks" , compIcon : `https://cdn.lordicon.com/egiwmiit.json`},
@@ -43,7 +43,7 @@ function LeftNavBar({selectedNavElem,setSelectedNavElem,theme}) {
         </div>
         <div className="bottomOfLeftNav"> 
                 <LeftNavComponent key={LeftNavCompList.length+1} theme={theme} compName={"settings"} compIcon={settingsIcon} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem}/>
-                <LeftNavComponent key={LeftNavCompList.length+2} theme={theme} compName={"logout"} compIcon={'null'} svgIcon={(theme=='light')?logoutIconLight:logoutIconDark} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem}/>
+                <LeftNavComponent key={LeftNavCompList.length+2} theme={theme} compName={"logout"} compIcon={'null'} svgIcon={(theme=='light')?logoutIconLight:logoutIconDark} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} setCurrentUser={setCurrentUser} setIsLoggedIn={setIsLoggedIn}/>
         </div>
     </div>
     

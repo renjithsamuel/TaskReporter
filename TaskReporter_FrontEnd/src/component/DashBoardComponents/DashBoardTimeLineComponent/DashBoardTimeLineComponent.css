@@ -1,6 +1,7 @@
 .timeLineComponentWrapper{
+    margin-top: 2vh;
     width: 50vw;
-    height: 40vh;
+    height: 45vh;
     border-radius: var(--border-radius);
     padding: 2vh;
     background-color: var(--primary-color);

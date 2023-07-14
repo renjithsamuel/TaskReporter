@@ -3,13 +3,14 @@
     height: 100vh;
     position: absolute;
     overflow: hidden;
-    top: -1vh;
-    left: -0.5vw;
+    top: 0vh;
+    left: 0vw;
     background-color: var(--popup-cover-color);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 5;
+    overflow: hidden;
 }
 
 .loginWithGoogleWrapper{

@@ -57,7 +57,19 @@
 
 .topNavRight{
     display: flex;
+    justify-content: center;
+    align-items: center;
     /* margin-left: 50vw; */
+}
+
+.noInternetIndicator{
+    margin-right: 0.5vw;
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3vw;
+    height: 3vw;
 }
 
 .notifications{
@@ -68,6 +80,23 @@
     align-items: center;
     width: 3vw;
     height: 3vw;
+}
+
+.notificationsPopUpBackDrop{
+    position: absolute;
+    left: -17.2vw;
+    z-index: 5;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: var(--popup-cover-color);
+}
+
+.notificationsWrapperFromTopNav{
+    margin-right: 5vw;
+    margin-top: 5vh;
 }
 
 .userNameTop{

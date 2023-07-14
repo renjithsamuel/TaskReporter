@@ -54,7 +54,7 @@
 }
 
 .addTaskInputWrapper{
-    width: 80%;
+    width: 90%;
     display: flex;
     padding: 1vh;
 }
@@ -146,6 +146,7 @@
     width: 2vw;
     height: 2vw;
     background-color: var(--secondary-color);
+    
 }
 
 .selectWeight:hover{

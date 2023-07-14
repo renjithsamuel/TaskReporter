@@ -1,5 +1,21 @@
+import { isOnline } from "../App";
+
 export const sendHttpRequest = async (url , method, data) => {
     let returnData ;
+
+    // If not online : 
+    if (!isOnline) {
+        // Store the API call in local storage if there is no internet connection
+        const queuedRequest = { url, method, data };
+        const queuedRequests = JSON.parse(localStorage.getItem('queuedRequests')) || [];
+        queuedRequests.push(queuedRequest);
+        localStorage.setItem('queuedRequests', JSON.stringify(queuedRequests));
+        console.log('API call queued:', queuedRequest);
+    
+        // Return a placeholder or error response
+        return { error: 'No internet connection. API call queued.' };
+      }
+
     await fetch(url,{
         method : method ,
         body : JSON.stringify(data),
@@ -7,6 +23,27 @@ export const sendHttpRequest = async (url , method, data) => {
     }).then((response)=>{ return response.json()}).then((response)=>returnData=response).catch(err=>console.log(JSON.stringify(err)));
     return returnData;
 }
+
+
+ // Function to execute queued API calls
+ export const executeQueuedRequests = async () => {
+  const queuedRequests = JSON.parse(localStorage.getItem('queuedRequests')) || [];
+
+  for (const request of queuedRequests) {
+    const { url, method, data } = request;
+
+    try {
+      const response = await sendHttpRequest(url, method, data);
+      console.log('API call executed:', response);
+        
+    } catch (error) {
+      console.error('API call failed:', error);
+    }
+  }
+
+  // Clear the queued requests from local storage
+  localStorage.removeItem('queuedRequests');
+};
 
 // getting user by data and loggging in
 export const loginCurrentUser = async (tempCurrentUser,setCurrentUser,setGotUser) => {
@@ -54,6 +91,7 @@ export const toggleTheme = (newTheme,newPallete,setTheme)=>{
 
 // get categories by userID
 export const getCategoriesByUserId = async (userId,setCategoryList) => {
+    console.log("get categories check ",userId);
     const getCategoriesByUserIdUrl = `http://localhost:3000/api/v1/categories/getCategoriesByUserId/${userId}`;
     const categoriesResponseData = await sendHttpRequest(getCategoriesByUserIdUrl,'GET');
     console.log("categories response data ",categoriesResponseData);
@@ -233,7 +271,7 @@ export const patchCategoryWithWeight = async (taskObject,setCategoryList) => {
         console.log("Something else went wrong while patching Task!");
     }
 
-    const updatedCategoryData = {overAllWeight : responseObject.data.overAllWeight + taskObject.weight }
+    const updatedCategoryData = {overAllWeight : responseObject.data.overAllWeight + taskObject.weight , tasksCount : responseObject.data.tasksCount + 1 }
     const patchCategoryUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${taskObject.category}`;
     console.log("category  check",updatedCategoryData);
     const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);
@@ -355,7 +393,7 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
             if(contribution.emailId != updationEmailId ){
                 return  contribution;
             }else if(contribution.emailId == updationEmailId){
-                let updatedContribution = {emailId : emailId , weightContributed : contribution.weightContributed - weight};
+                let updatedContribution = {emailId : emailId , weightContributed : contribution.weightContributed - weight , numberOfTaskCompleted : contribution.numberOfTaskCompleted - 1};
                 return updatedContribution;
             }     
         });
@@ -366,13 +404,13 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
             if(contribution.emailId != updationEmailId ){
                 return  contribution;
             }else if(contribution.emailId == updationEmailId){
-                let updatedContribution = {emailId : emailId ,  weightContributed : contribution.weightContributed + weight};
+                let updatedContribution = {emailId : emailId ,  weightContributed : contribution.weightContributed + weight , numberOfTaskCompleted : contribution.numberOfTaskCompleted + 1};
                 flag = true;
                 return updatedContribution;
             }     
         })
         if(flag==false){
-        updatedCategoryData.contribution = [...responseObject.data.contributions,{emailId : updationEmailId , weightContributed  : weight }]
+                updatedCategoryData.contribution = [...responseObject.data.contributions,{emailId : updationEmailId , weightContributed  : weight ,numberOfTaskCompleted : 1 }]
         }
     }
 
@@ -403,4 +441,75 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
     }
 }
 
+// accepting invite
+export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryList) => { 
+    console.log("category Id check",currentUser,invitedCategoryId);
+    const patchUserWithAcceptedInviteUrl = `http://localhost:3000/api/v1/users/patchUserById/${currentUser._id}`;
+    // patch user with deleted invite
+    const updatedInvites = currentUser.invites.map((invite)=>{if(invite._id!=invitedCategoryId)return invite._id});
+    console.log("checking updated invited at accept " , updatedInvites);
+    const patchableDataForDeleteInvite = {invites : updatedInvites,updateInvite:  true};
+    const patchedUserResponse = await sendHttpRequest(patchUserWithAcceptedInviteUrl , 'PATCH' , patchableDataForDeleteInvite);
+    console.log(patchedUserResponse,"checking patch");
+    if(patchedUserResponse && patchedUserResponse.success == false){
+        console.log("Something went wrong while patching users with invite!");
+    }else if(patchedUserResponse && patchedUserResponse.success == true){
+        console.log("Users patched Invites!");
+        console.log(patchedUserResponse.data);
+        // add as colaborator in category
+        updateColaboratorInCategory(invitedCategoryId,currentUser._id,setCategoryList);
+    }else{
+        console.log("Something else went wrong while patching users with invite!");
+    }
+}
 
+export const updateColaboratorInCategory = async (invitedCategoryId , currentUserId,setCategoryList) => { 
+    // getting the category here : 
+    const getUniqueCategoryByIdUrl = `http://localhost:3000/api/v1/categories/getUniqueCategoryById/${invitedCategoryId}`;
+    const inviteCategoryResponse = await sendHttpRequest(getUniqueCategoryByIdUrl,'GET');
+    console.log(inviteCategoryResponse,"checking patch2");
+    if(inviteCategoryResponse && inviteCategoryResponse.success == false){
+        console.log("something went wrong while getting category unique!");
+        return;
+    }
+    console.log("get category response update category ",inviteCategoryResponse);
+    // patch cateogory with new colaborator
+    const patchCategoriesWithNewColaboratorUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${invitedCategoryId}`;
+    const prevColaboratorsArray = inviteCategoryResponse.data.colaborators.map((colaborator)=>colaborator._id);
+    const patchableColaboratorsData = {colaborators : [ ...prevColaboratorsArray,currentUserId]};
+    console.log("patchabel colaborator data",patchableColaboratorsData);
+    const patchedCategoryResponse = await sendHttpRequest(patchCategoriesWithNewColaboratorUrl , 'PATCH' , patchableColaboratorsData);
+    console.log(patchedCategoryResponse,"checking patch3");
+    console.log(patchedCategoryResponse,"checking patch");
+    if(patchedCategoryResponse && patchedCategoryResponse.success == false){
+        console.log("Something went wrong while patching users with category!");
+    }else if(patchedCategoryResponse && patchedCategoryResponse.success == true){
+        console.log("Users patched category!");
+        console.log(patchedCategoryResponse.data);
+        // add as colaborator in category
+        getCategoriesByUserId(currentUserId,setCategoryList);
+    }else{
+        console.log("Something else went wrong while patching users with category!");
+    }
+}
+
+// Rejecting invite
+
+// accepting invite
+export const rejectInvite = async (currentUser , invitedCategoryId) => { 
+    const patchUserWithAcceptedInviteUrl = `http://localhost:3000/api/v1/users/patchUserById/${currentUser._id}`;
+    // console.log("category Id check",categoryId);
+    // patch user with deleted invite
+    const updatedInvites = currentUser.invites.map((invite)=>{if(invite._id!=invitedCategoryId)return invite._id});
+    const patchableDataForDeleteInvite = {invites : updatedInvites,updateInvite:  true};
+    const patchedUserResponse = await sendHttpRequest(patchUserWithAcceptedInviteUrl , 'PATCH' , patchableDataForDeleteInvite);
+    console.log(patchedUserResponse,"checking patch");
+    if(patchedUserResponse && patchedUserResponse.success == false){
+        console.log("Something went wrong while patching users with invite!");
+    }else if(patchedUserResponse && patchedUserResponse.success == true){
+        console.log("Users patched Invites!");
+        console.log(patchedUserResponse.data);
+    }else{
+        console.log("Something else went wrong while patching users with invite!");
+    }
+}

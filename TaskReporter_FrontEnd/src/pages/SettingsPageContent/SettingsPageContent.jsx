@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import './SettingsPageContent.css'
+import BannerCoverComponent from './BannerCoverComponent/BannerCoverComponent';
 import { toggleTheme } from '../../utils/ApiHandlers';
 
-function SettingsPageContent({theme,currentUser}) {
+function SettingsPageContent({theme,currentUser,setCategoryList}) {
 
 
 
@@ -11,10 +12,30 @@ function SettingsPageContent({theme,currentUser}) {
     return ( 
     <>
         <div className="settingsPageWrapper">
-            <TopNavComponent currPage={"Settings"} theme={theme[0]}  currentUser={currentUser}/>
+            <TopNavComponent currPage={"Settings"} theme={theme[0]}  currentUser={currentUser} setCategoryList={setCategoryList}/>
+
+                <div className="userBanners">
+                    <div className="userBannerCoverImage">
+                        <BannerCoverComponent />
+                    </div>
+                    <div className="insideBannerCover">
+                        <div className="userBannerUserImage">
+                            <img src={localStorage.getItem("userImageLink")} alt="user" height={102} width={102} />
+                        </div>
+                        <div className="userDetailsInsideBanner">
+                            <div className="usernameDisplay">
+                                    {currentUser.username}
+                            </div>
+                            <div className="userEmailDisplay">
+                                    {currentUser.emailId}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                     <div className="themeSwitcher">
                         <div className="themeName">
-                            Themes : 
+                            Themes  
                         </div>
                         <div className="themeSelectorsRight" onClick={()=>{toggleTheme('light','default',theme[1])}} style={{backgroundColor:'#ffffff'}}>
                                 
@@ -40,3 +61,5 @@ function SettingsPageContent({theme,currentUser}) {
 }
 
 export default SettingsPageContent;
+
+

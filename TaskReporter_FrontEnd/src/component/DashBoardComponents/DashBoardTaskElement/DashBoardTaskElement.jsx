@@ -4,7 +4,7 @@ import playDark from '../../../assets/play-dark.svg';
 import { Line } from 'rc-progress';
 import { useState } from 'react';
 
-function DashBoardTaskElement({theme}) {
+function DashBoardTaskElement({theme,setReportObject,reportObject}) {
     const [progress , setProgress] = useState(80);
 
     return ( <>
@@ -14,17 +14,17 @@ function DashBoardTaskElement({theme}) {
                     Task Reporter App
                 </div>
                 <div className="categoryDescription">
-                    Finish the project as soon and best as possible
+                    Finish the project as soon and best as possible.
                 </div>
             </div>
             <div className="progressIndicator">
                 <div className="progressInPercent">{progress}% complete</div>
                  <div className="progressInBar">
-                     <Line percent={progress} strokeWidth={4} strokeColor={(theme=='light')?'#000000':"#27374D"} /> 
+                     <Line percent={progress} strokeWidth={4} strokeColor={(theme=='light')?'#000000':"var(--secondary-color)"} /> 
                  </div>
             </div>
             <div className="CategoryRemainder">
-                <div className="resumeButton">
+                <div className="resumeButton" onClick={()=>{setReportObject((prevState)=>{return {...prevState,isOpen:true}})}}>
                     <img src={(theme=='light')?playLight:playDark} alt="play" height={30} width={30} />
                 </div>
             </div>
