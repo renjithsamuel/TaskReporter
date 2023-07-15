@@ -20,10 +20,14 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,ta
                     </div>
                     <div className="dashBoardReportsLabel">Reports</div>
                     <div className="DashBoardTaskElements">
-                    {categoryList.map((category,index)=>{    
-                        return <DashBoardTaskElement key={index} category={category} theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
-                        })
-                    }
+                        {
+                        (categoryList && categoryList.length > 0) ?
+                            categoryList.map((category,index)=>{    
+                                    return <DashBoardTaskElement key={index} category={category} theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
+                                    })
+                                    :
+                                    <h3 style={{marginLeft: '40%'}}>No Data to Show</h3>
+                        }
                     </div>
                 </div>
                 <div className="dashBoardContentRight">

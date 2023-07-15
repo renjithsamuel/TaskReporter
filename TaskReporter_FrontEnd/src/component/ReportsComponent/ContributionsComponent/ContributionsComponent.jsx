@@ -27,11 +27,13 @@ function ContributionsComponent({theme,reportObject,currentCategory}) {
     },[currentCategory])
 
     useEffect(()=>{
-        let tempOverAllTasksCompleted = 0;
-        contributionsState.individualContributionsArr.map((contribution)=>{
-            tempOverAllTasksCompleted += contribution.numberOfTasksCompleted;
-        })
-        setContributionsState((prevState)=>{ return {...prevState , overallTasksCompleted : tempOverAllTasksCompleted }})
+       if(contributionsState && contributionsState.individualContributionsArr && contributionsState.individualContributionsArr.length > 0) {
+            let tempOverAllTasksCompleted = 0;
+            contributionsState.individualContributionsArr.map((contribution)=>{
+                tempOverAllTasksCompleted += contribution.numberOfTasksCompleted;
+            })
+            setContributionsState((prevState)=>{ return {...prevState , overallTasksCompleted : tempOverAllTasksCompleted }})
+       }
     },[updatedContributionvals]);
 
     useEffect(()=>{
@@ -39,6 +41,9 @@ function ContributionsComponent({theme,reportObject,currentCategory}) {
     },[contributionsState])
 
     return ( <>
+    
+      {  
+       (currentCategory && currentCategory._id)?
         <div className="contributionsComponentWrapper">
                 <div className="overallCompletionWrapper">
                     <div className="overallCompletionName">
@@ -51,14 +56,22 @@ function ContributionsComponent({theme,reportObject,currentCategory}) {
                         Individual Contributions
                     </div>
                         <div className="individualContributionIndicator">
-                            {
-                                contributionsState.individualContributionsArr.map((contribution,index)=>{
-                                   return <ContributionCardComponent key={index} cardName={contribution.emailId } percentage={(contribution.weightContributed/contributionsState.overAllWeight)*100} tasksCompleted={contribution.numberOfTasksCompleted} overallTasks={contributionsState.overallTasks} theme={theme}/>
-                                })
+                            {   
+                                (contributionsState &&  contributionsState.individualContributionsArr && contributionsState.individualContributionsArr.length >  0 && contributionsState.individualContributionsArr[0] != null) ?
+                                    contributionsState.individualContributionsArr.map((contribution,index)=>{
+                                    return <ContributionCardComponent key={index} cardName={contribution.emailId } percentage={(contribution.weightContributed/contributionsState.overAllWeight)*100} tasksCompleted={contribution.numberOfTasksCompleted} overallTasks={contributionsState.overallTasks} theme={theme}/>
+                                    })
+
+                                    :
+
+                                    <h3>No Data to Show</h3>
                             }
                         </div>
                 </div>
         </div>
+            : 
+            <h3 style={{marginLeft:'40%'}}>No Data to Show</h3>
+        }
     </> );
 }
 

@@ -1,8 +1,12 @@
 import { isOnline } from "../App";
 
+//  `https://taskreporternode.onrender.com`;
+// https://taskreporternode.onrender.com
+
+
 export const sendHttpRequest = async (url , method, data) => {
     let returnData ;
-
+    
     // If not online : 
     if (!isOnline) {
         // Store the API call in local storage if there is no internet connection
@@ -47,8 +51,8 @@ export const sendHttpRequest = async (url , method, data) => {
 
 // getting user by data and loggging in
 export const loginCurrentUser = async (tempCurrentUser,setCurrentUser,setGotUser) => {
-    const getUserByData = `http://localhost:3000/api/v1/users/getUserByData`;
-    const postCurrentUserUrl = `http://localhost:3000/api/v1/users/postUser`;
+    const getUserByData = `https://taskreporternode.onrender.com/api/v1/users/getUserByData`;
+    const postCurrentUserUrl = `https://taskreporternode.onrender.com/api/v1/users/postUser`;
     console.log(tempCurrentUser);
     let responseUserData = await sendHttpRequest(getUserByData,'POST',tempCurrentUser);
     console.log(responseUserData);
@@ -103,7 +107,7 @@ export function enableScroll() {
 
 // connect to server
 export const connectToServerFunc = async (setConnectedToServer)=>{
-    const getHealthApi = `http://localhost:3000/api/v1/health`;
+    const getHealthApi = `https://taskreporternode.onrender.com/api/v1/health`;
     const res = await sendHttpRequest(getHealthApi,`GET`);
     if(res && res.success==true){
         console.log("connected to server!");
@@ -122,7 +126,7 @@ export const toggleTheme = (newTheme,newPallete,setTheme)=>{
 // get categories by userID
 export const getCategoriesByUserId = async (userId,setCategoryList) => {
     console.log("get categories check ",userId);
-    const getCategoriesByUserIdUrl = `http://localhost:3000/api/v1/categories/getCategoriesByUserId/${userId}`;
+    const getCategoriesByUserIdUrl = `https://taskreporternode.onrender.com/api/v1/categories/getCategoriesByUserId/${userId}`;
     const categoriesResponseData = await sendHttpRequest(getCategoriesByUserIdUrl,'GET');
     console.log("categories response data ",categoriesResponseData);
     if(categoriesResponseData && categoriesResponseData.success == true){
@@ -138,7 +142,7 @@ export const getCategoriesByUserId = async (userId,setCategoryList) => {
 
 // get tasks by category ID
 export const getTasksByCategoryId = async (categoryId,setTaskList) => {
-    const getTasksByCategoryIdUrl = `http://localhost:3000/api/v1/tasks/getTasksByCategoryId/${categoryId}`;
+    const getTasksByCategoryIdUrl = `https://taskreporternode.onrender.com/api/v1/tasks/getTasksByCategoryId/${categoryId}`;
     const tasksResponseData = await sendHttpRequest(getTasksByCategoryIdUrl,'GET');
     console.log(tasksResponseData,"tasksResponseData at get task by id");
     if(tasksResponseData && tasksResponseData.success == true){
@@ -159,7 +163,7 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
 
 // get reports by category ID
 export const getReportsByCategoryId = async (categoryId,setReportList) => {
-    const getReportsByCategoryIdUrl = `http://localhost:3000/api/v1/reports/getReportsByCategoryId/${categoryId}`;
+    const getReportsByCategoryIdUrl = `https://taskreporternode.onrender.com/api/v1/reports/getReportsByCategoryId/${categoryId}`;
     const reportsResponseData = await sendHttpRequest(getReportsByCategoryIdUrl,'GET');
     console.log(reportsResponseData,"reports ResponseData at get report by id");
     if(reportsResponseData && reportsResponseData.success == true){
@@ -213,7 +217,7 @@ export const getReportsByCategoryId = async (categoryId,setReportList) => {
             }
             
             // posting new category
-            const postCategoryUrl = `http://localhost:3000/api/v1/categories/postCategory`;
+            const postCategoryUrl = `https://taskreporternode.onrender.com/api/v1/categories/postCategory`;
             const postedCategoryResponse = await sendHttpRequest(postCategoryUrl,'POST',updatedCategory);
             console.log(postedCategoryResponse);
             if(postedCategoryResponse && postedCategoryResponse.success == false){
@@ -237,7 +241,7 @@ export const getReportsByCategoryId = async (categoryId,setReportList) => {
 
 
         export const getColaboratorsIdArray = async (colaboratorEmails) => {
-            const getUserByEmail = 'http://localhost:3000/api/v1/users/getUserByEmail';  
+            const getUserByEmail = 'https://taskreporternode.onrender.com/api/v1/users/getUserByEmail';  
             try {
             const promises = colaboratorEmails.map(async (email) => {
                 const responseUserData = await sendHttpRequest(getUserByEmail, 'POST', { emailId: email });
@@ -265,7 +269,7 @@ export const getReportsByCategoryId = async (categoryId,setReportList) => {
 
 
         export const patchUserForInvites = async (colaboratorIdArray , categoryId) => {
-            const patchManyUserWithInviteUrl = `http://localhost:3000/api/v1/users/patchManyUserWithInvites`;
+            const patchManyUserWithInviteUrl = `https://taskreporternode.onrender.com/api/v1/users/patchManyUserWithInvites`;
             console.log("category Id check",categoryId);
             const patchableData = {colaborators : colaboratorIdArray,categoryId : categoryId};
             const patchedUserResponse = await sendHttpRequest(patchManyUserWithInviteUrl , 'PATCH' , patchableData);
@@ -291,7 +295,7 @@ export const postTask = async (addTaskObject,setTaskList,setCategoryList) => {
         return;
     }
     addTaskObject['endDate'] = new Date(addTaskObject.endDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
-    const postTaskUrl = `http://localhost:3000/api/v1/tasks/postTask`;
+    const postTaskUrl = `https://taskreporternode.onrender.com/api/v1/tasks/postTask`;
     console.log("task  check",addTaskObject);
     const postedTaskResponse = await sendHttpRequest(postTaskUrl , 'POST' , addTaskObject);
     console.log(postedTaskResponse,"checking post task");
@@ -318,7 +322,7 @@ export const patchCategoryWithWeight = async (taskObject,setCategoryList) => {
         return;
     }
     // getting category 
-    const getCategoryDataUrl = `http://localhost:3000/api/v1/categories/getUniqueCategoryById/${taskObject.category}`;
+    const getCategoryDataUrl = `https://taskreporternode.onrender.com/api/v1/categories/getUniqueCategoryById/${taskObject.category}`;
     const responseObject = await sendHttpRequest(getCategoryDataUrl , 'GET');
     console.log(responseObject,"checking gotten object");
     if(responseObject && responseObject.success == false){
@@ -331,7 +335,7 @@ export const patchCategoryWithWeight = async (taskObject,setCategoryList) => {
     }
 
     const updatedCategoryData = {overAllWeight : responseObject.data.overAllWeight + taskObject.weight , tasksCount : responseObject.data.tasksCount + 1 }
-    const patchCategoryUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${taskObject.category}`;
+    const patchCategoryUrl = `https://taskreporternode.onrender.com/api/v1/categories/patchCategoryById/${taskObject.category}`;
     console.log("category  check",updatedCategoryData);
     const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);
     console.log(patchedCategoryResponse,"checking patch category");
@@ -363,7 +367,7 @@ export const patchTask = async (taskId , patchableData,setTaskList) => {
         console.log("send valid completed data");
         return;
     }
-    const patchTaskUrl = `http://localhost:3000/api/v1/tasks/patchTaskById/${taskId}`;
+    const patchTaskUrl = `https://taskreporternode.onrender.com/api/v1/tasks/patchTaskById/${taskId}`;
     console.log("task  check",patchableData);
     const patchedTaskResponse = await sendHttpRequest(patchTaskUrl , 'PATCH' , patchableData);
     console.log(patchedTaskResponse,"checking patch task");
@@ -395,7 +399,7 @@ export const postReport = async (addReportObj,setReportList) =>{
         return;
     }
     addReportObj['reportedDate'] = new Date(addReportObj.reportedDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
-    const postReportUrl = `http://localhost:3000/api/v1/reports/postReport`;
+    const postReportUrl = `https://taskreporternode.onrender.com/api/v1/reports/postReport`;
     console.log("task  check",addReportObj);
     const postedReportResponse = await sendHttpRequest(postReportUrl , 'POST' , addReportObj);
     console.log(postedReportResponse,"checking post report");
@@ -419,7 +423,7 @@ export const deleteReport = async (taskId,setReportList) =>{
         console.log("send valid details!");
         return; 
     }
-    const deleteReportUrl = `http://localhost:3000/api/v1/reports/deleteReportByTaskId/${taskId}`;
+    const deleteReportUrl = `https://taskreporternode.onrender.com/api/v1/reports/deleteReportByTaskId/${taskId}`;
     const gottenResponse = await sendHttpRequest(deleteReportUrl,'DELETE');
     if(gottenResponse && gottenResponse.success == true){
         console.log("transaction succesful", gottenResponse.data);
@@ -446,7 +450,7 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
         return;
     }
     // getting category
-    const getCategoryDataUrl = `http://localhost:3000/api/v1/categories/getUniqueCategoryById/${categoryId}`;
+    const getCategoryDataUrl = `https://taskreporternode.onrender.com/api/v1/categories/getUniqueCategoryById/${categoryId}`;
     const responseObject = await sendHttpRequest(getCategoryDataUrl , 'GET');
     console.log(responseObject,"checking gotten object");
     if(responseObject && responseObject.success == false){
@@ -489,7 +493,7 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
     updatedCategoryData.weightsCompleted =  (status ==  'completed')?(responseObject.data.weightsCompleted + weight) 
                                                              : (responseObject.data.weightsCompleted - weight);
 
-    const patchCategoryUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${categoryId}`;
+    const patchCategoryUrl = `https://taskreporternode.onrender.com/api/v1/categories/patchCategoryById/${categoryId}`;
     console.log("task  check",updatedCategoryData);
     const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);
     console.log(patchedCategoryResponse,"checking patch category");
@@ -517,7 +521,7 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
 // accepting invite
 export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryList) => { 
     console.log("category Id check",currentUser,invitedCategoryId);
-    const patchUserWithAcceptedInviteUrl = `http://localhost:3000/api/v1/users/patchUserById/${currentUser._id}`;
+    const patchUserWithAcceptedInviteUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
     // patch user with deleted invite
     const updatedInvites = currentUser.invites.map((invite)=>{if(invite._id!=invitedCategoryId)return invite._id});
     console.log("checking updated invited at accept " , updatedInvites);
@@ -538,7 +542,7 @@ export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryLi
 
 export const updateColaboratorInCategory = async (invitedCategoryId , currentUserId,setCategoryList) => { 
     // getting the category here : 
-    const getUniqueCategoryByIdUrl = `http://localhost:3000/api/v1/categories/getUniqueCategoryById/${invitedCategoryId}`;
+    const getUniqueCategoryByIdUrl = `https://taskreporternode.onrender.com/api/v1/categories/getUniqueCategoryById/${invitedCategoryId}`;
     const inviteCategoryResponse = await sendHttpRequest(getUniqueCategoryByIdUrl,'GET');
     console.log(inviteCategoryResponse,"checking patch2");
     if(inviteCategoryResponse && inviteCategoryResponse.success == false){
@@ -547,7 +551,7 @@ export const updateColaboratorInCategory = async (invitedCategoryId , currentUse
     }
     console.log("get category response update category ",inviteCategoryResponse);
     // patch cateogory with new colaborator
-    const patchCategoriesWithNewColaboratorUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${invitedCategoryId}`;
+    const patchCategoriesWithNewColaboratorUrl = `https://taskreporternode.onrender.com/api/v1/categories/patchCategoryById/${invitedCategoryId}`;
     const prevColaboratorsArray = inviteCategoryResponse.data.colaborators.map((colaborator)=>colaborator._id);
     const patchableColaboratorsData = {colaborators : [ ...prevColaboratorsArray,currentUserId]};
     console.log("patchabel colaborator data",patchableColaboratorsData);
@@ -570,7 +574,7 @@ export const updateColaboratorInCategory = async (invitedCategoryId , currentUse
 
 // accepting invite
 export const rejectInvite = async (currentUser , invitedCategoryId) => { 
-    const patchUserWithAcceptedInviteUrl = `http://localhost:3000/api/v1/users/patchUserById/${currentUser._id}`;
+    const patchUserWithAcceptedInviteUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
     // console.log("category Id check",categoryId);
     // patch user with deleted invite
     const updatedInvites = currentUser.invites.map((invite)=>{if(invite._id!=invitedCategoryId)return invite._id});

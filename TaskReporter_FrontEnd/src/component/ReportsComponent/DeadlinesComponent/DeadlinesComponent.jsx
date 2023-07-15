@@ -15,6 +15,8 @@ function DeadlinesComponent({theme,currentCategory,currentTasks}) {
     },[])
 
     return ( <>
+               {
+            (currentCategory && currentCategory._id)?
                 <div className="deadlinesComponentWrapper">
                     <div className="overallDeadlineWrapper">
                         <div className="overallDeadlineName">
@@ -42,6 +44,10 @@ function DeadlinesComponent({theme,currentCategory,currentTasks}) {
                         </div>
                     </div>
                 </div>
+                : 
+                <h3 style={{marginLeft:'40%'}}>No Data to Show</h3>
+                
+                }
         </> );
 }
 

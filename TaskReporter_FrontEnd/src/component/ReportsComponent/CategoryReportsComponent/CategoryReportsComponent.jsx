@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import './CategoryReportsComponent.css';
 
 
-function CategoryReportsComponent({theme,currentReports}) {
+function CategoryReportsComponent({theme,currentReports=[]}) {
 
 
 

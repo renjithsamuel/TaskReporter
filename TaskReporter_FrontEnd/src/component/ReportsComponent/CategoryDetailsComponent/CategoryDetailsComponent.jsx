@@ -42,42 +42,45 @@ function CategoryDetailsComponent({reportObject,currentCategory}) {
     return ( <>
                 <div className="categoryDetailsContentWrapper">
                 
-                {
-                    categoryDetailsElements.map((categoryDetailsElement)=>{
-                        return (
-                                <div className="categoryDetailsSingleListElement" key={categoryDetailsElement.key}>
-                                        <div className="categoryDetailsListElementLeft">
-                                            {categoryDetailsElement.label}
-                                        </div>
-                                        {
-                                        (JSON.stringify(currentCategory)=="{}")? "" :
-                                        (categoryDetailsElement.dbKey!='colaborators' && categoryDetailsElement.dbKey!='createdBy' )?
-                                            (<div className="categoryDetailsListElementRight">
-                                                {( currentCategory && categoryDetailsElement.dbKey && currentCategory[`${categoryDetailsElement.dbKey}`] )?currentCategory[categoryDetailsElement.dbKey].toString():""}
-                                            </div> )
-                                            :(categoryDetailsElement.dbKey=='createdBy' )?
+                {   
+                    (currentCategory._id)?
+                        categoryDetailsElements.map((categoryDetailsElement)=>{
+                            return (
+                                    <div className="categoryDetailsSingleListElement" key={categoryDetailsElement.key}>
+                                            <div className="categoryDetailsListElementLeft">
+                                                {categoryDetailsElement.label}
+                                            </div>
+                                            {
+                                            (JSON.stringify(currentCategory)=="{}")? "" :
+                                            (categoryDetailsElement.dbKey!='colaborators' && categoryDetailsElement.dbKey!='createdBy' )?
+                                                (<div className="categoryDetailsListElementRight">
+                                                    {( currentCategory && categoryDetailsElement.dbKey && currentCategory[`${categoryDetailsElement.dbKey}`] )?currentCategory[categoryDetailsElement.dbKey].toString():""}
+                                                </div> )
+                                                :(categoryDetailsElement.dbKey=='createdBy' )?
 
-                                            (<div className="categoryDetailsListElementRight">
-                                                 {( currentCategory && categoryDetailsElement.dbKey && currentCategory[`${categoryDetailsElement.dbKey}`].username )?currentCategory[categoryDetailsElement.dbKey].username.toString():""}
-                                            </div> )
+                                                (<div className="categoryDetailsListElementRight">
+                                                    {( currentCategory && categoryDetailsElement.dbKey && currentCategory[`${categoryDetailsElement.dbKey}`].username )?currentCategory[categoryDetailsElement.dbKey].username.toString():""}
+                                                </div> )
 
-                                            :(categoryDetailsElement.dbKey=='colaborators')?
-                                            (<div className="categoryDetailsListColaboratorElementRightWrapper">
-                                                {   
-                                                    (currentCategory && Array.isArray(currentCategory.colaborators))?
-                                                    currentCategory.colaborators.map((Colaborator,index) => {
-                                                        return (<div className="categoryDetailsListColaboratorElementRight" key={index}>
-                                                           {index+1} . {Colaborator.emailId} 
-                                                        </div>)
-                                                    }):''
-                                                }
-                                            </div>)
-                                            : ''
-                                            
-                                        }
-                                 </div>
-                                 )
-                    })
+                                                :(categoryDetailsElement.dbKey=='colaborators')?
+                                                (<div className="categoryDetailsListColaboratorElementRightWrapper">
+                                                    {   
+                                                        (currentCategory && Array.isArray(currentCategory.colaborators))?
+                                                        currentCategory.colaborators.map((Colaborator,index) => {
+                                                            return (<div className="categoryDetailsListColaboratorElementRight" key={index}>
+                                                            {index+1} . {Colaborator.emailId} 
+                                                            </div>)
+                                                        }):''
+                                                    }
+                                                </div>)
+                                                : ''
+                                                
+                                            }
+                                    </div>
+                                    )
+                                })
+                            :
+                                <h3>No data to Show</h3>
                 }
             </div>
             </> );
