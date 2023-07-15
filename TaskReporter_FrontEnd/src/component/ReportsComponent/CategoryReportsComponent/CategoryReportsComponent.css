@@ -11,7 +11,6 @@
 .categoryReportCardSingleCardElement{
     width: 90%;
     height: auto;
-
     margin: 1vh;
     padding: 1vh;
     border-radius: var(--border-radius);
@@ -60,13 +59,23 @@
     padding: 0.5vh;
 }
 
+.categoryReportCardStatement{
+    width: 98%;
+    display: flex;
+    justify-content: center;
+    padding: 1vh;
+    background-color: var(--cover-color);
+    border-radius: var(--border-radius);
+}
+
 .categoryReportCardReportStatementFor{
+    width: 15%;
     width: max-content;
     height: max-content;
     padding: 0.4vh;
     margin:0.4vh; 
     border-radius: var(--border-radius);
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,23 +84,22 @@
 }
 
 .reportStatementForName{
+    width: 6vw;
     padding: 0.8vh;
     font-size: medium;
     text-align: center;
 }
 .reportStatementTaskName{
+    width: 6vw;
     border-radius: var(--border-radius);
     background-color: var(--primary-color);
     padding: 0.8vh;
+    overflow: hidden;
+    text-align: center;
 }
-.categoryReportCardStatement{
-    display: flex;
-    justify-content: center;
-    padding: 1vh;
-    background-color: var(--cover-color);
-    border-radius: var(--border-radius);
-}
+
 
 .categoryReportCardStatementContent{
     margin: 1vh;
+    width: 80%;
 }

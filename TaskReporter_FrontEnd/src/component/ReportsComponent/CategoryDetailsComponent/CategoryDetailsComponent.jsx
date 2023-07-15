@@ -1,42 +1,78 @@
+import { useEffect, useState } from 'react';
 import './CategoryDetailsComponent.css';
 
 
-function CategoryDetailsComponent({}) {
+function CategoryDetailsComponent({reportObject,currentCategory}) {
 
     const categoryDetailsElements = [
-        {key : 1 ,  label : "Category Name " , value : "SIH Project"},
-        {key  : 2 , label : "Description " , value :  " Smart India hackathon 2022 Software edition conducted by Government of India."},
-        {key  : 3 , label : "Start Date " , value :  "20 Oct 2022"},
-        {key  : 4 , label : "End Date  " , value :  " 20 Nov 2022 "},
-        {key  : 5 , label : "Created By " , value :  " renjithsamuelking@gmail.com"},
-        {key  : 6 , label : "Colaborators" , value :  [" ranjithsamuelking@gmail.com","Balasuriya@gmail.com","arunPR@gmail.com"]},
+        {dbKey : "categoryName",key : 1 ,  label : "Category Name" , value : "SIH Project"},
+        {dbKey : "description",key  : 2 , label : "Description" , value :  " Smart India hackathon 2022 Software edition conducted by Government of India."},
+        {dbKey : "startDate",key  : 3 , label : "Start Date" , value :  "20 Oct 2022"},
+        {dbKey : "endDate",key  : 4 , label : "End Date" , value :  " 20 Nov 2022 "},
+        {dbKey : "createdBy",key  : 5 , label : "Created By" , value :  " renjithsamuelking@gmail.com"},
+        {dbKey : "colaborators",key  : 6 , label : "Colaborators" , value :  [" ranjithsamuelking@gmail.com","Balasuriya@gmail.com","arunPR@gmail.com"]},
     ]
+
+    // const [categoryDetailsElements , setCategoryDetailsElements ] = useState([
+    //     {dbKey : "categoryName",key : 1 ,  label : "Category Name" , value : "SIH Project"},
+    //     {dbKey : "description",key  : 2 , label : "Description" , value :  " Smart India hackathon 2022 Software edition conducted by Government of India."},
+    //     {dbKey : "startDate",key  : 3 , label : "Start Date" , value :  "20 Oct 2022"},
+    //     {dbKey : "endDate",key  : 4 , label : "End Date" , value :  " 20 Nov 2022 "},
+    //     {dbKey : "createdBy",key  : 5 , label : "Created By" , value :  " renjithsamuelking@gmail.com"},
+    //     {dbKey : "colaborators",key  : 6 , label : "Colaborators" , value :  [" ranjithsamuelking@gmail.com","Balasuriya@gmail.com","arunPR@gmail.com"]},
+    // ]);
+
+    // const [currentCategory , setCurrentCategory ] = useState({});
+
+    // useEffect(()=>{
+    //     categoryList.map((category)=>{
+    //             if(reportObject.categoryId == category._id){
+    //                 setCurrentCategory(category);
+    //             }
+    //     });
+    //     console.log("current category",currentCategory,"reportObject: " , reportObject);
+    // },[reportObject,currentCategory])
+
+    useEffect(() => {
+      console.log(currentCategory);
+    }, [currentCategory])
+    
+
 
     return ( <>
                 <div className="categoryDetailsContentWrapper">
                 
                 {
                     categoryDetailsElements.map((categoryDetailsElement)=>{
-                        
                         return (
                                 <div className="categoryDetailsSingleListElement" key={categoryDetailsElement.key}>
                                         <div className="categoryDetailsListElementLeft">
                                             {categoryDetailsElement.label}
                                         </div>
-                                        {(categoryDetailsElement.label!='Colaborators')?
+                                        {
+                                        (JSON.stringify(currentCategory)=="{}")? "" :
+                                        (categoryDetailsElement.dbKey!='colaborators' && categoryDetailsElement.dbKey!='createdBy' )?
                                             (<div className="categoryDetailsListElementRight">
-                                                {categoryDetailsElement.value}
+                                                {( currentCategory && categoryDetailsElement.dbKey && currentCategory[`${categoryDetailsElement.dbKey}`] )?currentCategory[categoryDetailsElement.dbKey].toString():""}
                                             </div> )
-                                            :
+                                            :(categoryDetailsElement.dbKey=='createdBy' )?
+
+                                            (<div className="categoryDetailsListElementRight">
+                                                 {( currentCategory && categoryDetailsElement.dbKey && currentCategory[`${categoryDetailsElement.dbKey}`].username )?currentCategory[categoryDetailsElement.dbKey].username.toString():""}
+                                            </div> )
+
+                                            :(categoryDetailsElement.dbKey=='colaborators')?
                                             (<div className="categoryDetailsListColaboratorElementRightWrapper">
                                                 {   
-                                                    (categoryDetailsElement.value).map((Colaborator,index)=>{
-                                                        return(<div className="categoryDetailsListColaboratorElementRight" key={index}>
-                                                           {index+1} . {Colaborator} 
+                                                    (currentCategory && Array.isArray(currentCategory.colaborators))?
+                                                    currentCategory.colaborators.map((Colaborator,index) => {
+                                                        return (<div className="categoryDetailsListColaboratorElementRight" key={index}>
+                                                           {index+1} . {Colaborator.emailId} 
                                                         </div>)
-                                                    })
+                                                    }):''
                                                 }
                                             </div>)
+                                            : ''
                                             
                                         }
                                  </div>

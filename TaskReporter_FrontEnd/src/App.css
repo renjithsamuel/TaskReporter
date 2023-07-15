@@ -87,8 +87,6 @@
   --border-color : #f2fcf4;
   --graph-bg-color : #29303a;
   --shadow-color :  #9db2bf66;
-  --popup-cover-color : #4d4c4c5e;
-  --cover-color : #282f38;
   --popup-cover-color : #1b20278b;
   --cover-color : #393e46f2;
 }
@@ -106,8 +104,6 @@
   --border-color : #000000;
   --graph-bg-color : #F6F1F1;
   --shadow-color :  #0e4d5f;
-  --popup-cover-color : #19a7cea8;
-  --cover-color : #d8d8d8cb;
   --popup-cover-color : #19a7ce8f;
   --cover-color : #efefefe7;
 }
@@ -116,18 +112,80 @@
   /* brownTimber pallete */
   --bg-color: #DFD7BF;
   --primary-color: #734615;
-  --primary-hover-color: #fff0c2;
-  --secondary-color: #7b460c;
-  --secondary-light-color: #cb7417;
-  --hover-color: #a35400;
+  --primary-hover-color: #a5633c;
+  --secondary-color: #b57c00;
+  --secondary-light-color: #c1a872;
+  --hover-color: #694b37;
   --text-color: #ffffff;
   --border-color: #f3f3f3;
   --graph-bg-color: #f5F5F5;
   --shadow-color: #DFD7BF;
-  --popup-cover-color: #F2EAD3;
-  --cover-color: #d8d8d8cb;
   --popup-cover-color: #dfd7bfc1;
   --cover-color: #5a3309a6;
+}
+
+[ data-theme = 'light'][data-pallete = 'palePink']{
+  /* brownTimber pallete */
+  --bg-color: #F9F5F6;
+  --primary-color: #fdb9d2;
+  --primary-hover-color: #f79cbe;
+  --secondary-color: #FDCEDF;
+  --secondary-light-color: #fff3f7;
+  --hover-color: #F2BED1;
+  --text-color: #000000;
+  --border-color: #000000;
+  --graph-bg-color: #f1a8c3;
+  --shadow-color: #F8E8EE;
+  --popup-cover-color: #f79cbe86;
+  --cover-color: #d9608ce7;
+}
+
+[ data-theme = 'dark'][data-pallete = 'killMachine']{
+  /* brownTimber pallete */
+  --bg-color: #252525;
+  --primary-color: #922f2f;
+  --primary-hover-color: #8f1515;
+  --secondary-color: #AF0404;
+  --secondary-light-color: #ce2727;
+  --hover-color: #bf4646;
+  --text-color: #ffffff;
+  --border-color: #ffffff;
+  --graph-bg-color: #414141;
+  --shadow-color: #2e2e2e;
+  --popup-cover-color: #2525256b;
+  --cover-color: #414141d4;
+}
+
+[ data-theme = 'light'][data-pallete = 'desertSand']{
+  /* brownTimber pallete */
+  --bg-color: #F5F5F5;
+  --primary-color: #F2EAD3;
+  --primary-hover-color: #ede1bf;
+  --secondary-color: #966530;
+  --secondary-light-color: #af691e;
+  --hover-color: #DFD7BF;
+  --text-color: #000000;
+  --border-color: #000000;
+  --graph-bg-color: #6a3700;
+  --shadow-color: #c3b794;
+  --popup-cover-color: #5d3205b0;
+  --cover-color: #dfd7bfd3;
+}
+
+[ data-theme = 'dark'][data-pallete = 'cyberpunkRed']{
+  /* brownTimber pallete */
+  --bg-color: #E23E57;
+  --primary-color: #9c2e53;
+  --primary-hover-color: #8e294a;
+  --secondary-color: #522546;
+  --secondary-light-color: #46295a;
+  --hover-color: #672b57;
+  --text-color: #ffffff;
+  --border-color: #ffffff;
+  --graph-bg-color: #833f56;
+  --shadow-color: #E23E57;
+  --popup-cover-color: #88304dcb;
+  --cover-color: #522546e0;
 }
 
 

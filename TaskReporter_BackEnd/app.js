@@ -19,7 +19,8 @@ const chatByDateRoutes = require('./Routes/ChatsByDatesRouter');
 const categoriesRoutes = require('./Routes/CategoriesRouter');
 
 
-const mongoDBString = `mongodb://0.0.0.0:27017/taskReporter`;
+// const mongoDBString = `mongodb://0.0.0.0:27017/taskReporter`;
+const mongoDBString = `mongodb+srv://${config.get('DBNAME')}:${config.get('DBPASSWORD')}@cluster0.gp8dend.mongodb.net/TaskReporter?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoDBString,{
         useNewUrlParser : true,

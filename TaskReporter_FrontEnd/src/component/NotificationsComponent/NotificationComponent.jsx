@@ -8,7 +8,7 @@ import acceptDark from '../../assets/accept-dark.svg'
 import closeLight from '../../assets/close-light.svg'
 import closeDark from '../../assets/close-dark.svg'
 import { useEffect } from 'react';
-import { acceptInvite,rejectInvite } from '../../utils/ApiHandlers';
+import { acceptInvite,rejectInvite ,enableScroll} from '../../utils/ApiHandlers';
 
 
 function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage,setCategoryList}) {
@@ -24,7 +24,7 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
                 <div className="notificationsTitleWrapper">Notifications</div>
                 <div className="notificationControlElems">
                     <div className="closeShowNotoficationsBtn"
-                        onClick={()=>{setIsNotificationOpen(false)}}
+                        onClick={()=>{setIsNotificationOpen(false);enableScroll()}}
                         style={{visibility:(fromPage=='Dashboard')?'hidden':'none'}}
                         >
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />

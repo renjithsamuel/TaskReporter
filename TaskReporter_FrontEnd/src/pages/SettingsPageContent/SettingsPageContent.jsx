@@ -6,7 +6,18 @@ import { toggleTheme } from '../../utils/ApiHandlers';
 
 function SettingsPageContent({theme,currentUser,setCategoryList}) {
 
-
+    const themeArray = [
+        { key : 1 , theme : 'light',pallete : "default",setTheme : theme[1],displayColor : '#ffffff'},
+        { key : 2 , theme : 'dark',pallete : "orange",setTheme : theme[1],displayColor : '#fe8040'},
+        { key : 3 , theme : 'dark',pallete : "inkBlue",setTheme : theme[1],displayColor : '#27374D'},
+        { key : 4 , theme : 'dark',pallete : "neon",setTheme : theme[1],displayColor : '#222831'},
+        { key : 5 , theme : 'light',pallete : "blueTimber",setTheme : theme[1],displayColor : '#19A7CE'},
+        { key : 6 , theme : 'dark',pallete : "brownTimber",setTheme : theme[1],displayColor : '#5a3309'},
+        { key : 7 , theme : 'light',pallete : "palePink",setTheme : theme[1],displayColor : '#F2BED1'},
+        { key : 8 , theme : 'dark',pallete : "killMachine",setTheme : theme[1],displayColor : '#922f2f'},
+        { key : 9 , theme : 'light',pallete : "desertSand",setTheme : theme[1],displayColor : '#f1dfaa'},
+        { key : 10 , theme : 'dark',pallete : "cyberpunkRed",setTheme : theme[1],displayColor : '#522546'},
+    ]
 
 
     return ( 
@@ -37,29 +48,25 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                         <div className="themeName">
                             Themes  
                         </div>
-                        <div className="themeSelectorsRight" onClick={()=>{toggleTheme('light','default',theme[1])}} style={{backgroundColor:'#ffffff'}}>
-                                
-                        </div>
-                        <div className="themeSelectorsRight"  onClick={()=>{toggleTheme('dark','orange',theme[1])}} style={{backgroundColor:'#fe8040'}}>
-
-                        </div>
-                        <div className="themeSelectorsRight"  onClick={()=>{toggleTheme('dark','inkBlue',theme[1])}} style={{backgroundColor:'#27374D'}}>
-
-                        </div>
-                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('dark','neon',theme[1])}} style={{backgroundColor:'#222831'}}>
-
-                        </div>
-                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('light','blueTimber',theme[1]  )}} style={{backgroundColor:'#19A7CE'}}>
-
-                        </div>
-                        <div className="themeSelectorsRight"   onClick={()=>{toggleTheme('dark','brownTimber',theme[1]  )}} style={{backgroundColor:'#5a3309'}}>
-
-                        </div>
+                        {
+                            themeArray.map((themeElement)=>{
+                                return <ThemeRightElement theme={themeElement.theme} pallete={themeElement.pallete} setTheme={themeElement.setTheme} displayColor={themeElement.displayColor}/>
+                            })
+                        }
                     </div>
         </div>
     </> );
 }
 
 export default SettingsPageContent;
+
+
+function ThemeRightElement({theme,pallete,setTheme,displayColor}) {
+    return (   
+    <div className="themeSelectorsRight" onClick={()=>{toggleTheme(theme,pallete,setTheme)}} style={{backgroundColor:displayColor , borderRadius: (localStorage.getItem('data-pallete')==pallete)?'15px':'10px'}}>
+                                
+    </div>
+);
+}
 
 

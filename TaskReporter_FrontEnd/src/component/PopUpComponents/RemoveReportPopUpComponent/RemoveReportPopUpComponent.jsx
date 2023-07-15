@@ -3,10 +3,10 @@ import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
 import { patchTask, deleteReport , patchCategoryOnTaskCompletion } from '../../../utils/ApiHandlers';
 
-function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList}) {
+function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList,reportList,setReportList}) {
 
     const handleSubmitRemoveReport = ()=>{
-        deleteReport(addReportEffectObj.taskId);
+        deleteReport(addReportEffectObj.taskId,setReportList);
         patchTask(addReportEffectObj.taskId,{completed : false},setTaskList);
         setAddReportEffectObj((prev)=>{return {...prev,isOpen : false,success : true}});
         console.log("atRemoveReports",'incomplete',addReportEffectObj.emailId,addReportEffectObj.weight,addReportEffectObj.categoryId);

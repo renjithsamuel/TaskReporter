@@ -2,19 +2,32 @@ import './DashBoardTaskElement.css'
 import playLight from '../../../assets/play-light.svg';
 import playDark from '../../../assets/play-dark.svg';
 import { Line } from 'rc-progress';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function DashBoardTaskElement({theme,setReportObject,reportObject}) {
-    const [progress , setProgress] = useState(80);
+function DashBoardTaskElement({theme,category,setReportObject,reportObject}) {
+    let tempProgress = 0;
+    const [progress , setProgress] = useState();
 
+    useEffect(()=>{
+
+            console.log(category);
+            tempProgress = Math.floor((category.weightsCompleted/category.overAllWeight)*100);
+            console.log(tempProgress);
+            if(tempProgress.toString()==='NaN'){
+                setProgress(0);
+            }else{
+                setProgress(tempProgress)
+            }
+    },[])
+    
     return ( <>
         <div className="dashBoardTaskElementWrapper">
             <div className="categoryDetails">
                 <div className="categoryTitle">
-                    Task Reporter App
+                    {category.categoryName}
                 </div>
                 <div className="categoryDescription">
-                    Finish the project as soon and best as possible.
+                    {category.description}
                 </div>
             </div>
             <div className="progressIndicator">
@@ -24,7 +37,7 @@ function DashBoardTaskElement({theme,setReportObject,reportObject}) {
                  </div>
             </div>
             <div className="CategoryRemainder">
-                <div className="resumeButton" onClick={()=>{setReportObject((prevState)=>{return {...prevState,isOpen:true}})}}>
+                <div className="resumeButton" onClick={()=>{setReportObject((prevState)=>{return {...prevState,categoryId:category._id,isOpen:true}})}}>
                     <img src={(theme=='light')?playLight:playDark} alt="play" height={30} width={30} />
                 </div>
             </div>

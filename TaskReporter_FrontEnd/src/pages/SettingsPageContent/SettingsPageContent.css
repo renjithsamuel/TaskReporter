@@ -12,6 +12,7 @@
     width: 90%;
     height: 30vh;
     z-index: 0;
+    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
 }
 
 .userBannerCoverImage{
@@ -35,6 +36,8 @@
     width: max-content;
 }
 
+
+
 .userDetailsInsideBanner{
     color: whitesmoke;
     font-size: large;
@@ -50,6 +53,12 @@
     margin-left: 0.5vw;
     border-radius: var(--border-radius);
     background-color: var(--popup-cover-color);
+    border: 2px solid transparent;
+}
+
+.userDetailsInsideBanner:hover{
+    cursor: default;
+    border: 2px solid var(--text-color);
 }
 
 .themeSwitcher{

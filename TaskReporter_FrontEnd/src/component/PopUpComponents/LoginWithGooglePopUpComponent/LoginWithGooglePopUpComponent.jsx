@@ -4,6 +4,7 @@ import googleImg from "../../../assets/google.png" ;
 import taskReporterIconLight from '../../../assets/taskReporter-light.svg';
 import taskReporterIconDark from '../../../assets/taskReporter-dark.svg';
 import { useEffect, useState } from 'react';
+import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
 
 
 
@@ -18,6 +19,13 @@ function LoginWithGooglePopUpComponent({theme,setIsLoggedIn,connectedToServer}) 
             console.log("local storage print" , localStorage.getItem('emailId'));
         }
     },[oauthData])
+
+
+    useEffect(()=>{
+        disableScroll();
+        return ()=>{enableScroll()}
+    },[])
+
 
 
     return ( 

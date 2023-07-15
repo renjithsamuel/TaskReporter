@@ -1,7 +1,8 @@
 .chatPageGroupContentWrapper{
     margin-left: 2vw; 
-    
+
 }
+
 
 .currentChatsWrapper{
     width: 50vw;
@@ -11,7 +12,20 @@
     padding: 2vh;
     border-radius: var(--border-radius);
     filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
+    /* under dev */
+    display: flex;
+    flex-direction: column;
+    align-content: start    ;
 }
+
+
+.UnderDevelopment{
+    font-size: x-large;
+    align-self: center;
+    justify-self: center;
+    font-weight: 600;
+}
+
 
 .sendMessageBar{
     margin: 1vh;

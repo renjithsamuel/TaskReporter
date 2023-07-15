@@ -6,13 +6,13 @@ import minusIconLight from '../../../assets/minus-light.svg'
 import minusIconDark from '../../../assets/minus-dark.svg'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
-import { postCategory } from '../../../utils/ApiHandlers';
+import { disableScroll, enableScroll, postCategory } from '../../../utils/ApiHandlers';
 
 function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpened}) {
 
     const [addCategoryElements,setAddCategoryElements ] = useState([]);
 
-    useState(()=>{
+    useEffect(()=>{
         const newArr = [{keyForDB : "categoryName",inputLabel : "Category/Project Name : " , inputPlaceHolder : " Enter Category/Project Name  " , inputType : "text",id : "categoryNameInput"},
                         {keyForDB : "description",inputLabel : "Description : " , inputPlaceHolder : " Enter Description  " , inputType : "text",id:"categoryDescriptionInput"},
                         {keyForDB : "startDate",inputLabel : "Start Date : " , inputPlaceHolder : " Enter Start Date  " , inputType : "Date",id:"categoryStartDateInput"},
@@ -21,6 +21,13 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
                         ];
         setAddCategoryElements(newArr);
     },[]);
+
+    useEffect(()=>{
+        disableScroll();
+        return ()=>{enableScroll()}
+    },[])
+
+
 
     const [colaboratorEmails,setColaboratorEmails ] = useState(['']);
     const [categoryData,setCategoryData] = useState({});

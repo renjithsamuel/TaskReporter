@@ -14,11 +14,14 @@ function ChatPageGroupContent({theme}) {
     <>
         <div className="chatPageGroupContentWrapper">
                 <div className="currentChatsWrapper">
+                <div className="UnderDevelopment">Under Development</div>
+                     
                     {messages.map((message,index)=>{
                         return <MessageElement key={index} senderName={message.senderName} message={message.message} senderEmail={message.senderEmail} currentUserEmail={currentUser.email}/>
                     })}
                 </div>
                 <div className="sendMessageBar">
+                   
                     <div className="messageInputBox">
                         <input type="text"  placeholder='type message' id='messageBoxInput'/>
                     </div>

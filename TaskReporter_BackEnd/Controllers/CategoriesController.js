@@ -64,7 +64,7 @@ exports.getUniqueCategoryById = async (req,res,next) => {
 // Get categories by UserId
 exports.getCategoriesByUserId = async (req,res,next) => {
     const userId  = req.params.id;
-    console.log(userId);
+    // console.log(userId);
     try{
         // single level population : 
         // const CategoryData = await categories.findById(CategoryID).populate('chats').populate('categories');
@@ -91,7 +91,7 @@ exports.getCategoriesByUserId = async (req,res,next) => {
 }
 
 exports.postCategory = async (req,res,next) => {
-    if(req.body.categoryName == null || req.body.description == null || req.body.startDate == null || req.body.endDate == null ||  req.body.colaborators == null ||  req.body.createdBy == null){
+    if(req.body.categoryName == null || req.body.description == null || req.body.startDate == null || req.body.endDate == null ||  req.body.colaborators == null ||  req.body.createdBy == null ){
         return res.status(404).json({
             success : false,
             message: "send valid details!"
@@ -106,6 +106,7 @@ exports.postCategory = async (req,res,next) => {
                            weightsCompleted : 0,
                            contributions : [],
                            overAllWeight : 0,
+                           tasksCount : 0
                         };
 
     try{
@@ -131,6 +132,7 @@ exports.postCategory = async (req,res,next) => {
 
 // patch Categories
 exports.patchCategoryById = async (req,res,next) => {
+    console.log(req.params.id);
     if(!req.params.id){
         return res.status(404).json({
             success : false,
@@ -139,7 +141,6 @@ exports.patchCategoryById = async (req,res,next) => {
     }
 
     const CategoryID = req.params.id;
-
     // if data not in db:
     let dataInDB = await categories.findById({_id:CategoryID});
     if(!dataInDB){
@@ -151,7 +152,8 @@ exports.patchCategoryById = async (req,res,next) => {
     
     if(req.body.categoryName == null && req.body.description == null && req.body.startDate == null
          && req.body.endDate == null && req.body.colaborators == null &&  req.body.createdBy == null && 
-         req.body.weightsCompleted ==null && req.body.contributions ==null && req.body.overAllWeight == null
+         req.body.weightsCompleted ==null && req.body.contributions ==null && req.body.overAllWeight == null 
+         && req.body.tasksCount == null
         ){
         return res.status(404).json({
             success : false,
@@ -173,11 +175,13 @@ exports.patchCategoryById = async (req,res,next) => {
         description : req.body.description  || CategoryData.description,
         startDate : req.body.startDate || CategoryData.startDate,
         endDate : req.body.endDate || CategoryData.endDate,
+        colaborators : req.body.colaborators || CategoryData.colaborators,
         taskCompletedBy : req.body.taskCompletedBy || CategoryData.taskCompletedBy,
         createdBy : req.body.createdBy || CategoryData.createdBy,
         weightsCompleted : req.body.weightsCompleted || CategoryData.weightsCompleted,
         contributions : req.body.contributions || CategoryData.contributions,
-        overAllWeight : req.body.overAllWeight || CategoryData.overAllWeight
+        overAllWeight : req.body.overAllWeight || CategoryData.overAllWeight,
+        tasksCount : (req.body.tasksCount!=null)?req.body.tasksCount:CategoryData.tasksCount,
     }
     try{
         const patchedData = await categories.findByIdAndUpdate(CategoryID ,{ $set: { ...patchableData } }, {new : true});

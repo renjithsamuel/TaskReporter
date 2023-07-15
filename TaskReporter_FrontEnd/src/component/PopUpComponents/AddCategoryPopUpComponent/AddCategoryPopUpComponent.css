@@ -9,7 +9,6 @@
     background-color: var(--popup-cover-color);
     z-index: 5;
     overflow: hidden;
-
     display: flex;
     justify-content: center;
     align-items: center;

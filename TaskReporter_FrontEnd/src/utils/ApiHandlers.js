@@ -71,6 +71,36 @@ export const loginCurrentUser = async (tempCurrentUser,setCurrentUser,setGotUser
     }
 }
 
+// disable scroll
+
+export function disableScroll() {
+  
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  
+    window.onscroll = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0, 
+        behavior: 'instant'
+      })
+    }
+  }
+  
+export function enableScroll() {
+      window.onscroll = null;
+}
+
+// const disableScroll = () => {
+//     document.body.style.overflow = 'hidden';
+//   };
+
+//   // Function to enable scroll
+//   const enableScroll = () => {
+//     document.body.style.overflow = 'visible';
+//   };
+
+
 // connect to server
 export const connectToServerFunc = async (setConnectedToServer)=>{
     const getHealthApi = `http://localhost:3000/api/v1/health`;
@@ -127,12 +157,36 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
     }
 }
 
+// get reports by category ID
+export const getReportsByCategoryId = async (categoryId,setReportList) => {
+    const getReportsByCategoryIdUrl = `http://localhost:3000/api/v1/reports/getReportsByCategoryId/${categoryId}`;
+    const reportsResponseData = await sendHttpRequest(getReportsByCategoryIdUrl,'GET');
+    console.log(reportsResponseData,"reports ResponseData at get report by id");
+    if(reportsResponseData && reportsResponseData.success == true){
+        console.log("reports fetched successfully!");
+        setReportList((prevReportList) => {
+            const updatedReportsList = [
+            //   ...prevTaskList.filter((report) => !reportsResponseData.data.some((newReport) => newReport._id === report._id)),
+                ...prevReportList,
+              ...reportsResponseData.data
+            ];
+            return updatedReportsList;
+          });
+    }else if(reportsResponseData && reportsResponseData.success == false){
+        console.log("error while fetching reports " , reportsResponseData.message);
+    }else{
+        console.log("something else went wrong while fetching reports!");
+    }
+}
+
 
 // posting new category and side effects : 
         export const postCategory = async (updatedCategory,colaboratorEmails=[],currentUser,setCategoryList) => {
             console.log(" Inside post Category! : ");
             updatedCategory['tasks'] = [];
             updatedCategory['createdBy'] = currentUser._id;
+            updatedCategory['startDate'] = new Date(updatedCategory.startDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
+            updatedCategory['endDate'] = new Date(updatedCategory.endDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
             console.log(updatedCategory);
             // validating datas
             if(updatedCategory.categoryName == null || updatedCategory.description == null || updatedCategory.startDate == null || updatedCategory.endDate == null ||  updatedCategory.createdBy == null  ){
@@ -141,7 +195,9 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
                 return;
             }
             let colaboratorIdArray = [];
-            if(colaboratorEmails.length!=0){
+            console.log("colaborator emails ",colaboratorEmails);
+            const hasNonEmptyEmails = colaboratorEmails.some(email => email.trim() !== '');
+            if(hasNonEmptyEmails){
                     // fetching colaborator IDs
                     colaboratorIdArray = await getColaboratorsIdArray(colaboratorEmails);
                     // validating fetched colaborator ID's
@@ -152,6 +208,8 @@ export const getTasksByCategoryId = async (categoryId,setTaskList) => {
                         console.log("Something went wrong while adding colaborators!");
                         return;
                     }
+            }else{
+                updatedCategory['colaborators'] = [currentUser._id];
             }
             
             // posting new category
@@ -232,6 +290,7 @@ export const postTask = async (addTaskObject,setTaskList,setCategoryList) => {
         console.log("send valid details!");
         return;
     }
+    addTaskObject['endDate'] = new Date(addTaskObject.endDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
     const postTaskUrl = `http://localhost:3000/api/v1/tasks/postTask`;
     console.log("task  check",addTaskObject);
     const postedTaskResponse = await sendHttpRequest(postTaskUrl , 'POST' , addTaskObject);
@@ -244,7 +303,7 @@ export const postTask = async (addTaskObject,setTaskList,setCategoryList) => {
         patchCategoryWithWeight(addTaskObject,setCategoryList);
         setTaskList((prevTaskList)=>{
             let updatedTaskData = [...prevTaskList.filter((task) => !postedTaskResponse.data_id),postedTaskResponse.data];
-            console.log(updatedTaskData);
+            // console.log(updatedTaskData);
             return updatedTaskData;
         });
     }else{
@@ -329,12 +388,13 @@ export const patchTask = async (taskId , patchableData,setTaskList) => {
 }
 
 // post report while completing a task
-export const postReport = async (addReportObj) =>{
+export const postReport = async (addReportObj,setReportList) =>{
     if(addReportObj.category == null || addReportObj.taskCompleted == null || addReportObj.reportedBy==null || addReportObj.reportedDate==null || addReportObj.reportStatement ==null){
         alert('send valid details!');
         console.log("send valid details!");
         return;
     }
+    addReportObj['reportedDate'] = new Date(addReportObj.reportedDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
     const postReportUrl = `http://localhost:3000/api/v1/reports/postReport`;
     console.log("task  check",addReportObj);
     const postedReportResponse = await sendHttpRequest(postReportUrl , 'POST' , addReportObj);
@@ -345,13 +405,16 @@ export const postReport = async (addReportObj) =>{
         console.log("posted report!");
         console.log(postedReportResponse.data);
         // setReportList
+        setReportList((prevReportList)=>{
+            return [...prevReportList,postedReportResponse.data];
+        });
     }else{
         console.log("Something else went wrong while posting report!");
     }
 }
 
 // deleteReport for marking task as not completed
-export const deleteReport = async (taskId) =>{
+export const deleteReport = async (taskId,setReportList) =>{
     if(taskId==null){
         console.log("send valid details!");
         return; 
@@ -361,6 +424,14 @@ export const deleteReport = async (taskId) =>{
     if(gottenResponse && gottenResponse.success == true){
         console.log("transaction succesful", gottenResponse.data);
         // setReportList
+        setReportList((prevReportList)=>{
+            let updatedReportList = prevReportList.map((report)=>{
+                if(report._id!=gottenResponse.data._id){
+                    return report;
+                }
+            });
+            return updatedReportList;
+        });
     }else if(gottenResponse && gottenResponse.success == false){
         console.log("error during transaction",gottenResponse.message);
     }else {
@@ -389,33 +460,35 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
  
     let updatedCategoryData = {};
     if(status != 'completed'){
-        updatedCategoryData.contribution = responseObject.data.contributions.map((contribution)=>{
+        updatedCategoryData.contributions = responseObject.data.contributions.map((contribution)=>{
             if(contribution.emailId != updationEmailId ){
                 return  contribution;
             }else if(contribution.emailId == updationEmailId){
-                let updatedContribution = {emailId : emailId , weightContributed : contribution.weightContributed - weight , numberOfTaskCompleted : contribution.numberOfTaskCompleted - 1};
+                let updatedContribution = {emailId : updationEmailId , weightContributed : contribution.weightContributed - weight , numberOfTasksCompleted : contribution.numberOfTasksCompleted - 1};
                 return updatedContribution;
             }     
         });
     }else {
         // let tempOverallWeight = (responseObject.data.weightsCompleted==null)?0 : responseObject.data.weightsCompleted + weight;
         let flag = false;
-        updatedCategoryData.contribution = responseObject.data.contributions.map((contribution)=>{
+        updatedCategoryData.contributions = responseObject.data.contributions.map((contribution)=>{
             if(contribution.emailId != updationEmailId ){
                 return  contribution;
             }else if(contribution.emailId == updationEmailId){
-                let updatedContribution = {emailId : emailId ,  weightContributed : contribution.weightContributed + weight , numberOfTaskCompleted : contribution.numberOfTaskCompleted + 1};
+                let updatedContribution = {emailId : updationEmailId ,  weightContributed : contribution.weightContributed + weight , numberOfTasksCompleted : contribution.numberOfTasksCompleted + 1};
                 flag = true;
                 return updatedContribution;
             }     
         })
         if(flag==false){
-                updatedCategoryData.contribution = [...responseObject.data.contributions,{emailId : updationEmailId , weightContributed  : weight ,numberOfTaskCompleted : 1 }]
+                console.log("reached flag false");
+                updatedCategoryData.contributions = [...(responseObject.data.contributions),{emailId : updationEmailId , weightContributed  : weight ,numberOfTasksCompleted : 1 }]
         }
     }
 
-     updatedCategoryData.overAllWeight =  (status ==  'completed')?(responseObject.data.weightsCompleted + weight) 
-                                                                        : (responseObject.data.weightsCompleted - weight);
+    updatedCategoryData.weightsCompleted =  (status ==  'completed')?(responseObject.data.weightsCompleted + weight) 
+                                                             : (responseObject.data.weightsCompleted - weight);
+
     const patchCategoryUrl = `http://localhost:3000/api/v1/categories/patchCategoryById/${categoryId}`;
     console.log("task  check",updatedCategoryData);
     const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);

@@ -1,24 +1,42 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './ContributionsComponent.css';
 import { Line } from 'rc-progress';
 
-function ContributionsComponent({theme}) {
-    const weightsCompleted = 50;
-    const overallWeights  = 70 ; 
-    let overallTasksCompleted = 0;
-    const overallTasks = 7;
-    const individualContributionsArr = 
-                            [
-                                {emailId : "balasuriya@gmail.com" , weightsCompleted : 30 , tasksCompleted : 5},
-                                {emailId : "renjithsamuel@gmail.com" , weightsCompleted : 20 , tasksCompleted : 3},
-
-                            ];
-                
+function ContributionsComponent({theme,reportObject,currentCategory}) {
+    const [contributionsState , setContributionsState ] = useState({weightsCompleted : 0 , overAllWeight : 0 
+                                                                , overallTasksCompleted : 0 , overallTasks : 0 
+                                                                ,individualContributionsArr : [] });
+    const [updatedContributionvals,setUpdatedContributionvals] = useState(false);
+    // [
+    //     {emailId : "balasuriya@gmail.com" , weightsCompleted : 30 , tasksCompleted : 5},
+    //     {emailId : "renjithsamuel@gmail.com" , weightsCompleted : 20 , tasksCompleted : 3},
+    // ];
+    
     useEffect(()=>{
-        individualContributionsArr.map((contribution)=>{
-            overallTasksCompleted += contribution.tasksCompleted;
+        console.log("current category " , currentCategory);
+       if(currentCategory!=null){
+            let tempContributionsState = {};
+            tempContributionsState.weightsCompleted = currentCategory.weightsCompleted;
+            tempContributionsState.overAllWeight  = currentCategory.overAllWeight ; 
+            tempContributionsState.overallTasks = currentCategory.tasksCount;
+            tempContributionsState.individualContributionsArr = currentCategory.contributions;
+            setContributionsState(tempContributionsState);
+            setUpdatedContributionvals(true);
+       }
+
+    },[currentCategory])
+
+    useEffect(()=>{
+        let tempOverAllTasksCompleted = 0;
+        contributionsState.individualContributionsArr.map((contribution)=>{
+            tempOverAllTasksCompleted += contribution.numberOfTasksCompleted;
         })
-    },[])
+        setContributionsState((prevState)=>{ return {...prevState , overallTasksCompleted : tempOverAllTasksCompleted }})
+    },[updatedContributionvals]);
+
+    useEffect(()=>{
+        console.log(contributionsState);
+    },[contributionsState])
 
     return ( <>
         <div className="contributionsComponentWrapper">
@@ -26,7 +44,7 @@ function ContributionsComponent({theme}) {
                     <div className="overallCompletionName">
                             Overall Completion
                     </div>
-                    <ContributionCardComponent cardName={"Overall Completion "} percentage={(weightsCompleted/overallWeights)*100} tasksCompleted={overallTasksCompleted} overallTasks={overallTasks} theme={theme}/>
+                    <ContributionCardComponent cardName={"Overall Completion "} percentage={(contributionsState.weightsCompleted/contributionsState.overAllWeight)*100} tasksCompleted={contributionsState.overallTasksCompleted} overallTasks={contributionsState.overallTasks} theme={theme}/>
                 </div>
                 <div className="individualContributionsWrapper">
                     <div className="individualContributionName">
@@ -34,8 +52,8 @@ function ContributionsComponent({theme}) {
                     </div>
                         <div className="individualContributionIndicator">
                             {
-                                individualContributionsArr.map((contribution,index)=>{
-                                   return <ContributionCardComponent key={index} cardName={contribution.emailId } percentage={(contribution.weightsCompleted/overallWeights)*100} tasksCompleted={contribution.tasksCompleted} overallTasks={overallTasks} theme={theme}/>
+                                contributionsState.individualContributionsArr.map((contribution,index)=>{
+                                   return <ContributionCardComponent key={index} cardName={contribution.emailId } percentage={(contribution.weightContributed/contributionsState.overAllWeight)*100} tasksCompleted={contribution.numberOfTasksCompleted} overallTasks={contributionsState.overallTasks} theme={theme}/>
                                 })
                             }
                         </div>
@@ -59,10 +77,10 @@ function ContributionCardComponent({theme,cardName , percentage , tasksCompleted
                 </div>
                 <div className="contributionCardPercentIndicator">
                     <div className="contributionCardPercentBar">
-                            <Line percent={Math.floor(percentage)} strokeWidth={3} strokeColor={(theme=='light')?'#000000':"var(--secondary-color)"} />
+                            <Line percent={(percentage.toString()!="NaN")?Math.floor(percentage):0} strokeWidth={3} strokeColor={(theme=='light')?'#000000':"var(--secondary-color)"} />
                     </div>
                     <div className="contributionCardPercentName">
-                        {Math.floor(percentage)}%
+                        {(percentage.toString()!="NaN")?Math.floor(percentage):0}%
                     </div>
                 </div>
                 <div className="contributionCardTasksCountIndicator">

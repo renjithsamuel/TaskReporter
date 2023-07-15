@@ -5,10 +5,13 @@ const LineGraphComponent = ({ theme }) => {
 
   // Sample data
   const data2 = [
-    { month: 'january', projects: 4 },
-    { month: 'febraury', projects: 5 },
-    { month: 'march', projects: 0 },
-    { month: 'april', projects: 2 }
+    { month: 'january', tasksCompleted: 4 },
+    { month: 'febraury', tasksCompleted: 5 },
+    { month: 'march', tasksCompleted: 0 },
+    { month: 'april', tasksCompleted: 2 },
+    { month: 'may', tasksCompleted: 5 },
+    { month: 'june', tasksCompleted: 7 },
+    { month: 'july', tasksCompleted: 5 },
   ];
 
   return (
@@ -29,7 +32,7 @@ const LineGraphComponent = ({ theme }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="projects" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="tasksCompleted" stroke="#8884d8" activeDot={{ r: 8 }} />
       </LineChart>
     </div>
   );

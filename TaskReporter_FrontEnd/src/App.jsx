@@ -15,7 +15,7 @@ import ReportsPageContent from './pages/ReportsPageContent/ReportsPageContent';
 import LoginWithGooglePopUpComponent from './component/PopUpComponents/LoginWithGooglePopUpComponent/LoginWithGooglePopUpComponent';
 
 // importing functions from utils.js
-import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests} from './utils/ApiHandlers';
+import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests, getReportsByCategoryId} from './utils/ApiHandlers';
 
 
 import ShowReportsPopUpComponent from './component/PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
@@ -66,6 +66,7 @@ function App(){
   // tasks states
   const [categoryList,setCategoryList] = useState([]);
   const [taskList , setTaskList] = useState([]);
+  const [reportList , setReportList] = useState([]);
 
   useEffect(()=>{
 
@@ -81,15 +82,22 @@ function App(){
       if(categoryList!=null){
           categoryList.map((category) => {
                  getTasksByCategoryId(category._id,setTaskList);
-          })
+                 getReportsByCategoryId(category._id,setReportList);
+          });
       }
-  },[categoryList])
+  },[categoryList]);
 
   useEffect(()=>{
       if(taskList!=null){
           console.log("tasklist : " ,taskList);
       }
   },[taskList]);
+
+  useEffect(()=>{
+      if(reportList!=null){
+          console.log("reportlist : " ,reportList);
+      }
+  },[reportList]);
     
     //   to check current online status
     isOnline = useOnlineStatus();
@@ -130,11 +138,11 @@ function App(){
             :'Logging out!'
           } */}
           <Routes>
-              <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn}/>}/>
+              <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
               <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
-              <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>}/>
-              <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
-              <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} />}/>
+              <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} reportList={reportList}/>}/>
+              <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList} reportList={reportList}/>}/>
+              <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />}/>
           </Routes>
     </div>
 

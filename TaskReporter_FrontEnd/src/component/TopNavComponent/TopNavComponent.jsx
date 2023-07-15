@@ -9,7 +9,8 @@ import {  Link } from "react-router-dom";
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import { useEffect, useState } from 'react';
-import { isOnline } from '../../App';
+import { isOnline  } from '../../App';
+import { disableScroll ,enableScroll } from '../../utils/ApiHandlers';
 import NotificationComponent from '../NotificationsComponent/NotificationComponent';
 
 defineElement(lottie.loadAnimation);    
@@ -50,7 +51,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList}) 
                         <div className="noInternetIndicator" style={{display:(isOnline)?'none':'flex'}}>
                             <img src={(theme=='light')?noInternetLight: noInternetDark} alt="user" height={30} width={30} />
                         </div>
-                        <div className="notifications" onClick={()=>{setIsNotificationOpen(true)}} 
+                        <div className="notifications" onClick={()=>{setIsNotificationOpen(true);disableScroll()}} 
                                               style={{display:(fromPage=='Dashboard' || currPage=='Dashboard')?'none':'flex'}}
                                             >
                             <lord-icon

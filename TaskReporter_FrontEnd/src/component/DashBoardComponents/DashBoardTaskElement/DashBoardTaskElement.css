@@ -4,6 +4,7 @@
     width: 50vw;
     height: max-content;
     padding: 2vh;
+    margin-top: 2vh;
     border-radius: var(--border-radius);
     background-color: var(--primary-color);
     filter: drop-shadow(1px 2px 2px var(--shadow-color));

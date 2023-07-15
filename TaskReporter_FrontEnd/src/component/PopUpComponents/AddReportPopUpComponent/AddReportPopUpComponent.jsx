@@ -1,20 +1,26 @@
 import './AddReportPopUpComponent.css';
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
-import { patchTask, postReport ,patchCategoryOnTaskCompletion} from '../../../utils/ApiHandlers';
-import { useState } from 'react';
+import { patchTask, postReport ,patchCategoryOnTaskCompletion, enableScroll, disableScroll} from '../../../utils/ApiHandlers';
+import { useEffect, useState } from 'react';
 
-function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList}) {
+function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList,reportList,setReportList}) {
 
     const [addReportElementsInput,setAddReportElementsInput ] = useState([]);
     const [addReportObject,setAddReportObject] = useState({category : addReportEffectObj.categoryId,taskCompleted: addReportEffectObj.taskId,reportedBy : currentUser._id,reportedDate : new Date()});
 
-    useState(()=>{
+    useEffect(()=>{
         const newArr = [
                         {keyForDB : 'reportStatement',inputLabel : "Report Statement : " , inputPlaceHolder : " Type Report  " , inputType : "textarea",id : "reportStatementId"},
                         ];
         setAddReportElementsInput(newArr);
     },[]);
+
+    useEffect(()=>{
+        disableScroll();
+        return ()=>{enableScroll()}
+    },[])
+
 
     const handleAddReportInputChange = (keyForDB,value) => {
         let updatedAddReportObj = {...addReportObject}
@@ -28,7 +34,7 @@ function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTas
             console.log("send valid details!");
             return;
         }
-        postReport(addReportObject);
+        postReport(addReportObject,setReportList);
         patchTask(addReportEffectObj.taskId,{completed : true},setTaskList);
         patchCategoryOnTaskCompletion('completed',currentUser.emailId,addReportEffectObj.weight,addReportEffectObj.categoryId,setCategoryList);
         setAddReportEffectObj((prev)=>{return {...prev,isOpen : false,success : true}});

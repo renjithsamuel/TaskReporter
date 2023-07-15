@@ -95,8 +95,12 @@
 }
 
 .notificationsWrapperFromTopNav{
+    position: absolute;
+    left: 70vw;
+    top: 7vh;
     margin-right: 5vw;
     margin-top: 5vh;
+    
 }
 
 .userNameTop{

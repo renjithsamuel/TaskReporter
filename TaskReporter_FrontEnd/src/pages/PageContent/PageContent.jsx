@@ -5,7 +5,7 @@ import TopNavComponent from "../../component/TopNavComponent/TopNavComponent";
 import AddCategoryPopUpComponent from "../../component/PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent";
 import { getCategoriesByUserId , getTasksByCategoryId } from "../../utils/ApiHandlers";
 
-function PageContent({theme,currentUser,categoryList,setCategoryList,taskList,setTaskList}) {
+function PageContent({theme,currentUser,categoryList,setCategoryList,taskList,setTaskList,reportList,setReportList}) {
     useEffect(()=>{
         console.log("categories list at page content final : ");
     },[categoryList])
@@ -13,7 +13,7 @@ function PageContent({theme,currentUser,categoryList,setCategoryList,taskList,se
     return (
     <div className="pageContentWrapper">
         <TopNavComponent currPage={"Tasks"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>
-       {categoryList!=null && <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme} currentUser={currentUser} setCategoryList={setCategoryList}/> }
+       {categoryList!=null && <PageContentTasksComponent categoryList={categoryList} taskList={taskList} setTaskList={setTaskList} theme={theme} currentUser={currentUser} setCategoryList={setCategoryList} reportList={reportList} setReportList={setReportList}/> }
     </div>
     );
 }

@@ -33,7 +33,11 @@ exports.getUserByData = async (req,res,next) =>{
         })
     }
     try{
-        const currentUserData = await users.findOne({username : req.body.username , emailId : req.body.emailId}).populate('invites')
+        const currentUserData = await users.findOne({username : req.body.username , emailId : req.body.emailId})
+                                        .populate({
+                                            path: 'invites',
+                                            populate: { path: 'createdBy', model: 'users' , select: 'username' },})
+        // .populate('invites')
         // .populate({
         //     path: 'categories',
         //     populate: [
@@ -76,7 +80,10 @@ exports.getUserByEmail = async (req,res,next) =>{
         })
     }
     try{
-        const currentUserData = await users.findOne({emailId : req.body.emailId},{_id:1});
+        const currentUserData = await users.findOne({emailId : req.body.emailId},{_id:1}).populate({
+            path: 'invites',
+            populate: { path: 'createdBy', model: 'users' , select: 'username' },});
+
         if(!currentUserData){
             return res.status(400).json({
                 success : false,
@@ -111,7 +118,9 @@ exports.getUniqueUserById = async (req,res,next) => {
         // single level population : 
         // const userData = await users.findById(userID).populate('chats').populate('categories');
         // multi level population : 
-        const userData = await users.findById(userID).populate('invites')
+        const userData = await users.findById(userID).populate({
+                                            path: 'invites',
+                                            populate: { path: 'createdBy', model: 'users' , select: 'username' },})
         // .populate({
         //     path: 'categories',
         //     populate: [
@@ -197,7 +206,8 @@ exports.patchUserById = async (req,res,next) => {
             })
         }
     
-    if(req.body.username == null && req.body.emailId == null  && req.body.invites == null){
+    if(req.body.username == null && req.body.emailId == null  
+        && req.body.invites == null && req.body.updateInvite == null ){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -216,7 +226,7 @@ exports.patchUserById = async (req,res,next) => {
     const patchableData = {
         username :  req.body.username || userData.username, 
         emailId : req.body.emailId || userData.emailId,
-        invites : req.body.invites || userData.invites
+        invites : (req.body.updateInvite==true)?req.body.invites : userData.invites,
     }
     try{
         const patchedData = await users.findByIdAndUpdate(userID , { $set: { ...patchableData } }, {new : true});
@@ -240,7 +250,7 @@ exports.patchUserById = async (req,res,next) => {
 }
 
 exports.patchManyUserWithInvites = async (req,res,next) => {
-    console.log(req.body.colaborators , req.body.categoryId);
+    // console.log(req.body.colaborators , req.body.categoryId);
     if (!Array.isArray(req.body.colaborators) || req.body.categoryId == null) {
         return res.status(400).json({
           success: false,

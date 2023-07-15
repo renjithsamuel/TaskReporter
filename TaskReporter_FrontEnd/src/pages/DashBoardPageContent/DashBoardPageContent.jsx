@@ -6,11 +6,11 @@ import NotificationComponent from '../../component/NotificationsComponent/Notifi
 import { useState } from 'react';
 import ShowReportsPopUpComponent from '../../component/PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
 
-function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList}) {
-    const [addShowReportsComponentFromDashBoard,setAddShowReportsComponentFromDashBoard] = useState({isOpen : false , category : '',categoryId:''});
+function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,taskList,reportList}) {
+    const [addShowReportsComponentFromDashBoard,setAddShowReportsComponentFromDashBoard] = useState({isOpen : false , category : '',categoryId:'',categoryList : categoryList , taskList:  taskList,reportList: reportList});
 
     return ( <>
-         {(addShowReportsComponentFromDashBoard.isOpen==true)?<div className='showReportsPopUpBackDropFromDashBoard'><ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={categoryList} setIsReportObjectOpen={setAddShowReportsComponentFromDashBoard}/></div>:''}
+         {(addShowReportsComponentFromDashBoard.isOpen==true)?<div className='showReportsPopUpBackDropFromDashBoard'><ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={categoryList} taskList={taskList} reportList={reportList} reportObject={addShowReportsComponentFromDashBoard} setIsReportObjectOpen={setAddShowReportsComponentFromDashBoard}/></div>:''}
         <div className="dashBoardComponentWrapper">
             <TopNavComponent currPage={"Dashboard"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>
             <div className="dashBoardContentWrapper">
@@ -20,8 +20,10 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList}) 
                     </div>
                     <div className="dashBoardReportsLabel">Reports</div>
                     <div className="DashBoardTaskElements">
-                        {/* map */}
-                        <DashBoardTaskElement theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
+                    {categoryList.map((category,index)=>{    
+                        return <DashBoardTaskElement key={index} category={category} theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
+                        })
+                    }
                     </div>
                 </div>
                 <div className="dashBoardContentRight">

@@ -10,9 +10,11 @@ const CategoriesSchema = mongoose.Schema({
     weightsCompleted : {type : Number},
     contributions: [{
         emailId: { type: String },
-        weightContributed: { type: Number }
+        weightContributed: { type: Number },
+        numberOfTasksCompleted : {type : Number} 
     }], 
     overAllWeight : { type : Number},
+    tasksCount : {type : Number}
     // contributions: [{
     //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
     //     percentage: { type: Number }

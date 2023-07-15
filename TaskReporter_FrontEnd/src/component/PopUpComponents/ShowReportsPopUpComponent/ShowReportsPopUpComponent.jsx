@@ -6,22 +6,66 @@ import ContributionsComponent from '../../ReportsComponent/ContributionsComponen
 import DeadlinesComponent from '../../ReportsComponent/DeadlinesComponent/DeadlinesComponent'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
+import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
 
-function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',categoryList,setIsReportObjectOpen,fromPage}) {
+function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) {
 
     const [currentReportTab , setCurrentReportTab] = useState(`${defaultReportPage}`);
-    const [currentSelectedCategoryId, setCurrentSelectedCategoryId] = useState(0);
 
-    useEffect(()=>{
-        if(categoryList!=null && categoryList[0] && categoryList[0]._id!=undefined){
-                setCurrentSelectedCategoryId(categoryList[0]._id);
-        }
-    },[])
+//     useEffect(()=>{
+//         if(reportObject && reportObject.categoryId){
+//                 setIsReportObjectOpen((prevState)=>{ return {...prevState,categoryId : reportObject.categoryId}});
+//         }else if(categoryList!=null && categoryList[0] && categoryList[0]._id!=undefined){
+//                 setIsReportObjectOpen((prevState)=>{ return {...prevState,categoryId : categoryList[0]._id}});
+//         }
+//     },[])
+
+        useEffect(()=>{
+                disableScroll();
+                return ()=>{enableScroll()}
+        },[])
+
     
 //     handle category selection
     const handleCategorySelectionClick = (categoryId) =>{
-        setCurrentSelectedCategoryId(categoryId);
-    }
+        setIsReportObjectOpen((prevState)=>{ return {...prevState,categoryId : categoryId}});
+    }   
+
+    const [currentCategory , setCurrentCategory] = useState({});
+    const [currentReports , setCurrentReports] = useState([]);
+    const [currentTasks , setCurrentTasks] = useState([]);
+
+
+    useEffect(()=>{
+        let tempReportList = [];
+        let tempTaskList = [];
+                if(reportObject &&  reportObject.categoryId!=null){
+                        categoryList.map((category)=>{
+                                if( category &&  category._id ==  reportObject.categoryId){
+                                    setCurrentCategory(category);
+                                }
+                        });
+                
+                        tempReportList = reportList.map((report)=>{
+                                if(report && report.category &&  report.category._id ==  reportObject.categoryId){
+                                        return report;
+                                } 
+                        });
+
+                        tempReportList = tempReportList.filter((elem) => elem!=undefined);
+                        
+                        tempTaskList = taskList.map((task)=>{
+                                if( task && task.category && task.category._id == reportObject.categoryId){
+                                        return task;
+                                }       
+                        })
+
+                        tempTaskList = tempTaskList.filter((elem) => elem!=undefined);
+                        
+                }
+        setCurrentReports(tempReportList);
+        setCurrentTasks(tempTaskList);
+    },[reportObject]);
 
     return ( <>
                     <div className="showReportContentWrapper" >
@@ -35,7 +79,8 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                                                 return (
                                                                         <div className="showReportContentEachCategory" 
                                                                         key={categoryIndex} onClick={()=>handleCategorySelectionClick(category._id)} 
-                                                                        style={{backgroundColor:(currentSelectedCategoryId == category._id) ? 'var(--secondary-color)':'var(--secondary-light-color)'}}>
+                                                                        style={{backgroundColor:(reportObject.categoryId == category._id) ? 'var(--secondary-color)':'var(--secondary-light-color)',
+                                                                                 borderColor:(reportObject.categoryId == category._id)?'var(--text-color)':'transparent'}}>
                                                                                 {category.categoryName}
                                                                         </div>
                                                                 )
@@ -69,14 +114,14 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                         <div className="reportContentWrapper">
                                                 <div className="reportContentBar">
                                                         {(currentReportTab=='categoryDetails')?
-                                                                <CategoryDetailsComponent theme={theme}/>
+                                                                <CategoryDetailsComponent theme={theme} reportObject={reportObject} currentCategory={currentCategory}/>
                                                                 : (currentReportTab=='reports')?
-                                                                <CategoryReportsComponent theme={theme}/>
+                                                                <CategoryReportsComponent theme={theme} reportObject={reportObject} currentReports={currentReports} />
                                         
                                                                 : (currentReportTab == 'contributions')?
-                                                                <ContributionsComponent theme={theme}/>
+                                                                <ContributionsComponent theme={theme} reportObject={reportObject} currentCategory={currentCategory}/>
                                                                 : (currentReportTab == 'deadlines')?
-                                                                <DeadlinesComponent theme={theme}/>
+                                                                <DeadlinesComponent theme={theme} reportObject={reportObject} currentCategory={currentCategory} currentTasks={currentTasks}/>
                                                                 : ''
                                                         }
                                                 </div>

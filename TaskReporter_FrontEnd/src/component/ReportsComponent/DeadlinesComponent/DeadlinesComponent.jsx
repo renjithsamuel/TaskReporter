@@ -1,14 +1,19 @@
+import { useEffect } from 'react';
 import './DeadlinesComponent.css';
 
-function DeadlinesComponent({theme}) {
+function DeadlinesComponent({theme,currentCategory,currentTasks}) {
 
-    const overAllDeadline = {taskName : "Task reporter" , endDate  : "04-Sep-2023"};
+    // const overAllDeadline = {taskName : "Task reporter" , endDate  : "04-Sep-2023"};
 
-    const deadlineArray = [
-                            {taskName  : "frontEnd" , endDate : '03-Oct-2023'},
-                            {taskName  : "BackEnd" , endDate : '03-Nov-2023'}
-                        ];
+    // const deadlineArray = [
+    //                         {taskName  : "frontEnd" , endDate : '03-Oct-2023'},
+    //                         {taskName  : "BackEnd" , endDate : '03-Nov-2023'}
+    //                     ];
                         
+    useEffect(()=>{
+            console.log("deadline", currentCategory );
+    },[])
+
     return ( <>
                 <div className="deadlinesComponentWrapper">
                     <div className="overallDeadlineWrapper">
@@ -16,7 +21,12 @@ function DeadlinesComponent({theme}) {
                             Overall Deadline 
                         </div>
                         <div className="overallDeadlineCard">
-                                <DeadlineSingleCardComponent  taskName={overAllDeadline.taskName} endDate={overAllDeadline.endDate} daysMore={calculateRemainingDays(overAllDeadline.endDate)}/>
+                            {
+                            (currentCategory)?
+                                <DeadlineSingleCardComponent  taskName={currentCategory.categoryName} endDate={currentCategory.endDate} daysMore={calculateRemainingDays(currentCategory.endDate)}/>
+                                :
+                                <h3>No Data</h3>
+                            } 
                         </div>
                     </div>
                     <div className="tasksDeadlinesWrapper">
@@ -24,10 +34,10 @@ function DeadlinesComponent({theme}) {
                             Tasks Deadline
                         </div>
                         <div className="tasksDeadlineCardsWrapper">
-                            {
-                                deadlineArray.map((deadlineElement,index)=>{
+                            {   (currentTasks && currentTasks.length > 0)?
+                                currentTasks.map((deadlineElement,index)=>{
                                     return <DeadlineSingleCardComponent key={index} taskName={deadlineElement.taskName} endDate={deadlineElement.endDate}  daysMore={calculateRemainingDays(deadlineElement.endDate)}/>
-                                })
+                                }):<h3>No Tasks</h3>
                             }
                         </div>
                     </div>

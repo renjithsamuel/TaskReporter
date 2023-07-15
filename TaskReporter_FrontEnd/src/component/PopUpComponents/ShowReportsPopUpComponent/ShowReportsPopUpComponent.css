@@ -25,18 +25,23 @@
 }
 
 .showReportContentEachCategory{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1vh;
-    font-size: larger;
-    font-weight: 600;
+    margin-top: 0.7vh;
+    text-align: center;
+    width: 90%;
+    height: max-content;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    padding: 1.5vh;
+    font-size: large;
+    font-weight: 500;
     border-radius: var(--border-radius);
     background-color: var(--primary-hover-color);
+    border: 2px solid transparent;
 }
 
 
-.showReportContentEachCategory{
+.showReportContentEachCategory:hover{
+    border-color: var(--text-color);
     background-color: var(--secondary-light-color);
     filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
     cursor: pointer;
@@ -46,20 +51,6 @@
     padding: 1vh;
 }
 
-.showReportContentEachCategory{
-    margin-top: 0.5vh;
-    font-size: large;
-    font-weight: 400;
-    padding: 0.5vh;
-    text-align: center;
-    background-color: var(--secondary-light-color);
-}
-
-.showReportContentEachCategory:hover{
-    filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
-    cursor: pointer;
-    background-color: var(--secondary-color);
-}
 
 .showReportContentRightWrapper{
     filter: drop-shadow(1px 0.5px 2px var(--shadow-color));

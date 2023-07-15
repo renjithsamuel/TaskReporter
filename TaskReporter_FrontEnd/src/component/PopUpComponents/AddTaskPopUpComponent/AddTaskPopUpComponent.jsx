@@ -1,7 +1,7 @@
 import './AddTaskPopUpComponent.css'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
-import { postTask } from '../../../utils/ApiHandlers';
+import { disableScroll, enableScroll, postTask } from '../../../utils/ApiHandlers';
 import { useEffect, useState } from 'react';
 
 function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,setTaskList,setCategoryList}) {
@@ -9,7 +9,7 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
     const [addTaskElementsInput,setAddTaskElementsInput ] = useState([]);
     const [addTaskObject,setAddTaskObject] = useState({category : categoryId,completed: false});
 
-    useState(()=>{
+    useEffect(()=>{
         const newArr = [
                         {keyForDB : 'taskName',inputLabel : "Task Name : " , inputPlaceHolder : " Enter task Name " , inputType : "text",id : "taskNameInput"},
                         {keyForDB : 'description',inputLabel : "Description : " , inputPlaceHolder : " Enter Description " , inputType : "text",id:"taskDescriptionInput"},
@@ -19,11 +19,18 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
         setAddTaskElementsInput(newArr);
     },[]);
 
+    useEffect(()=>{
+        disableScroll();
+        return ()=>{enableScroll()}
+    },[])
+
+
+
     const handleAddTaskInputChange = (keyForDB,value) => {
         let updatedAddTaskObj = {...addTaskObject}
         updatedAddTaskObj[keyForDB] = value ;
         setAddTaskObject(updatedAddTaskObj);
-        console.log(addTaskObject);
+        // console.log(addTaskObject);
     }
 
     const handleSubmitAddtask = ()=>{
