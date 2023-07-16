@@ -19,7 +19,7 @@ function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,add
             <div className="removeReportContentWrapper">
                 <div className="titleRemoveReport">
                     <div className="removeReportName">
-                        {addReportEffectObj.taskName}
+                       Mark  "{addReportEffectObj.taskName}" as incomplete
                     </div>
                     {/* <div className="closeRemoveReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />

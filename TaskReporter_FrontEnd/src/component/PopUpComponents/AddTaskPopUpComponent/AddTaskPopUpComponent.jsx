@@ -51,7 +51,7 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
             <div className="addTaskContentWrapper">
                 <div className="titleAddTask">
                     <div className="addTaskName">
-                        {category}
+                        Add task to   {category}
                     </div>
                     {/* <div className="closeAddTaskBtn" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
