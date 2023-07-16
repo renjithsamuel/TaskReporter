@@ -22,7 +22,7 @@
     --graph-bg-color : #f6f6f6;
     --shadow-color :  #737373b4;
     --popup-cover-color : #4d4c4c5e;
-    --cover-color : #ffffffe1;
+    --cover-color : #ffffff;
 }
 
 [data-theme = 'light'][data-pallete = 'default']{
@@ -37,7 +37,7 @@
   --graph-bg-color : #f6f6f6;
   --shadow-color :  #737373b4;
   --popup-cover-color : #4d4c4c5e;
-  --cover-color : #ffffffe1;
+  --cover-color : #ffffff;
 }
 
 
@@ -128,7 +128,7 @@
   --graph-bg-color: #fc91b8;
   --shadow-color: #F8E8EE;
   --popup-cover-color: #f79cbe86;
-  --cover-color: #d9608cec;
+  --cover-color: #d9608cfa;
 }
 
 [ data-theme = 'dark'][data-pallete = 'killMachine']{
@@ -143,7 +143,7 @@
   --graph-bg-color: #1e1e1e;
   --shadow-color: #2e2e2e;
   --popup-cover-color: #2525256b;
-  --cover-color: #414141d4;
+  --cover-color: #414141;
 }
 
 [ data-theme = 'light'][data-pallete = 'desertSand']{
@@ -157,8 +157,8 @@
   --border-color: #000000;
   --graph-bg-color: #f8eccd;
   --shadow-color: #c3b794;
-  --popup-cover-color: #8c79459b;
-  --cover-color: #dfd7bfd3;
+  --popup-cover-color: #8c794588;
+  --cover-color: #dfd7bf;
 }
 
 [ data-theme = 'dark'][data-pallete = 'cyberpunkRed']{
@@ -172,7 +172,7 @@
   --border-color: #ffffff;
   --graph-bg-color: #381b4b;
   --shadow-color: #642553ac;
-  --popup-cover-color: #8e294b91;
+  --popup-cover-color: #8e294b66;
   --cover-color: #522546;
 }
 
@@ -187,8 +187,8 @@
   --border-color: #000000;
   --graph-bg-color: #A6E3E9;
   --shadow-color: #676767a9;
-  --popup-cover-color: #e3fdfda1;
-  --cover-color: #cbf1f5f0;
+  --popup-cover-color: #e3fdfd6f;
+  --cover-color: #cbf1f5;
 }
 
 [ data-theme = 'light'][data-pallete = 'peaceGreen']{
@@ -218,7 +218,7 @@
   --graph-bg-color: #D6E4F0; /* Use the adjusted primary blue color for the graph background */
   --shadow-color: #484848;
   --popup-cover-color: #f6f6f68d;
-  --cover-color: #6aa1f9d6; /* Lightened cover color */
+  --cover-color: #6aa1f9f7; /* Lightened cover color */
 }
 
 
