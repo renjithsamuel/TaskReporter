@@ -5,6 +5,7 @@ function DeadlinesComponent({theme,currentCategory,currentTasks}) {
                         
     useEffect(()=>{
             console.log("deadline", currentCategory );
+            console.log(currentTasks.some((elem)=>elem.completed==false));
     },[])
 
     return ( <>
@@ -29,10 +30,13 @@ function DeadlinesComponent({theme,currentCategory,currentTasks}) {
                             Tasks Deadline
                         </div>
                         <div className="tasksDeadlineCardsWrapper">
-                            {   (currentTasks && currentTasks.length > 0)?
+                            {   (currentTasks && currentTasks.length > 0 && !(currentTasks.some((elem)=>elem.completed==true)))?
                                 currentTasks.map((deadlineElement,index)=>{
-                                    return <DeadlineSingleCardComponent key={index} taskName={deadlineElement.taskName} endDate={deadlineElement.endDate}  daysMore={calculateRemainingDays(deadlineElement.endDate)}/>
-                                }):<h3 style={{marginLeft:'40%'}}>No Tasks</h3>
+                                    if(deadlineElement.completed == false){
+                                             return <DeadlineSingleCardComponent key={index} taskName={deadlineElement.taskName} endDate={deadlineElement.endDate}  daysMore={calculateRemainingDays(deadlineElement.endDate)}/>
+                                    }
+                                })
+                                :<h3 style={{marginLeft:'35%'}}>No Incomplete Tasks</h3>
                             }
                         </div>
                     </div>
