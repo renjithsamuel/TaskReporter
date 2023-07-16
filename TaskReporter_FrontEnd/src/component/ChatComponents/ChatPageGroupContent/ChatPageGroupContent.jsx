@@ -39,7 +39,7 @@ export default ChatPageGroupContent;
 function MessageElement({senderName,message,senderEmail,currentUserEmail}) {
     return ( 
     <>
-        <div className="messageElementWrapper" style={{marginLeft:(senderEmail==currentUserEmail)?'39vw':'0vw',borderColor:(senderEmail==currentUserEmail)?'var(--border-color)':'transparent',backgroundColor:(senderEmail==currentUserEmail)?'var(--secondary-light-color)':'var(--hover-color)'}}>
+        <div className="messageElementWrapper" style={{marginLeft:(senderEmail==currentUserEmail)?'39vw':'0vw',borderColor:(senderEmail==currentUserEmail)?'var(--border-color)':'var(--border-color)',backgroundColor:(senderEmail==currentUserEmail)?'var(--secondary-color)':'var(--secondary-light-color)'}}>
             <div className="senderName">
                 {senderName}
             </div>

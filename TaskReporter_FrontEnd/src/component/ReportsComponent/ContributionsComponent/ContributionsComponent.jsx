@@ -90,7 +90,7 @@ function ContributionCardComponent({theme,cardName , percentage , tasksCompleted
                 </div>
                 <div className="contributionCardPercentIndicator">
                     <div className="contributionCardPercentBar">
-                            <Line percent={(percentage.toString()!="NaN")?Math.floor(percentage):0} strokeWidth={3} strokeColor={(theme=='light')?'#000000':"var(--secondary-color)"} />
+                            <Line percent={(percentage.toString()!="NaN")?Math.floor(percentage):0} strokeWidth={3} strokeColor={'var(--text-color)'} />
                     </div>
                     <div className="contributionCardPercentName">
                         {(percentage.toString()!="NaN")?Math.floor(percentage):0}%

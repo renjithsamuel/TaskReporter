@@ -71,7 +71,7 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                             Projects
                     </div>
                     <div className="sortByTime">
-                        <div className="taskAddButton" onClick={()=>{setIsOpened(true)}}>
+                        <div className="categoryAddButton" onClick={()=>{setIsOpened(true)}}>
                                 <div className="AddCategoryName">
                                     Add Category
                                 </div>

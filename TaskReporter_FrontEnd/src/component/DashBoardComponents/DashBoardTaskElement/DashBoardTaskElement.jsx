@@ -33,7 +33,7 @@ function DashBoardTaskElement({theme,category,setReportObject,reportObject}) {
             <div className="progressIndicator">
                 <div className="progressInPercent">{progress}% complete</div>
                  <div className="progressInBar">
-                     <Line percent={progress} strokeWidth={4} strokeColor={(theme=='light')?'#000000':"var(--secondary-color)"} /> 
+                     <Line percent={progress} strokeWidth={4} strokeColor={'var(--text-color)'} /> 
                  </div>
             </div>
             <div className="CategoryRemainder">

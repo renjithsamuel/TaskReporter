@@ -67,9 +67,9 @@
     align-self: flex-start;
     justify-content: start;
     align-items: center;
-    height: 5vh;
+    height: auto;
     width: max-content;
-    padding: 3vh;
+    padding: 1vh;
     text-align: center;
     text-justify: auto;
     margin-top: 2vh;
@@ -81,6 +81,7 @@
 .themeName{
     width: max-content;
     padding: 1vh;
+    margin: 1vh;
     border-radius: var(--border-radius);
     background-color: var(--secondary-color);
 }
@@ -96,4 +97,32 @@
 .themeSelectorsRight:hover{
     cursor: pointer;
     filter: drop-shadow(1px 5px 5px var(--shadow-color));
+}
+
+.themeSwitcherRight{
+    margin: 1vh;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    /* background-color: var(--secondary-light-color); */
+}
+.themesLight,.themesDark{
+    margin  : 1vh;
+    padding: 1vh;
+    display: flex;
+    align-items: center ;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+    
+}
+.themesLightName,.themesDarkName{
+    display: flex;
+    justify-content: start;
+     width: max-content;
+    padding: 1vh;
+    margin: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-color);
+}
+.themesDisplayLight,.themesDisplayDark{
+    display: flex;
 }

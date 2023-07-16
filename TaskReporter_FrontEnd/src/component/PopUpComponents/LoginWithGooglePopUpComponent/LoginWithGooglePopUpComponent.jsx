@@ -49,7 +49,7 @@ function LoginWithGooglePopUpComponent({theme,setIsLoggedIn,connectedToServer}) 
                             <lord-icon
                                 src="https://cdn.lordicon.com/xjovhxra.json"
                                 trigger="loop"
-                                colors={(theme=='light')?'primary:#616161' : "primary:#a866ee"}
+                                colors={(theme=='light')?'primary:#000000' : "primary:#ffffff"}
                                 style={{width:40 , height:40,marginLeft:5}}>
                             </lord-icon>
                         </div>
