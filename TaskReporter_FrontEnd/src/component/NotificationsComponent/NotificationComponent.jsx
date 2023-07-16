@@ -7,9 +7,9 @@ import acceptLight from '../../assets/accept-light.svg'
 import acceptDark from '../../assets/accept-dark.svg'
 import closeLight from '../../assets/close-light.svg'
 import closeDark from '../../assets/close-dark.svg'
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { acceptInvite,rejectInvite ,enableScroll} from '../../utils/ApiHandlers';
-
+import {UserContext} from '../../App'
 
 function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage,setCategoryList}) {
 
@@ -17,6 +17,7 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
         console.log("invites check ",currentUser);
     },[])
 
+    const setCurrentUser = useContext(UserContext);
 
     return ( <>
         <div className="notificationsWrapper">
@@ -38,7 +39,7 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
                 {
                     (currentUser && (Array.isArray(currentUser.invites) && currentUser.invites.length > 0))?(
                         currentUser.invites.map((invite,index)=>{
-                           return <SingleNotificationComponent key={index}  theme={theme} currentUser={currentUser} invitedCategoryId={invite._id} invitedBy={invite.createdBy.username} categoryName={invite.categoryName} setCategoryList={setCategoryList}/>
+                           return <SingleNotificationComponent key={index} setCurrentUser={setCurrentUser} theme={theme} currentUser={currentUser} invitedCategoryId={invite._id} invitedBy={invite.createdBy.username} categoryName={invite.categoryName} setCategoryList={setCategoryList}/>
                         })
                     ):(<h3>No Notifications</h3>)
                 }
@@ -50,7 +51,7 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
 export default NotificationComponent;
 
 
-function SingleNotificationComponent({theme,invitedBy,categoryName,invitedCategoryId,currentUser,setCategoryList}) {
+function SingleNotificationComponent({theme,invitedBy,categoryName,invitedCategoryId,currentUser,setCategoryList,setCurrentUser}) {
 
 
     return ( <>
@@ -64,10 +65,10 @@ function SingleNotificationComponent({theme,invitedBy,categoryName,invitedCatego
                 </div>
             </div>
             <div className="singleNotificaitonControlElem">
-                <div className="notificationAcceptBtn" onClick={()=>{acceptInvite(currentUser,invitedCategoryId,setCategoryList)}}>
+                <div className="notificationAcceptBtn" onClick={()=>{acceptInvite(currentUser,invitedCategoryId,setCategoryList,setCurrentUser)}}>
                     <img src={(theme=='light')?acceptLight:acceptDark} alt="accept" height={30} width={30} />
                 </div>
-                <div className="notificationRejectBtn" onClick={()=>{rejectInvite(currentUser,invitedCategoryId)}}>
+                <div className="notificationRejectBtn" onClick={()=>{rejectInvite(currentUser,invitedCategoryId,setCurrentUser)}}>
                     <img src={(theme=='light')?rejectLight:rejectDark} alt="reject" height={30} width={30} />
                 </div>      
             </div>

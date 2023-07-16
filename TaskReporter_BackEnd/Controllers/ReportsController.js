@@ -267,3 +267,40 @@ exports.deleteReportByTaskId = async (req,res,next) => {
         })
     }
 }
+
+
+
+exports.deleteManyReportsByCategoryId = async (req, res, next) => {
+    const categoryId = req.params.id;
+  
+    if (!categoryId) {
+      return res.status(404).json({
+        success: false,
+        message: "send valid categoryId",
+      });
+    }
+  
+    try {
+      // Find and delete all tasks with the matching categoryId
+      const deletedReportsData = await reports.deleteMany({ category: categoryId });
+  
+      if (!deletedReportsData) {
+        return res.status(404).json({
+          success: false,
+          message: "No reports found with the given categoryId",
+        });
+      }
+  
+      return res.status(200).json({
+        success: true,
+        data: deletedReportsData,
+        count: deletedReportsData.length,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        err,
+      });
+    }
+  };

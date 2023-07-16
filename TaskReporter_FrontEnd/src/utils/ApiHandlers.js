@@ -1,7 +1,7 @@
 import { isOnline } from "../App";
 
-//  `https://taskreporternode.onrender.com`;
-// https://taskreporternode.onrender.com
+//  `http://localhost:-3000`;
+// https://taskreporternode-.onrender.com
 
 
 export const sendHttpRequest = async (url , method, data) => {
@@ -519,7 +519,7 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
 }
 
 // accepting invite
-export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryList) => { 
+export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryList,setCurrentUser) => { 
     console.log("category Id check",currentUser,invitedCategoryId);
     const patchUserWithAcceptedInviteUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
     // patch user with deleted invite
@@ -535,6 +535,11 @@ export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryLi
         console.log(patchedUserResponse.data);
         // add as colaborator in category
         updateColaboratorInCategory(invitedCategoryId,currentUser._id,setCategoryList);
+        setCurrentUser((prevState)=>{
+            let newInvites = [...(prevState.invites)];
+            newInvites = newInvites.filter((elem)=>elem._id!=invitedCategoryId);
+            return {...prevState,invites : newInvites};
+        })
     }else{
         console.log("Something else went wrong while patching users with invite!");
     }
@@ -552,8 +557,8 @@ export const updateColaboratorInCategory = async (invitedCategoryId , currentUse
     console.log("get category response update category ",inviteCategoryResponse);
     // patch cateogory with new colaborator
     const patchCategoriesWithNewColaboratorUrl = `https://taskreporternode.onrender.com/api/v1/categories/patchCategoryById/${invitedCategoryId}`;
-    const prevColaboratorsArray = inviteCategoryResponse.data.colaborators.map((colaborator)=>colaborator._id);
-    const patchableColaboratorsData = {colaborators : [ ...prevColaboratorsArray,currentUserId]};
+    const prevColaboratorsArray = inviteCategoryResponse.data.colaborators.map((colaborator)=>{ if(colaborator._id!=currentUserId)return colaborator._id});
+    let patchableColaboratorsData = {colaborators : [ ...prevColaboratorsArray,currentUserId]};
     console.log("patchabel colaborator data",patchableColaboratorsData);
     const patchedCategoryResponse = await sendHttpRequest(patchCategoriesWithNewColaboratorUrl , 'PATCH' , patchableColaboratorsData);
     console.log(patchedCategoryResponse,"checking patch3");
@@ -573,7 +578,7 @@ export const updateColaboratorInCategory = async (invitedCategoryId , currentUse
 // Rejecting invite
 
 // accepting invite
-export const rejectInvite = async (currentUser , invitedCategoryId) => { 
+export const rejectInvite = async (currentUser , invitedCategoryId , setCurrentUser) => { 
     const patchUserWithAcceptedInviteUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
     // console.log("category Id check",categoryId);
     // patch user with deleted invite
@@ -586,7 +591,145 @@ export const rejectInvite = async (currentUser , invitedCategoryId) => {
     }else if(patchedUserResponse && patchedUserResponse.success == true){
         console.log("Users patched Invites!");
         console.log(patchedUserResponse.data);
+        setCurrentUser((prevState)=>{
+            let newInvites = [...(prevState.invites)];
+            newInvites = newInvites.filter((elem)=>elem._id!=invitedCategoryId);
+            return {...prevState,invites : newInvites};
+        })
     }else{
         console.log("Something else went wrong while patching users with invite!");
     }
 }
+
+
+
+
+
+
+// deleteCategory
+export const deleteCategory = async (categoryId,setCategoryList) =>{
+    if(!confirm("Are you sure want to delete the category?"))return;
+    if(categoryId==null){
+        console.log("send valid details!");
+        return; 
+    }
+    const deleteCategoryUrl = `https://taskreporternode.onrender.com/api/v1/categories/deleteCategoryById/${categoryId}`;
+    const gottenResponse = await sendHttpRequest(deleteCategoryUrl,'DELETE');
+    if(gottenResponse && gottenResponse.success == true){
+        console.log("transaction succesful", gottenResponse.data);
+        // setReportList
+        setCategoryList((prevList)=>{
+            const updatedList = prevList.filter((elem) => elem._id !== gottenResponse.data._id);
+            return updatedList;
+        });
+
+        deleteManyTasksByCategoryId(categoryId);
+        deleteManyReportsByCategoryId(categoryId); 
+    }else if(gottenResponse && gottenResponse.success == false){
+        console.log("error during transaction",gottenResponse.message);
+    }else {
+        console.log("something else went wrong in the server");
+    }
+}
+
+const deleteManyTasksByCategoryId = async (categoryId) => {
+    const deleteManyTasksUrl = `https://taskreporternode.onrender.com/api/v1/tasks/deleteManyTasksByCategoryId/${categoryId}`;
+    const gottenResponse = await sendHttpRequest(deleteManyTasksUrl,'DELETE');
+    if(gottenResponse && gottenResponse.success == true){
+        console.log("transaction succesful", gottenResponse.data);
+    }else if(gottenResponse && gottenResponse.success == false){
+        console.log("error during transaction",gottenResponse.message);
+    }else {
+        console.log("something else went wrong in the server");
+    }
+}
+
+const deleteManyReportsByCategoryId = async (categoryId) => {
+    const deleteManyReportsUrl = `https://taskreporternode.onrender.com/api/v1/reports/deleteManyReportsByCategoryId/${categoryId}`;
+    const gottenResponse = await sendHttpRequest(deleteManyReportsUrl,'DELETE');
+    if(gottenResponse && gottenResponse.success == true){
+        console.log("transaction succesful", gottenResponse.data);
+    }else if(gottenResponse && gottenResponse.success == false){
+        console.log("error during transaction",gottenResponse.message);
+    }else {
+        console.log("something else went wrong in the server");
+    }
+}
+
+// delete Task
+export const deleteTask = async (taskId,weight,setTaskList,categoryId,setCategoryList) =>{
+    if(!confirm("Are you sure want to delete the task?"))return;
+    if(taskId==null || categoryId==null){
+        console.log("send valid details!");
+        return; 
+    }
+    const deleteTasksUrl = `https://taskreporternode.onrender.com/api/v1/tasks/deleteTaskById/${taskId}`;
+    const gottenResponse = await sendHttpRequest(deleteTasksUrl,'DELETE');
+    if(gottenResponse && gottenResponse.success == true){
+        console.log("transaction succesful", gottenResponse.data);
+        // setReportList
+        setTaskList((prevList) => {
+            const updatedList = prevList.filter((task) => task._id !== gottenResponse.data._id);
+            return updatedList;
+          });
+
+        patchCategoryWithDeleteTask(weight,categoryId,setCategoryList)
+    }else if(gottenResponse && gottenResponse.success == false){
+        console.log("error during transaction",gottenResponse.message);
+    }else {
+        console.log("something else went wrong in the server");
+    }
+}
+
+
+
+// patch category with overall weight decrease and taskCount decrease
+export const patchCategoryWithDeleteTask = async (weight,categoryId,setCategoryList) => {
+    if(weight==null || categoryId==null){
+        console.log("send valid task data");
+        return;
+    }
+    // checking input
+    console.log("checking input",weight,categoryId);
+    // getting category 
+    const getCategoryDataUrl = `https://taskreporternode.onrender.com/api/v1/categories/getUniqueCategoryById/${categoryId}`;
+    const responseObject = await sendHttpRequest(getCategoryDataUrl , 'GET');
+    console.log(responseObject,"checking gotten object");
+    if(responseObject && responseObject.success == false){
+        console.log("Something went wrong while getting object!");
+    }else if(responseObject && responseObject.success == true){
+        console.log("got object!");
+        console.log(responseObject.data);
+    }else{
+        console.log("Something else went wrong while patching Task!");
+    }
+
+    let updatedCategoryData = {overAllWeight : responseObject.data.overAllWeight - weight , tasksCount : responseObject.data.tasksCount - 1};
+    const patchCategoryUrl = `https://taskreporternode.onrender.com/api/v1/categories/patchCategoryById/${categoryId}`;
+    console.log("patchableData  check",updatedCategoryData);
+    const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl , 'PATCH' , updatedCategoryData);
+    console.log(patchedCategoryResponse,"checking patched category");
+    if(patchedCategoryResponse && patchedCategoryResponse.success == false){
+        console.log("Something went wrong while patching category!");
+    }else if(patchedCategoryResponse && patchedCategoryResponse.success == true){
+        console.log("patched category!");
+        console.log(patchedCategoryResponse.data);
+        setCategoryList((prevCategoryList)=>{
+            let updatedCategoryList = prevCategoryList.map((category)=>{
+                if(category._id!=patchedCategoryResponse.data._id){
+                    return category;
+                }else{
+                    return patchedCategoryResponse.data;
+                }
+            });
+            return updatedCategoryList;
+        })
+    }else{
+        console.log("Something else went wrong while patching category!");
+    }
+}
+
+
+// fix reports tasks and chats after deleting a category
+
+

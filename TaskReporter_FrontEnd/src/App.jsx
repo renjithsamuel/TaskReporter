@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import './App.css'
 // router dom
 import {  Routes, Route } from "react-router-dom";
@@ -18,10 +18,8 @@ import LoginWithGooglePopUpComponent from './component/PopUpComponents/LoginWith
 import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests, getReportsByCategoryId} from './utils/ApiHandlers';
 
 
-import ShowReportsPopUpComponent from './component/PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
-
 export let isOnline = false;
-
+export const UserContext = createContext(null);
 
 function App(){
   const [connectedToServer,setConnectedToServer] = useState(false);
@@ -79,7 +77,11 @@ function App(){
 
   useEffect(()=>{
       console.log("category list at tasks" , categoryList);
-      if(categoryList!=null){
+      if(categoryList && categoryList.some((elem)=>!elem || elem._id===undefined)){
+        let tempCategoryList = categoryList.filter((elem)=>elem && elem._id!==undefined);
+        setCategoryList(tempCategoryList);
+      }
+      else if(categoryList!=null){
           categoryList.map((category) => {
                  getTasksByCategoryId(category._id,setTaskList);
                  getReportsByCategoryId(category._id,setReportList);
@@ -88,12 +90,20 @@ function App(){
   },[categoryList]);
 
   useEffect(()=>{
-      if(taskList!=null){
+    if(taskList && taskList.some((elem)=>!elem || elem._id===undefined)){
+        let tempTaskList = taskList.filter((elem)=>elem && elem._id!==undefined);
+        setTaskList(tempTaskList);
+      }
+     else if(taskList!=null){
           console.log("tasklist : " ,taskList);
       }
   },[taskList]);
 
   useEffect(()=>{
+    if(reportList && reportList.some((elem)=>!elem || elem._id===undefined)){
+        let tempReportList = reportList.filter((elem)=> elem && elem._id!==undefined);
+        setReportList(tempReportList);
+      }
       if(reportList!=null){
           console.log("reportlist : " ,reportList);
       }
@@ -125,27 +135,29 @@ function App(){
   return (
     <>
     {(!gotUser  )?<LoginWithGooglePopUpComponent theme={theme} setIsLoggedIn={setIsLoggedIn} connectedToServer={connectedToServer}/>:''}
-    <div className='AppWrapper'>
-          <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme} setCurrentUser={setCurrentUser}/>
-          {/* {(selectedNavElem=='tasks')?    
-            <PageContent theme={theme} currentUser={currentUser}/>
-            :(selectedNavElem=='chat')?
-            <ChatPageContent theme={theme}  currentUser={currentUser}/>
-            :(selectedNavElem=='dashboard')?
-            <DashBoardPageContent theme={theme}  currentUser={currentUser}/>
-            :(selectedNavElem=='settings')?
-            <SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser}/>
-            :'Logging out!'
-          } */}
-          <Routes>
-              <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
-              <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
-              <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} reportList={reportList}/>}/>
-              <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList} reportList={reportList}/>}/>
-              <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />}/>
-          </Routes>
-    </div>
-
+    <UserContext.Provider value={setCurrentUser}>
+      <div className='AppWrapper'>
+          
+            <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme} setCurrentUser={setCurrentUser}/>
+            {/* {(selectedNavElem=='tasks')?    
+              <PageContent theme={theme} currentUser={currentUser}/>
+              :(selectedNavElem=='chat')?
+              <ChatPageContent theme={theme}  currentUser={currentUser}/>
+              :(selectedNavElem=='dashboard')?
+              <DashBoardPageContent theme={theme}  currentUser={currentUser}/>
+              :(selectedNavElem=='settings')?
+              <SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser}/>
+              :'Logging out!'
+            } */}
+            <Routes>
+                <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
+                <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
+                <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} reportList={reportList}/>}/>
+                <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList} reportList={reportList}/>}/>
+                <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />}/>
+            </Routes>
+      </div>
+    </UserContext.Provider>
 
     </>
     // <ShowReportsPopUpComponent theme={theme} />

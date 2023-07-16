@@ -4,12 +4,15 @@ import addIconLight from '../../../assets/add-light.svg';
 import addIconDark from '../../../assets/add-dark.svg';
 import arrowRightLight from '../../../assets/arrow-right-light.svg'
 import arrowRightDark from '../../../assets/arrow-right-dark.svg'
+import deleteIconDark from '../../../assets/delete-dark.svg'
+import deleteIconLight from '../../../assets/delete-light.svg'
 import { useEffect, useState } from 'react';
 import AddTaskPopUpComponent from '../../PopUpComponents/AddTaskPopUpComponent/AddTaskPopUpComponent';
 import AddCategoryPopUpComponent from '../../PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent'
 import RemoveReportPopUpComponent from '../../PopUpComponents/RemoveReportPopUpComponent/RemoveReportPopUpComponent';
 import AddReportPopUpComponent from '../../PopUpComponents/AddReportPopUpComponent/AddReportPopUpComponent';
 import ShowReportsPopUpComponent from '../../PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
+import { deleteCategory } from '../../../utils/ApiHandlers';
 
 function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,currentUser,setCategoryList,reportList,setReportList}) {
     
@@ -20,22 +23,28 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
     const [addShowReportsComponent,setAddShowReportsComponent] = useState({isOpen : false , category : '',categoryId:'',categoryList : categoryList,taskList : taskList,reportList:reportList});
 
     useEffect(() => {
+        // deleting undefined
+        if(categoryList && categoryList.some((elem)=>!elem || elem._id===undefined)){
+            let tempCategoryList = categoryList.filter((elem)=> elem && elem._id!==undefined);
+            setCategoryList(tempCategoryList);
+        }
+
+        else{
         setShowCompleted(Array(categoryList.length).fill(false));
         console.log("category list at page content task",categoryList);
         if(categoryList!=null){
             setAddShowReportsComponent({isOpen : false , category : '',categoryId:'',categoryList : categoryList,taskList : taskList,reportList:reportList})
-        }
+        }}
       }, [categoryList]);
 
-    useEffect(()=>{
-        console.log(isAddTaskPopUpOpen);
-        console.log("taskList at page content task component",taskList);
-    },[isAddTaskPopUpOpen])
+
 
     useEffect(()=>{
-        console.log("task list at page content task",taskList);
-
-    },[taskList]);
+        if(taskList!=null && taskList.some((elem)=>!elem || elem._id===undefined)){
+            let tempTaskList = taskList.filter((elem) => elem && elem!=undefined);
+            setTaskList(tempTaskList);
+        }
+    },[taskList])
     
       const handleSwitchCompleted = (status,cateindex) => {
         setShowCompleted(prevState => {
@@ -77,18 +86,24 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                     </div>
                 </div>
                 <div className="tasksCategoryWise">
-                    {(categoryList && categoryList.length>0)?'':(<div style={{width:'100%',height:'100%'}}><h1 style={{display:'flex',justifyContent:'center',alignItems:'center'}}>No Categories</h1></div>)}
-                    {categoryList.map((category ,cateindex)=>{
+
+                {
+                    (categoryList && categoryList.length>0 && categoryList[0]!=undefined)?
+                        categoryList.map((category ,cateindex)=>{
                             return (
                             <div className='singleCategoryWrapper' key={cateindex}>
                                     <div className="categoryTopNav">
-                                            <div className="categoryName">{category.categoryName}</div>
+                                            <div className="categoryName">{(category && category._id)?category.categoryName:''}</div>
                                             <div className="taskBottomElems">
+                                                 <div className="deleteTaskButton" onClick={()=>{deleteCategory(category._id,setCategoryList)}}>
+                                                    <img src={(theme=='light')?deleteIconLight:deleteIconDark} alt="delete" height={30} width={30} />
+                                                </div>
                                                  <div className="addTaskButton" onClick={()=>{setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id});}}>
                                                     <img src={(theme=='light')?addIconLight:addIconDark} alt="add" height={30} width={30} />
                                                 </div>
                                                  <div className="goToReportPageFromTask" onClick={()=>{setAddShowReportsComponent((prevState)=>{return {...prevState,isOpen:true,categoryId:category._id}})}} >
-                                                    <img src={(theme=='light')?arrowRightLight:arrowRightDark} alt="projectView" height={30} /></div>
+                                                    <img src={(theme=='light')?arrowRightLight:arrowRightDark} alt="projectView" height={30} />
+                                                </div>
                                             </div>
         
                                     </div>
@@ -104,13 +119,14 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                                     </div>
                                     <div className="tasklists">
                                         {/* show if an element has no tasks */}
-                                    {
-                                    taskList.some(elem => elem.category && elem.category.categoryName === category.categoryName) ? 
+                                    {(taskList && taskList.length > 0 && taskList[0] != undefined)?
+                                      taskList.some(elem => elem.category && category && elem.category.categoryName === category.categoryName) ? 
                                         (showCompleted[cateindex]==false)
-                                                            ?taskList.some(elem => elem.category && elem.category.categoryName === category.categoryName && elem.completed == false)? '' :  (<h3>No Pending Tasks</h3>) 
-                                                            : taskList.some(elem => elem.category && elem.category.categoryName === category.categoryName && elem.completed == true)? '' :  (<h3>No Completed Tasks</h3>) 
-                                    : (<h3>No Tasks</h3>) }
-
+                                                            ? taskList.some(elem => elem && elem.category && elem.category.categoryName === category.categoryName && elem.completed == false)? '' :  (<h3>No Pending Tasks</h3>) 
+                                                            : taskList.some(elem => elem && elem.category && elem.category.categoryName === category.categoryName && elem.completed == true)? '' :  (<h3>No Completed Tasks</h3>) 
+                                    : (<h3>No Tasks</h3>)  
+                                    : (<h3>No Tasks</h3>) 
+                                                                }
                                     {   
                                         (taskList && (Array.isArray(taskList) && taskList.length > 0))?
                                             taskList.map((elem)=>{
@@ -121,6 +137,8 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                                                             elem={elem} setTaskList={setTaskList}
                                                                 taskList={taskList} theme={theme}
                                                                 currentUser={currentUser} 
+                                                                category={category}
+                                                                setCategoryList={setCategoryList}
                                                                 addReportEffectObj={addReportEffectObj} 
                                                                 setAddReportEffectObj={setAddReportEffectObj}/>}
                                             })
@@ -131,7 +149,11 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                             </div>)
                             }
                         )
+
+                        :(<div style={{width:'100%',height:'100%'}}><h1 style={{display:'flex',justifyContent:'center',alignItems:'center'}}>No Categories</h1></div>)
                     }
+
+                    
                 </div>
         
         

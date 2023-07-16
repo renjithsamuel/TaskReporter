@@ -226,7 +226,7 @@ exports.patchUserById = async (req,res,next) => {
     const patchableData = {
         username :  req.body.username || userData.username, 
         emailId : req.body.emailId || userData.emailId,
-        invites : (req.body.updateInvite==true)?req.body.invites : userData.invites,
+        invites : (req.body.updateInvite==true || req.body.invites!=null)?req.body.invites : userData.invites,
     }
     try{
         const patchedData = await users.findByIdAndUpdate(userID , { $set: { ...patchableData } }, {new : true});

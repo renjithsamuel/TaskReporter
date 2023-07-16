@@ -64,7 +64,7 @@ function ContributionsComponent({theme,reportObject,currentCategory}) {
 
                                     :
 
-                                    <h3>No Data to Show</h3>
+                                    <h3 style={{marginLeft:'40%'}}>No Data to Show</h3>
                             }
                         </div>
                 </div>

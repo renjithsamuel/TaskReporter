@@ -117,10 +117,19 @@ exports.postCategory = async (req,res,next) => {
                 message : "something went wrong while posting!"
             })
         };
+
+        const populatedData = await categories
+                                                .findById(postedData._id)
+                                                .populate('colaborators')
+                                                .populate('createdBy')
+                                                .exec();
+  
+
+
         return res.status(200).json({
             success : true ,
-            data : postedData ,
-            count : postedData.length
+            data : populatedData ,
+            count : 1
         })
     }catch(err){
         return res.status(500).json({
@@ -176,11 +185,10 @@ exports.patchCategoryById = async (req,res,next) => {
         startDate : req.body.startDate || CategoryData.startDate,
         endDate : req.body.endDate || CategoryData.endDate,
         colaborators : req.body.colaborators || CategoryData.colaborators,
-        taskCompletedBy : req.body.taskCompletedBy || CategoryData.taskCompletedBy,
         createdBy : req.body.createdBy || CategoryData.createdBy,
-        weightsCompleted : req.body.weightsCompleted || CategoryData.weightsCompleted,
-        contributions : req.body.contributions || CategoryData.contributions,
-        overAllWeight : req.body.overAllWeight || CategoryData.overAllWeight,
+        weightsCompleted : (req.body.weightsCompleted!=null)?req.body.weightsCompleted : CategoryData.weightsCompleted,
+        contributions : (req.body.contributions!=null)?req.body.contributions : CategoryData.contributions,
+        overAllWeight : (req.body.overAllWeight!=null )?req.body.overAllWeight:CategoryData.overAllWeight,
         tasksCount : (req.body.tasksCount!=null)?req.body.tasksCount:CategoryData.tasksCount,
     }
     try{

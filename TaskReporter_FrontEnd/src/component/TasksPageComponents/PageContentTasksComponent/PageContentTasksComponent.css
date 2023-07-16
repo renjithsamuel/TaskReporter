@@ -109,7 +109,7 @@
     font-size: large;
     font-weight: 600;
     display: flex;
-    width: 65%;
+    width: 50%;
     align-items: center;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -128,20 +128,20 @@
     height: 7vh;
 }
 
-.addTaskButton{
+.addTaskButton,.deleteTaskButton{
     z-index: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3vw;
-    height: 6vh;
+    padding: 1vh;
+    height: max-content;
     margin: 1vh ;
     border-radius: var(--border-radius);
     background-color: var(--primary-color);
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
-.addTaskButton:hover{
+.addTaskButton:hover,.deleteTaskButton:hover{
     cursor: pointer;
     background-color: var(--hover-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
@@ -149,9 +149,9 @@
 
 .goToReportPageFromTask{
     z-index: 0;
-    width: 3vw;
-    height: 6vh;
+    padding: 1vh;
     margin: 1vh ;
+    height: max-content;
     border-radius: var(--border-radius);
     display: flex;
     justify-content: center;
