@@ -5,7 +5,7 @@ import './main.css'
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <BrowserRouter >
+    <BrowserRouter  basename={import.meta.env.PUBLIC_URL}>
             <div className="lines">
                 <div className="line"></div>
                 <div className="line"></div>

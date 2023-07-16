@@ -732,4 +732,4 @@ export const patchCategoryWithDeleteTask = async (weight,categoryId,setCategoryL
 
 // fix reports tasks and chats after deleting a category
 
-
+// link changes affect the vercel app to go to 404 not found

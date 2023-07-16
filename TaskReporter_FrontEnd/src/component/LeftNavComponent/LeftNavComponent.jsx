@@ -14,7 +14,15 @@ function LeftNavComponent({compName,compIcon,svgIcon,selectedNavElem , setSelect
         <Link to={(compName=='logout')? '/': (compName!='tasks')?"/"+compName:'/'} style={{textDecoration:'none',color:'var(--text-color)'}}>
         <div className="LeftNavComponentWrapper" 
                 style={{backgroundColor:(selectedNavElem==compName)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==compName)?'var(--border-color)':'var(--primary-color)' }} 
-                onClick={()=>{ setSelectedNavElem(compName);if(compName=='logout'){setCurrentUser({});localStorage.clear();location.reload();} }}
+                    onClick={   ()=>{
+                             setSelectedNavElem(compName);
+                             if(compName=='logout'){
+                                if(confirm("Are you sure want to logout?")){
+                                    setCurrentUser({});
+                                    localStorage.clear();
+                                    location.reload()
+                                }
+                            }}}
                 >
             <div className="NavIcon">
                 {
