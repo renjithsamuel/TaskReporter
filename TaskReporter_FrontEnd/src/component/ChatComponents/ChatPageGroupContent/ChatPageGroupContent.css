@@ -33,11 +33,9 @@
     margin-left: 2vw;
     height: min-content;
    width: max-content;
-}
-
-.ChatContentDate{
-    position: fixed;
-    right: 0;
+   width: 50%;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 .chatContentChats{

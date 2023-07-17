@@ -10,7 +10,6 @@ let socket;
 function ChatPageGroupContent({theme,currentUser , currentCategory}) {
     const [messages,setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
-    const [currentMessageDate , setCurrentMessageDate] = useState('');
     const [currentSkipCount,setCurrentSkipCount] = useState(0);
     const chatContentsBox = useRef();
 
@@ -87,7 +86,7 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                 <div className="currentChatsWrapper">
                 <div className="currentChatsTopContent">
                     <div className="ChatContentName">{currentCategory.categoryName}</div>
-                    <div className="ChatContentDate">{currentMessageDate}</div>
+                    {/* <div className="ChatContentDate"></div> */}
                 </div>
                     <div className="chatContentChats" ref={chatContentsBox}>
                         <div className="loadMoreChatsButton" onClick={()=>{handleLoadMoreChats()}}> Load More...</div>

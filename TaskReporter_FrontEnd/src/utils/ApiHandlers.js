@@ -774,11 +774,12 @@ export const patchCategoryWithDeleteTask = async (weight,categoryId,setCategoryL
 // link changes affect the vercel app to go to 404 not found
 
 export const getPreviousChats = async ( categoryId,setMessages ,skipCount,setCurrentSkipCount) => {
+    console.log(setCurrentSkipCount);
     const getChatUrl = `https://taskreporternode.onrender.com/api/v1/chatByDates/getPreviousChats?id=${categoryId}&skipCount=${skipCount}&limit=${20}`;
     const gottenReponse = await sendHttpRequest(getChatUrl , 'GET');
     if(gottenReponse && gottenReponse.success == true) {
         console.log("message got successfully!",gottenReponse);
-        if(gottenReponse.data.length == 0){alert("No messages more!");console.log("no more messages");setCurrentSkipCount(skipCount-1);}
+        if(gottenReponse.data && gottenReponse.data.length == 0){alert("No messages more!");console.log("no more messages"); if(skipCount>0){setCurrentSkipCount(skipCount - 1)}}
         setMessages((prevMessages) =>
                 {   
                     let tempMessages = [...prevMessages,...gottenReponse.data];
@@ -787,7 +788,8 @@ export const getPreviousChats = async ( categoryId,setMessages ,skipCount,setCur
                     console.log("tempmessages",tempMessages);
                     return tempMessages;
                 }
-            );
+        );
+      
         
     }else if(gottenReponse && gottenReponse.success == false){
         console.log("message getting failed");
