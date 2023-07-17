@@ -108,9 +108,10 @@
 
 
 .messageElementWrapper{
-    min-width: 9vw;
-    width: max-content;
-    height: max-content;
+    width: fit-content;
+    height: fit-content;
+    max-width: 25vw;
+    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -132,15 +133,33 @@
     font-weight: 600;
 }
 
-.message{
-    text-indent: 0.6vw;
-    font-size: medium;
-    text-align: start;
-    font-weight: 400;
-}
-
 .messageDate{
     font-size: x-small;
     margin-left: 1vw;
 }
 
+
+.message{
+    text-indent: 0.6vw;
+    font-size: medium;
+    text-align: start;
+    font-weight: 400;
+    width: 90%;
+    word-wrap: break-word;
+}
+
+
+.messageAndTime{
+    margin-top: 0.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.messageTime{
+    font-size: x-small;
+    margin-left: 1vw;
+    font-style: italic;
+    align-self: flex-end;
+}

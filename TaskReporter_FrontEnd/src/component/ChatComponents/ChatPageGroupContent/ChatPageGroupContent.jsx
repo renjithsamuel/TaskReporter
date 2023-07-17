@@ -17,6 +17,7 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
             getPreviousChats(currentCategory._id,setMessages);
           // Join the room when the category ID is available
           socket = io('https://taskreporternode.onrender.com/');
+        //   socket = io('http://localhost:3001');
           socket.emit('joinRoom', currentCategory._id);
           socket.on("connect",()=>{
               console.log(`you have connected with the server with socket id : ${socket.id}`);
@@ -26,8 +27,9 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
           socket.on('message', (data) => {
             setMessages((prevMessages) =>
                 {
-                    // let tempMessages = prevMessages.filter((elem) => elem == currentCategory._id);
-                    return [...prevMessages,data];
+                    let tempMessages =[...prevMessages,data];
+                    tempMessages = tempMessages.sort((a,b)=> new Date(a.chatDate) - new Date(b.chatDate));
+                    return tempMessages;
                 }
 
             );
@@ -71,7 +73,10 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                         {
                            (messages && messages.length > 0)?
                             messages.map((message,index)=>{
-                                return <MessageElement key={index} senderName={message.senderName} chatDate={new Date(message.chatDate).toLocaleDateString('en-US',{day : 'numeric',month : 'short',year : 'numeric'})} message={message.text} senderEmail={message.senderEmail} currentUserEmail={currentUser.emailId}/>
+                                return <MessageElement key={index} 
+                                senderName={message.senderName} chatTime={new Date(message.chatDate).getHours() + ":" + new Date(message.chatDate).getHours()} 
+                                chatDate={new Date(message.chatDate).toLocaleDateString('en-US',{day : 'numeric',month : 'short',year : 'numeric'})} 
+                                message={message.text} senderEmail={message.senderEmail} currentUserEmail={currentUser.emailId}/>
                             })
                             :
                             <h3 style={{marginLeft:'45%',marginTop:'30%'}}>No Data</h3>
@@ -96,7 +101,7 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
 export default ChatPageGroupContent;
 
 
-function MessageElement({senderName,message,senderEmail,currentUserEmail,chatDate}) {
+function MessageElement({senderName,message,senderEmail,currentUserEmail,chatDate,chatTime}) {
     return ( 
     <>
         <div className="messageElementWrapper" style={{alignSelf:(senderEmail==currentUserEmail)?'end':'start',borderColor:(senderEmail==currentUserEmail)?'var(--border-color)':'var(--border-color)',backgroundColor:(senderEmail==currentUserEmail)?'var(--secondary-color)':'var(--secondary-light-color)'}}>
@@ -108,8 +113,13 @@ function MessageElement({senderName,message,senderEmail,currentUserEmail,chatDat
                     {chatDate}
                 </div>
             </div>
-            <div className="message">
-                {message}
+            <div className="messageAndTime">
+                <div className="message">
+                    {message}
+                </div>
+                <div className="messageTime">
+                    {chatTime}
+                </div>
             </div>
 
         </div>

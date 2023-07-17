@@ -740,9 +740,11 @@ export const getPreviousChats = async ( categoryId,setMessages ) => {
     if(gottenReponse && gottenReponse.success == true) {
         console.log("message got successfully!");
         setMessages((prevMessages) =>
-                {
-                    let tempMessages = prevMessages.filter((elem) => elem == categoryId);
-                    return [...tempMessages,...gottenReponse.data];
+                {   
+                    let tempMessages = [...prevMessages,...gottenReponse.data];
+                    tempMessages.filter((elem) => elem == categoryId);
+                    tempMessages = tempMessages.sort((a,b)=> new Date(a.chatDate) - new Date(b.chatDate));
+                    return tempMessages;
                 }
             );
     }else if(gottenReponse && gottenReponse.success == false){
