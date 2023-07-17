@@ -8,7 +8,7 @@ import acceptDark from '../../assets/accept-dark.svg'
 import closeLight from '../../assets/close-light.svg'
 import closeDark from '../../assets/close-dark.svg'
 import { useContext, useEffect } from 'react';
-import { acceptInvite,rejectInvite ,enableScroll} from '../../utils/ApiHandlers';
+import { acceptInvite,rejectInvite ,enableScroll, clearNotifications} from '../../utils/ApiHandlers';
 import {UserContext} from '../../App'
 
 function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage,setCategoryList}) {
@@ -30,7 +30,7 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
                         >
                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
                     </div>
-                    <div className="clearAllButton">
+                    <div className="clearAllButton" onClick={()=>{clearNotifications(currentUser,setCurrentUser)}}>
                         <img src={(theme=='light')?clearAllLight:clearAllDark} alt="clear" height={30}  width={30}/>
                     </div>
                 </div>

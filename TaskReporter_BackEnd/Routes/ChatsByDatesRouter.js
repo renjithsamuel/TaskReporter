@@ -4,14 +4,15 @@ const cors = require('cors');
 
 router.use(cors({origin : '*'}));
 
-const {getChatByDates,getPreviousChats,getUniqueChatByDateById,postChatByDate,patchChatByDateById,deleteChatByDateById} = require('../Controllers/ChatByDatesController');
+const {getChatByDates,getPreviousChats,getUniqueChatByDateById,postChatByDate,patchChatByDateById,deleteChatByDateById,deleteManyChatsByCategoryId} = require('../Controllers/ChatByDatesController');
 
 router.get('/getChatByDates',getChatByDates);
-router.get('/getPreviousChats/:id',getPreviousChats);
+router.get('/getPreviousChats',getPreviousChats);
 router.get('/getUniqueChatByDateById/:id',getUniqueChatByDateById);
 router.post('/postChatByDate',postChatByDate);
 router.patch('/patchChatByDateById/:id',patchChatByDateById);
 router.delete('/deleteChatByDateById/:id',deleteChatByDateById);
+router.delete('/deleteManyChatsByCategoryId/:id',deleteManyChatsByCategoryId);
 
 
 

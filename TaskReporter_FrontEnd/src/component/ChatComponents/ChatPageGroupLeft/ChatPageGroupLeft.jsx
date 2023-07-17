@@ -10,14 +10,14 @@ function chatPageGroupLeft({categoryList,setCurrentCategory,currentCategory}) {
     <>
         <div className="chatPageGroupLeftWrapper">
             <div className="chatTitle">Chats</div>
-            <div className="chatPageSingleGroup">
-            {(categoryList && categoryList.length > 0 &&  categoryList[0]._id!=undefined)?    
-               categoryList.map((category,index)=>{
-                   return <SingleGroup key={index} category={category} setCurrentCategory={setCurrentCategory} currentCategory={currentCategory}/> 
-               })
-               :
-               <h3> No Chats</h3> 
-            }    
+            <div className="chatPageSingleGroupsWrapper">
+                    {(categoryList && categoryList.length > 0 &&  categoryList[0]._id!=undefined)?    
+                    categoryList.map((category,index)=>{
+                        return <SingleGroup key={index} category={category} setCurrentCategory={setCurrentCategory} currentCategory={currentCategory}/> 
+                    })
+                    :
+                    <h3> No Chats</h3> 
+                    }    
             </div>
         </div>
     </> );

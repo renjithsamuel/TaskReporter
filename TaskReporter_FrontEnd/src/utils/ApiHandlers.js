@@ -518,6 +518,30 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
     }
 }
 
+// clear notifications
+
+export const clearNotifications = async (currentUser,setCurrentUser) => {
+    if(!confirm("Are you sure?")){
+        return;
+    }
+    const patchUserWithClearedNotificationsUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
+    // patch user with deleted invite
+    const patchableDataForDeleteNotifications = {invites : [],updateInvite:  true};
+    const patchedUserResponse = await sendHttpRequest(patchUserWithClearedNotificationsUrl , 'PATCH' , patchableDataForDeleteNotifications);
+    console.log(patchedUserResponse,"checking patch");
+    if(patchedUserResponse && patchedUserResponse.success == false){
+        console.log("Something went wrong while patching users with invite!");
+    }else if(patchedUserResponse && patchedUserResponse.success == true){
+        console.log("Users patched Invites!");
+        console.log(patchedUserResponse.data);
+        setCurrentUser((prevState)=>{
+            return {...prevState,invites : []};
+        })
+    }else{
+        console.log("Something else went wrong while patching users with invite!");
+    }
+}
+
 // accepting invite
 export const acceptInvite = async (currentUser , invitedCategoryId,setCategoryList,setCurrentUser) => { 
     console.log("category Id check",currentUser,invitedCategoryId);
@@ -625,6 +649,7 @@ export const deleteCategory = async (categoryId,setCategoryList) =>{
 
         deleteManyTasksByCategoryId(categoryId);
         deleteManyReportsByCategoryId(categoryId); 
+        deleteManyChatsByCategoryId(categoryId);
     }else if(gottenResponse && gottenResponse.success == false){
         console.log("error during transaction",gottenResponse.message);
     }else {
@@ -655,6 +680,20 @@ const deleteManyReportsByCategoryId = async (categoryId) => {
         console.log("something else went wrong in the server");
     }
 }
+
+const deleteManyChatsByCategoryId = async (categoryId) => {
+    const deleteManyChatsUrl = `https://taskreporternode.onrender.com/api/v1/reports/deleteManyChatsByCategoryId/${categoryId}`;
+    const gottenResponse = await sendHttpRequest(deleteManyChatsUrl,'DELETE');
+    if(gottenResponse && gottenResponse.success == true){
+        console.log("transaction succesful", gottenResponse.data);
+    }else if(gottenResponse && gottenResponse.success == false){
+        console.log("error during transaction",gottenResponse.message);
+    }else {
+        console.log("something else went wrong in the server");
+    }
+}
+
+
 
 // delete Task
 export const deleteTask = async (taskId,weight,setTaskList,categoryId,setCategoryList) =>{
@@ -734,19 +773,22 @@ export const patchCategoryWithDeleteTask = async (weight,categoryId,setCategoryL
 
 // link changes affect the vercel app to go to 404 not found
 
-export const getPreviousChats = async ( categoryId,setMessages ) => {
-    const getChatUrl = `https://taskreporternode.onrender.com/api/v1/chatByDates/getPreviousChats/${categoryId}`;
+export const getPreviousChats = async ( categoryId,setMessages ,skipCount,setCurrentSkipCount) => {
+    const getChatUrl = `https://taskreporternode.onrender.com/api/v1/chatByDates/getPreviousChats?id=${categoryId}&skipCount=${skipCount}&limit=${20}`;
     const gottenReponse = await sendHttpRequest(getChatUrl , 'GET');
     if(gottenReponse && gottenReponse.success == true) {
-        console.log("message got successfully!");
+        console.log("message got successfully!",gottenReponse);
+        if(gottenReponse.data.length == 0){alert("No messages more!");console.log("no more messages");setCurrentSkipCount(skipCount-1);}
         setMessages((prevMessages) =>
                 {   
                     let tempMessages = [...prevMessages,...gottenReponse.data];
-                    tempMessages.filter((elem) => elem == categoryId);
+                    tempMessages = tempMessages.filter((elem) => elem.category == categoryId);
                     tempMessages = tempMessages.sort((a,b)=> new Date(a.chatDate) - new Date(b.chatDate));
+                    console.log("tempmessages",tempMessages);
                     return tempMessages;
                 }
             );
+        
     }else if(gottenReponse && gottenReponse.success == false){
         console.log("message getting failed");
     }else{

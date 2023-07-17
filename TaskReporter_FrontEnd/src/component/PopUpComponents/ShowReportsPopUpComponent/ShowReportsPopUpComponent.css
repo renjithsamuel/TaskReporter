@@ -24,7 +24,15 @@
     background-color: var(--primary-hover-color);
 }
 
+.showReportContentCategoriesListSelector{
+    padding: 1vh;
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+
 .showReportContentEachCategory{
+    
     margin-top: 0.7vh;
     text-align: center;
     width: 90%;
@@ -47,9 +55,6 @@
     cursor: pointer;
 }
 
-.showReportContentCategoriesListSelector{
-    padding: 1vh;
-}
 
 
 .showReportContentRightWrapper{

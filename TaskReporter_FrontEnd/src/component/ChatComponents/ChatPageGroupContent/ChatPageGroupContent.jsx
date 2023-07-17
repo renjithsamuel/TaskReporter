@@ -1,5 +1,5 @@
 import './ChatPageGroupContent.css'
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import sendLight from '../../../assets/send-light.svg'
 import sendDark from '../../../assets/send-dark.svg'
 // socket
@@ -11,13 +11,18 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
     const [messages,setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
     const [currentMessageDate , setCurrentMessageDate] = useState('');
+    const [currentSkipCount,setCurrentSkipCount] = useState(0);
+    const chatContentsBox = useRef();
 
     useEffect(() => {
         if (currentCategory._id) {
-            getPreviousChats(currentCategory._id,setMessages);
+            setTimeout(()=>{  chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;},1000)
+            getPreviousChats(currentCategory._id,setMessages,currentSkipCount,setCurrentSkipCount);
+            
           // Join the room when the category ID is available
           socket = io('https://taskreporternode.onrender.com/');
         //   socket = io('http://localhost:3001');
+
           socket.emit('joinRoom', currentCategory._id);
           socket.on("connect",()=>{
               console.log(`you have connected with the server with socket id : ${socket.id}`);
@@ -28,11 +33,12 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
             setMessages((prevMessages) =>
                 {
                     let tempMessages =[...prevMessages,data];
+                    tempMessages = tempMessages.filter((elem) => elem.category == currentCategory._id);
                     tempMessages = tempMessages.sort((a,b)=> new Date(a.chatDate) - new Date(b.chatDate));
                     return tempMessages;
                 }
-
             );
+            chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;
           });
 
           return () => {
@@ -41,18 +47,24 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
         }
       }, [currentCategory._id]);
 
+
         // Function to send a message to the server
         const sendMessage = () => {
+            if(inputMessage.trim()==""){
+                setInputMessage('');
+                console.log("Enter valid message!");
+                return;
+            }   
             if (currentCategory._id) {
                 const chatObject = { 
                                     room : currentCategory._id,
-                                    text: inputMessage,
+                                    text: inputMessage.trim(),
                                     senderEmail: currentUser.emailId,
                                     senderName: currentUser.username,
                                     category : currentCategory._id,
                                     chatDate : new Date()
                                     // .toLocaleDateString('en-US',{day : 'numeric',month : 'short',year : 'numeric'}),
-                                      }
+                            }
                 socket.emit('message', chatObject);
                 postChatByDate(chatObject);
                 setInputMessage('');
@@ -60,6 +72,13 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                 console.log("Category ID is null, cannot send message.");
             }
         };
+
+
+        const handleLoadMoreChats = async ( ) => {
+                setCurrentSkipCount(currentSkipCount + 1);
+                 getPreviousChats(currentCategory._id,setMessages,currentSkipCount+1,setCurrentSkipCount);
+                 console.log(currentSkipCount);
+        } 
 
     return ( 
     <>
@@ -69,7 +88,8 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                     <div className="ChatContentName">{currentCategory.categoryName}</div>
                     <div className="ChatContentDate">{currentMessageDate}</div>
                 </div>
-                    <div className="chatContentChats">
+                    <div className="chatContentChats" ref={chatContentsBox}>
+                        <div className="loadMoreChatsButton" onClick={()=>{handleLoadMoreChats()}}> Load More...</div>
                         {
                            (messages && messages.length > 0)?
                             messages.map((message,index)=>{
@@ -87,8 +107,14 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                    
                     <div className="messageInputBox">
                         <input type="text"  placeholder='type message' id='messageBoxInput' 
-                             value={inputMessage}
-                           onChange={(e) => setInputMessage(e.target.value)}/>
+                                value={inputMessage}
+                                onChange={(e) => setInputMessage(e.target.value)} 
+                                onKeyUp={(e) => {
+                                    if (e.key === "Enter") {
+                                    sendMessage();
+                                    }
+                                }}
+                        />
                     </div>
                     <div className="messageSendButton"  onClick={sendMessage}>
                             <img src={(theme=='light')?sendLight:sendDark} alt="send" height={30}  width={30}/>

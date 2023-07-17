@@ -19,18 +19,20 @@
 }
 
 .currentChatsTopContent{
-    padding: 1vh;
+    margin-top: 0.5vh;
     font-size: x-large;
-    font-weight: 600;
+    font-weight: 500;
     display: flex;
+    justify-content: start;
     position: fixed;
     top: 0;
     left: 0;
     width: 95%;
 }
 .ChatContentName{
+    margin-left: 2vw;
+    height: min-content;
    width: max-content;
-   margin-left: 2vw;
 }
 
 .ChatContentDate{
@@ -48,7 +50,7 @@
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .sendMessageBar{
@@ -131,6 +133,7 @@
 .senderName{
     font-size: medium;
     font-weight: 600;
+    font-style: normal;
 }
 
 .messageDate{
@@ -141,7 +144,7 @@
 
 .message{
     text-indent: 0.6vw;
-    font-size: medium;
+    font-size: small;
     text-align: start;
     font-weight: 400;
     width: 90%;
@@ -162,4 +165,24 @@
     margin-left: 1vw;
     font-style: italic;
     align-self: flex-end;
+}
+
+
+.loadMoreChatsButton{
+    margin-left: 45%;
+    padding: 1vh;
+    width: max-content;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+}
+
+.loadMoreChatsButton:hover{
+    cursor: pointer;
+    background-color: var(--primary-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+.loadMoreChatsButton:active{
+    background-color: var(--shadow-color);
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
 }

@@ -19,10 +19,15 @@
     background-color: var(--primary-hover-color);
 }
 
+.chatPageSingleGroupsWrapper{
+    height: 75vh;
+    overflow-y: scroll;
+}
+
 .singleGroupWrapper{
     margin-top: 2vh;
     width: 13vw;
-    height: 8vh;
+    height: max-content;
     padding: 1vh;
     display: flex;
     justify-content: start;

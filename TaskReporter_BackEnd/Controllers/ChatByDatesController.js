@@ -26,11 +26,12 @@ exports.getChatByDates = async (req,res,next) =>{
 
 // get previous chats 
 exports.getPreviousChats = async (req, res, next) => {
-    const categoryId = req.params.id; // Assuming the category ID is passed as a parameter
-  
+    const categoryId = req.query.id; // Assuming the category ID is passed as a parameter
+    const skipCount = parseInt(req.query.skipCount);
+    const limit = parseInt(req.query.limit);
     try {
       // Find the chat messages for the specified category, limit to the most recent 30, and sort them in descending order by chatDate
-      const chatMessages = await chatByDates.find({ category: categoryId }).sort({ chatDate: -1 }).limit(60);
+      const chatMessages = await chatByDates.find({ category: categoryId }).sort({ chatDate: -1 }).skip(skipCount*limit).limit(limit).exec();
   
       return res.status(200).json({
         success: true,
@@ -222,3 +223,40 @@ exports.deleteChatByDateById = async (req,res,next) => {
         })
     }
 }
+
+
+//  delete many chats
+exports.deleteManyChatsByCategoryId = async (req, res, next) => {
+    const categoryId = req.params.id;
+  
+    if (!categoryId) {
+      return res.status(404).json({
+        success: false,
+        message: "send valid categoryId",
+      });
+    }
+  
+    try {
+      // Find and delete all chats with the matching categoryId
+      const deletedChatsData = await chatByDates.deleteMany({ category: categoryId });
+  
+      if (!deletedChatsData) {
+        return res.status(404).json({
+          success: false,
+          message: "No tasks found with the given categoryId",
+        });
+      }
+  
+      return res.status(200).json({
+        success: true,
+        data: deletedChatsData,
+        count: deletedChatsData.length,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        err,
+      });
+    }
+  };
