@@ -3,8 +3,19 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const config = require('config');
-
 const app = express();
+
+// socket
+// const server = require('http').createServer(app);
+// const io = require('socket.io')(server); 
+const io = require('socket.io')(3001,{
+    cors:{
+        // origin:['http://localhost:5173/' , 'http://localhost:5174/']
+        origin : '*'
+    }
+}); 
+
+
 app.use(express.json());
 app.use(helmet());
 app.use(cors({origin:'*'}));
@@ -14,8 +25,7 @@ app.use(cors({origin:'*'}));
 const usersRoutes = require('./Routes/UsersRouter');
 const tasksRoutes = require('./Routes/TasksRouter');
 const reportsRoutes = require('./Routes/ReportsRouter');
-const chatsRoutes = require('./Routes/ChatsRouter');
-const chatByDateRoutes = require('./Routes/ChatsByDatesRouter');
+const  {router : chatByDateRoutes , chatSocketHandler} = require('./Routes/ChatsByDatesRouter');
 const categoriesRoutes = require('./Routes/CategoriesRouter');
 
 
@@ -37,9 +47,11 @@ app.get('/api/v1/health',(req,res,next)=>{
 app.use('/api/v1/users',usersRoutes);
 app.use('/api/v1/tasks',tasksRoutes);
 app.use('/api/v1/reports',reportsRoutes);
-app.use('/api/v1/chats',chatsRoutes);
-app.use('/api/v1/chatByDate',chatByDateRoutes);
+app.use('/api/v1/chatByDates',chatByDateRoutes);
 app.use('/api/v1/categories',categoriesRoutes);
+
+// chat socket handler
+chatSocketHandler(io);
 
 const port = process.env.PORT || 3000;
 

@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 const ChatByDatesSchema = mongoose.Schema({
-    chatContentToday : {type : Array},
-    chatDate : {type : String},
-    chatGroup : {type : mongoose.Schema.Types.ObjectId,ref : 'chats'}
+    text : {type : String},
+    senderEmail : {type : String},
+    senderName : {type : String},
+    chatDate : {type : Date},
+    room : {type : String},
+    category : {type : mongoose.Schema.Types.ObjectId,ref : 'categories'}
 });
 
 module.exports = mongoose.model('chatByDates',ChatByDatesSchema);

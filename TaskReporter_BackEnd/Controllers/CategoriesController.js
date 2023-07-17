@@ -199,10 +199,18 @@ exports.patchCategoryById = async (req,res,next) => {
                 message : "something went wrong while patching Category!"
             })
         }
+
+        
+        const populatedData = await categories
+                                                .findById(patchedData._id)
+                                                .populate('colaborators')
+                                                .populate('createdBy')
+                                                .exec();
+
         return res.status(200).json({
             success : true,
-            data : patchedData ,
-            count : patchedData.length
+            data : populatedData ,
+            count : 1
         })
     }catch(err){
         return res.status(500).json({

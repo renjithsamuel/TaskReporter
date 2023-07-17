@@ -24,6 +24,27 @@ exports.getChatByDates = async (req,res,next) =>{
     }
 }
 
+// get previous chats 
+exports.getPreviousChats = async (req, res, next) => {
+    const categoryId = req.params.id; // Assuming the category ID is passed as a parameter
+  
+    try {
+      // Find the chat messages for the specified category, limit to the most recent 30, and sort them in descending order by chatDate
+      const chatMessages = await chatByDates.find({ category: categoryId }).sort({ chatDate: -1 }).limit(60);
+  
+      return res.status(200).json({
+        success: true,
+        data: chatMessages,
+        count: chatMessages.length,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error!" + err,
+      });
+    }
+  };
+
 // Get specific chatByDate
 exports.getUniqueChatByDateById = async (req,res,next) => {
     const chatByDateID  = req.params.id;
@@ -62,16 +83,19 @@ exports.getUniqueChatByDateById = async (req,res,next) => {
 
 
 exports.postChatByDate = async (req,res,next) => {
-    if(req.body.chatContentToday == null || req.body.chatDate == null){
+    if(req.body.text == null || req.body.senderEmail == null || req.body.senderName == null|| req.body.chatDate == null|| req.body.category == null|| req.body.room == null ){
         return res.status(404).json({
             success : false,
             message: "send valid details!"
         })
     }
-    const postableData = {chatContentToday : req.body.chatContentToday,
-                             chatDate : req.body.chatDate ,
-                             chatGroup : req.body.chatGroup ,
-                            };
+    const postableData = {text : req.body.text,
+                        senderEmail : req.body.senderEmail ,
+                        senderName : req.body.senderName ,
+                        chatDate : req.body.chatDate ,
+                        category : req.body.category ,
+                        room : req.body.room
+                    };  
 
     try{
         const postedData = await chatByDates.create(postableData);
@@ -113,7 +137,7 @@ exports.patchChatByDateById = async (req,res,next) => {
             })
         }
     
-    if(req.body.chatContentToday == null && req.body.chatDate == null && req.body.chatGroup == null){
+    if(req.body.text == null && req.body.senderEmail == null && req.body.senderName == null && req.body.chatDate == null && req.body.category == null && req.body.room == null){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -130,9 +154,12 @@ exports.patchChatByDateById = async (req,res,next) => {
         })
     }
     const patchableData = {
-        chatContentToday :  req.body.chatContentToday || userData.chatContentToday, 
+        text :  req.body.text || userData.text, 
+        senderEmail : req.body.senderEmail || userData.senderEmail,
+        senderName : req.body.senderName || userData.senderName,
         chatDate : req.body.chatDate || userData.chatDate,
-        chatGroup : req.body.chatGroup || userData.chatGroup
+        category : req.body.category || userData.category,
+        room : req.body.room || userData.room,
     }
     try{
         const patchedData = await chatByDates.findByIdAndUpdate(chatByDateID , { $set: { ...patchableData } }, {new : true});
