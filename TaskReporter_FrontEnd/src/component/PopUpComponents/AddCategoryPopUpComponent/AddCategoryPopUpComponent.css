@@ -18,6 +18,8 @@
 .popUpContentAddCategoryWrapper{
     width: 40vw;
     height: max-content;
+    max-height: 80vh;
+    overflow-y: scroll;
     backdrop-filter: blur(10px);    
     background-color: var(--cover-color);
     padding: 4vh;
