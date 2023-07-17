@@ -16,6 +16,7 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
 
     useEffect(() => {
         if (currentCategory._id) {
+            setCurrentSkipCount(0);
             setTimeout(()=>{  chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;},1000)
             getPreviousChats(currentCategory._id,setMessages,currentSkipCount,setCurrentSkipCount);
             
