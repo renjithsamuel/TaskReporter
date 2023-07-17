@@ -733,3 +733,36 @@ export const patchCategoryWithDeleteTask = async (weight,categoryId,setCategoryL
 // fix reports tasks and chats after deleting a category
 
 // link changes affect the vercel app to go to 404 not found
+
+export const getPreviousChats = async ( categoryId,setMessages ) => {
+    const getChatUrl = `https://taskreporternode.onrender.com/api/v1/chatByDates/getPreviousChats/${categoryId}`;
+    const gottenReponse = await sendHttpRequest(getChatUrl , 'GET');
+    if(gottenReponse && gottenReponse.success == true) {
+        console.log("message got successfully!");
+        setMessages((prevMessages) =>
+                {
+                    let tempMessages = prevMessages.filter((elem) => elem == categoryId);
+                    return [...tempMessages,...gottenReponse.data];
+                }
+            );
+    }else if(gottenReponse && gottenReponse.success == false){
+        console.log("message getting failed");
+    }else{
+        console.log("something else went wrong!");
+    }
+} 
+
+export const postChatByDate = async (chatObject) => {
+    if(!chatObject){
+        console.log("Send valid chat object!");
+    }
+    const postChatUrl = `https://taskreporternode.onrender.com/api/v1/chatByDates/postChatByDate`;
+    const postedReponse = await sendHttpRequest(postChatUrl , 'POST', chatObject);
+    if(postedReponse && postedReponse.success == true) {
+        console.log("message posted successfully!");
+    }else if(postedReponse && postedReponse.success == false){
+        console.log("message posting failed");
+    }else{
+        console.log("something else went wrong!");
+    }
+}

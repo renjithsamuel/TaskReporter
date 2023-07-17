@@ -74,7 +74,7 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                                         Categories
                                         </div>
                                         <div className="showReportContentCategoriesListSelector">
-                                                {
+                                                {   (categoryList && categoryList.length > 0 && categoryList[0]._id!=undefined)?
                                                         categoryList.map((category,categoryIndex)=>{
                                                                 return (
                                                                         <div className="showReportContentEachCategory" 
@@ -85,6 +85,8 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                                                         </div>
                                                                 )
                                                         })
+                                                        :
+                                                        <h3>No Data</h3>
                                                 }
                                         </div>
                                 </div> 

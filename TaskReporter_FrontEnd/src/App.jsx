@@ -151,7 +151,7 @@ function App(){
             } */}
             <Routes >
                 <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
-                <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>}/>
+                <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>}/>
                 <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} reportList={reportList}/>}/>
                 <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList} reportList={reportList}/>}/>
                 <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />}/>

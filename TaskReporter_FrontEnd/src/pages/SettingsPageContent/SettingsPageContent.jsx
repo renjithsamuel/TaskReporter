@@ -54,7 +54,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                         <div className="themeSwitcherRight">
                             <div className="themesLight">
                                 <div className="themesLightName">
-                                    Light themes
+                                    Light 
                                 </div>
                                 <div className="themesDisplayLight">
                                     {
@@ -67,7 +67,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                             </div>
                             <div className="themesDark">
                                 <div className="themesDarkName">
-                                    Dark themes
+                                    Dark 
                                 </div>
                                 <div className="themesDisplayDark">
                                     {

@@ -12,6 +12,11 @@
 .chatTitle{
     font-size: larger;
     font-weight: 600;
+    padding: 1vh;
+    width: 95%;
+    text-align: center;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-hover-color);
 }
 
 .singleGroupWrapper{
@@ -22,6 +27,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    border: 1px solid transparent;
     border-radius: var(--border-radius);
     background-color: var(--secondary-color);
 }
