@@ -5,21 +5,11 @@ const helmet = require('helmet');
 const config = require('config');
 const app = express();
 
-// socket
-// const server = require('http').createServer(app);
-// const io = require('socket.io')(server); 
-const io = require('socket.io')(3001,{
-    cors:{
-        // origin:['http://localhost:5173/' , 'http://localhost:5174/']
-        origin : '*'
-    }
-}); 
-
+const socketio = require('socket.io')
 
 app.use(express.json());
 app.use(helmet());
 app.use(cors({origin:'*'}));
-
 
 // router imports 
 const usersRoutes = require('./Routes/UsersRouter');
@@ -50,11 +40,28 @@ app.use('/api/v1/reports',reportsRoutes);
 app.use('/api/v1/chatByDates',chatByDateRoutes);
 app.use('/api/v1/categories',categoriesRoutes);
 
-// chat socket handler
-chatSocketHandler(io);
 
 const port = process.env.PORT || 3000;
 
-app.listen(port , ()=>{
+const server = app.listen(port , ()=>{
     console.log("listening to port",port);
 })
+
+const io = socketio(server,{
+    cors:{
+        origin : '*'
+    }
+})
+// chat socket handler
+chatSocketHandler(io);
+
+
+// const io = socketio(3001,{
+//     cors:{
+//         origin : '*'
+//     }
+// }); 
+
+// socket
+// const server = require('http').createServer(app);
+// const io = require('socket.io')(server); 

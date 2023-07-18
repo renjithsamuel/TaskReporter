@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import { getPreviousChats, postChatByDate } from '../../../utils/ApiHandlers';
 let socket;
 
-function ChatPageGroupContent({theme,currentUser , currentCategory}) {
+function ChatPageGroupContent({theme,currentUser,currentCategory}) {
     const [messages,setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
     const [currentSkipCount,setCurrentSkipCount] = useState(0);
@@ -21,7 +21,7 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
             
           // Join the room when the category ID is available
           socket = io('https://taskreporternode.onrender.com/');
-        //   socket = io('http://localhost:3001');
+        //   socket = io('http://localhost:3000');
 
           socket.emit('joinRoom', currentCategory._id);
           socket.on("connect",()=>{
@@ -38,15 +38,14 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                     return tempMessages;
                 }
             );
-            chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;
+            setTimeout(()=>{  chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;},500)
           });
-
           return () => {
             socket.disconnect();
           };
         }
       }, [currentCategory._id]);
-
+      
 
         // Function to send a message to the server
         const sendMessage = () => {
@@ -94,7 +93,7 @@ function ChatPageGroupContent({theme,currentUser , currentCategory}) {
                            (messages && messages.length > 0)?
                             messages.map((message,index)=>{
                                 return <MessageElement key={index} 
-                                senderName={message.senderName} chatTime={new Date(message.chatDate).getHours() + ":" + new Date(message.chatDate).getHours()} 
+                                senderName={message.senderName} chatTime={new Date(message.chatDate).getHours() + ":" + new Date(message.chatDate).getMinutes()} 
                                 chatDate={new Date(message.chatDate).toLocaleDateString('en-US',{day : 'numeric',month : 'short',year : 'numeric'})} 
                                 message={message.text} senderEmail={message.senderEmail} currentUserEmail={currentUser.emailId}/>
                             })
