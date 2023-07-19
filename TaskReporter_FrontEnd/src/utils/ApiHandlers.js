@@ -131,6 +131,7 @@ export const getCategoriesByUserId = async (userId,setCategoryList) => {
     console.log("categories response data ",categoriesResponseData);
     if(categoriesResponseData && categoriesResponseData.success == true){
         console.log("category fetched successfully!");
+        // let tempCategoryList = categoriesResponseData.data.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
         setCategoryList(categoriesResponseData.data);
     }else if(categoriesResponseData && categoriesResponseData.success == false){
         console.log("error while fetching categories " , categoriesResponseData.message);
@@ -398,7 +399,7 @@ export const postReport = async (addReportObj,setReportList) =>{
         console.log("send valid details!");
         return;
     }
-    addReportObj['reportedDate'] = new Date(addReportObj.reportedDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
+    // addReportObj['reportedDate'] = new Date(addReportObj.reportedDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
     const postReportUrl = `https://taskreporternode.onrender.com/api/v1/reports/postReport`;
     console.log("task  check",addReportObj);
     const postedReportResponse = await sendHttpRequest(postReportUrl , 'POST' , addReportObj);
@@ -779,7 +780,7 @@ export const getPreviousChats = async ( categoryId,setMessages ,skipCount,setCur
     const gottenReponse = await sendHttpRequest(getChatUrl , 'GET');
     if(gottenReponse && gottenReponse.success == true) {
         console.log("message got successfully!",gottenReponse);
-        if(gottenReponse.data && gottenReponse.data.length == 0){alert("No messages more!");console.log("no more messages"); if(skipCount>0){setCurrentSkipCount(skipCount - 1)}}
+        if(gottenReponse.data && gottenReponse.data.length == 0){console.log("no more messages"); if(skipCount>0){setCurrentSkipCount(skipCount - 1)}}
         setMessages((prevMessages) =>
                 {   
                     let tempMessages = [...prevMessages,...gottenReponse.data];

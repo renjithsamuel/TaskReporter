@@ -45,15 +45,21 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                     setCurrentCategory(category);
                                 }
                         });
-                
+                        
+                        // report list filtering
                         tempReportList = reportList.map((report)=>{
                                 if(report && report.category &&  report.category._id ==  reportObject.categoryId){
                                         return report;
                                 } 
                         });
-
-                        tempReportList = tempReportList.filter((elem) => elem!=undefined);
                         
+                        tempReportList = tempReportList.filter((elem) => elem!=undefined);
+
+                        tempReportList = removeDuplicates(tempReportList);
+
+                        tempReportList = tempReportList.sort((a,b) => new Date(b.reportedDate) - new Date(a.reportedDate));
+
+                        // task list filtering
                         tempTaskList = taskList.map((task)=>{
                                 if( task && task.category && task.category._id == reportObject.categoryId){
                                         return task;
@@ -61,11 +67,26 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                         })
 
                         tempTaskList = tempTaskList.filter((elem) => elem!=undefined);
+
+                        tempTaskList = tempTaskList.sort((a,b) => new Date(b.endDate) - new Date(a.endDate));
                         
                 }
         setCurrentReports(tempReportList);
         setCurrentTasks(tempTaskList);
     },[reportObject]);
+
+
+    function removeDuplicates(arr) {
+        const ids = new Set();
+        let newArr = [];
+        for (const elem of arr) {
+          if (!(elem._id && ids.has(elem._id))) {
+                  ids.add(elem._id);
+                   newArr.push(elem);     
+                }
+        }
+        return newArr;
+      }
 
     return ( <>
                     <div className="showReportContentWrapper" >

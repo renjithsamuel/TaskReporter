@@ -79,9 +79,11 @@ function App(){
       console.log("category list at tasks" , categoryList);
       if(categoryList && categoryList.some((elem)=>!elem || elem._id===undefined)){
         let tempCategoryList = categoryList.filter((elem)=>elem && elem._id!==undefined);
+        console.log("sorted category!",tempCategoryList);
         setCategoryList(tempCategoryList);
       }
       else if(categoryList!=null){
+          
           categoryList.map((category) => {
                  getTasksByCategoryId(category._id,setTaskList);
                  getReportsByCategoryId(category._id,setReportList);
@@ -92,6 +94,7 @@ function App(){
   useEffect(()=>{
     if(taskList && taskList.some((elem)=>!elem || elem._id===undefined)){
         let tempTaskList = taskList.filter((elem)=>elem && elem._id!==undefined);
+        // tempTaskList = tempTaskList.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt));
         setTaskList(tempTaskList);
       }
      else if(taskList!=null){
@@ -102,6 +105,7 @@ function App(){
   useEffect(()=>{
     if(reportList && reportList.some((elem)=>!elem || elem._id===undefined)){
         let tempReportList = reportList.filter((elem)=> elem && elem._id!==undefined);
+        // tempReportList = tempReportList.sort((a,b) => new Date(b.reportedDate) - new Date(a.reportedDate));
         setReportList(tempReportList);
       }
       if(reportList!=null){

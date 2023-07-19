@@ -30,7 +30,7 @@ function DeadlinesComponent({theme,currentCategory,currentTasks}) {
                             Tasks Deadline
                         </div>
                         <div className="tasksDeadlineCardsWrapper">
-                            {   (currentTasks && currentTasks.length > 0 && !(currentTasks.some((elem)=>elem.completed==true)))?
+                            {   (currentTasks && currentTasks.length > 0 && (currentTasks.some((elem)=>elem.completed!=true)))?
                                 currentTasks.map((deadlineElement,index)=>{
                                     if(deadlineElement.completed == false){
                                              return <DeadlineSingleCardComponent key={index} taskName={deadlineElement.taskName} endDate={deadlineElement.endDate}  daysMore={calculateRemainingDays(deadlineElement.endDate)}/>

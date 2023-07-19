@@ -42,6 +42,7 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
     useEffect(()=>{
         if(taskList!=null && taskList.some((elem)=>!elem || elem._id===undefined)){
             let tempTaskList = taskList.filter((elem) => elem && elem!=undefined);
+
             setTaskList(tempTaskList);
         }
     },[taskList])
@@ -59,7 +60,7 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
     return ( 
     <>  
         <div className="popUpTasksPage">
-            {(isAddTaskPopUpOpen.isOpen)?<AddTaskPopUpComponent theme={theme} setIsAddTaskPopUpOpen={setIsAddTaskPopUpOpen} category={isAddTaskPopUpOpen.category} categoryId={isAddTaskPopUpOpen.categoryId} setTaskList={setTaskList} setCategoryList={setCategoryList}/>:''}
+            {(isAddTaskPopUpOpen.isOpen)?<AddTaskPopUpComponent theme={theme} setIsAddTaskPopUpOpen={setIsAddTaskPopUpOpen} categoryStartDate={isAddTaskPopUpOpen.startDate} categoryEndDate={isAddTaskPopUpOpen.endDate} category={isAddTaskPopUpOpen.category} categoryId={isAddTaskPopUpOpen.categoryId} setTaskList={setTaskList} setCategoryList={setCategoryList}/>:''}
             {(isOpened==true)?<AddCategoryPopUpComponent theme={theme} setIsOpened={setIsOpened} currentUser={currentUser} setCategoryList={setCategoryList}/>:''}
             {(addReportEffectObj.toOpen=='addReport' && addReportEffectObj.isOpen == true)?<AddReportPopUpComponent  currentUser={currentUser} setAddReportEffectObj={setAddReportEffectObj} addReportEffectObj={addReportEffectObj} theme={theme} setTaskList={setTaskList} setCategoryList={setCategoryList} reportList={reportList} setReportList={setReportList}/>:''}
             {(addReportEffectObj.toOpen=='removeReport' && addReportEffectObj.isOpen == true)?<RemoveReportPopUpComponent setAddReportEffectObj={setAddReportEffectObj} addReportEffectObj={addReportEffectObj} theme={theme} setTaskList={setTaskList} setCategoryList={setCategoryList} reportList={reportList} setReportList={setReportList}/>:''}
@@ -98,7 +99,7 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                                                  <div className="deleteTaskButton" onClick={()=>{deleteCategory(category._id,setCategoryList)}}>
                                                     <img src={(theme=='light')?deleteIconLight:deleteIconDark} alt="delete" height={30} width={30} />
                                                 </div>
-                                                 <div className="addTaskButton" onClick={()=>{setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id});}}>
+                                                 <div className="addTaskButton" onClick={()=>{setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id,startDate:category.startDate,endDate:category.endDate});}}>
                                                     <img src={(theme=='light')?addIconLight:addIconDark} alt="add" height={30} width={30} />
                                                 </div>
                                                  <div className="goToReportPageFromTask" onClick={()=>{setAddShowReportsComponent((prevState)=>{return {...prevState,isOpen:true,categoryId:category._id}})}} >

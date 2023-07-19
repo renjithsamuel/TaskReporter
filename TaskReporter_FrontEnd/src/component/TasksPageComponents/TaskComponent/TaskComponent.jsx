@@ -23,7 +23,7 @@ function TaskComponent({theme,taskName,taskDescription,category,elem,setTaskList
         <>
         <div className="taskComponent">
             <div className="topOfTaskComp" style={{textDecoration:(elem.completed)?'line-through':''}}>
-                <input type="checkbox" onChange={()=>handleTaskCompletion()} checked={(elem.completed)? true:false}/>
+                <input type="checkbox" id='taskCheckBox' onChange={()=>handleTaskCompletion()} checked={(elem.completed)? true:false}/>
                 <div className="taskName" style={{textDecoration:(elem.completed)?'line-through':''}} onClick={()=>{handleTaskCompletion()}}>
                     {taskName}
                 </div>

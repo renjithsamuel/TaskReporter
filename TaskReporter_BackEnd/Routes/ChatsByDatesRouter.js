@@ -36,13 +36,6 @@ const chatSocketHandler = (io) => {
       socket.on('message', async (data) => {
         // Handle and store the message in the database
         try {
-          // Your code to store the message in the database using Mongoose
-          // For example, if you have a ChatMessage model:
-          // const newMessage = new ChatMessage({ room: data.room, sender: data.sender, text: data.text });
-          // await newMessage.save();
-          // console.log('Received message:', data);
-  
-          // Emit the message to the clients in the same room
           io.to(data.room).emit('message', data);
         } catch (error) {
           console.error('Error while storing the message:', error);

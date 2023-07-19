@@ -33,7 +33,7 @@ function CategoryReportsComponent({theme,currentReports=[]}) {
                                             </div>
                                             <div className="categoryReportCardReportedDate">
                                                 <div className="categoryReportCardReportedByDate">Reported Date  </div>
-                                                <div className="categoryReportCardReportedByDateValue">{(categoryReportCardElement && categoryReportCardElement.reportedDate)?" " + categoryReportCardElement.reportedDate : ''}</div>
+                                                <div className="categoryReportCardReportedByDateValue">{(categoryReportCardElement && categoryReportCardElement.reportedDate)?" " + new Date(categoryReportCardElement.reportedDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'}) : ''}</div>
                                             </div>
                                         </div>
                                         <div className="categoryReportCardStatement">

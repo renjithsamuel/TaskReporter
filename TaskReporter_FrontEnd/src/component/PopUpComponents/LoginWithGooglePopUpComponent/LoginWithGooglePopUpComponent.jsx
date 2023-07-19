@@ -3,9 +3,11 @@ import { LoginSocialGoogle} from "reactjs-social-login";
 import googleImg from "../../../assets/google.png" ;
 import taskReporterIconLight from '../../../assets/taskReporter-light.svg';
 import taskReporterIconDark from '../../../assets/taskReporter-dark.svg';
+import noInternetLight from '../../../assets/noInternet-light.svg';
+import noInternetDark from '../../../assets/noInternet-dark.svg';
 import { useEffect, useState } from 'react';
 import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
-
+import { isOnline } from '../../../App';
 
 
 function LoginWithGooglePopUpComponent({theme,setIsLoggedIn,connectedToServer}) {
@@ -40,7 +42,20 @@ function LoginWithGooglePopUpComponent({theme,setIsLoggedIn,connectedToServer}) 
                             Task Reporter
                     </div>
                 </div>
-                {(!connectedToServer)?
+                {
+                // (!isOnline)?
+                //  <div className="connectingToServerElement">
+                //     <div className="ConnectingToServerName">
+                //         Not Connected to the Internet!
+                //     </div>
+                //     <div className="loadingToServerConnection">
+                //         <div className="noInternetIndicator">
+                //             <img src={(theme=='light')?noInternetLight: noInternetDark} alt="user" height={30} width={30} />
+                //         </div>
+                //     </div>
+                //  </div>
+                // :
+                (!connectedToServer)?
                 <div className="connectingToServerElement">
                         <div className="ConnectingToServerName">
                             Connecting to Server!

@@ -4,11 +4,13 @@ import closeDark from '../../../assets/close-dark.svg'
 import { disableScroll, enableScroll, postTask } from '../../../utils/ApiHandlers';
 import { useEffect, useState } from 'react';
 
-function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,setTaskList,setCategoryList}) {
+function AddTaskPopUpComponent({category,categoryStartDate,categoryEndDate,theme,setIsAddTaskPopUpOpen,categoryId,setTaskList,setCategoryList}) {
 
     const [addTaskElementsInput,setAddTaskElementsInput ] = useState([]);
     const [addTaskObject,setAddTaskObject] = useState({category : categoryId,completed: false});
-
+    const startDate = new Date(categoryStartDate).toISOString().split('T')[0];
+    const endDate = new Date(categoryEndDate).toISOString().split('T')[0]; 
+    
     useEffect(()=>{
         const newArr = [
                         {keyForDB : 'taskName',inputLabel : "Task Name : " , inputPlaceHolder : " Enter task Name " , inputType : "text",id : "taskNameInput"},
@@ -20,6 +22,7 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
     },[]);
 
     useEffect(()=>{
+        console.log(categoryEndDate,categoryStartDate);
         disableScroll();
         return ()=>{enableScroll()}
     },[])
@@ -67,6 +70,10 @@ function AddTaskPopUpComponent({category,theme,setIsAddTaskPopUpOpen,categoryId,
                                 <div className="addTaskInputRight">
                                     {(elem.keyForDB=='weight')?
                                         <WeightSelector setAddTaskObject={setAddTaskObject} addTaskObject={addTaskObject}/>
+                                        :
+                                        (elem.keyForDB=='endDate')?
+                                        <input type={elem.inputType} placeholder={elem.inputPlaceHolder}  min={startDate} id={elem.id} 
+                                            max={endDate}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
                                         :
                                         <input type={elem.inputType} placeholder={elem.inputPlaceHolder} id={elem.id}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
                                     }
