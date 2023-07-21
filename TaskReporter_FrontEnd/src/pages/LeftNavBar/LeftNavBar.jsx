@@ -2,13 +2,9 @@ import './LeftNavBar.css';
 import LeftNavComponent from "../../component/LeftNavComponent/LeftNavComponent";
 import taskReporterIconLight from '../../assets/taskReporter-light.svg';
 import taskReporterIconDark from '../../assets/taskReporter-dark.svg';
-import dashBoardIcon from '../../assets/dashboard-light.svg';
-import tasksIcon from '../../assets/tasks-light.svg';
-import chatIcon from '../../assets/chat-light.svg';
-// import settingsIcon from '../../assets/settings-light.svg';
 import logoutIconLight from '../../assets/logout-light.svg'
 import logoutIconDark from '../../assets/logout-dark.svg'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
     let LeftNavCompList = [

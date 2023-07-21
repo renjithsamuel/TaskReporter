@@ -56,9 +56,6 @@ function AddTaskPopUpComponent({category,categoryStartDate,categoryEndDate,theme
                     <div className="addTaskName">
                         Add task to   {category}
                     </div>
-                    {/* <div className="closeAddTaskBtn" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>
-                        <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div> */}
                 </div>
                 {
                     addTaskElementsInput.map((elem,index)=>{

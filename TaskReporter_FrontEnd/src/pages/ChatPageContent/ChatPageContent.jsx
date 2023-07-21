@@ -25,7 +25,7 @@ function ChatPageContent({theme,currentUser,categoryList,setCategoryList}) {
             <TopNavComponent currPage={"Chat"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList} />
             <div className="chatPageMainContent">
                 <div className="chatPageGroupsLeft">
-                    <ChatPageGroupLeft categoryList={categoryList} currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>
+                    <ChatPageGroupLeft categoryList={categoryList} theme={theme} currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>
                 </div>
                 <div className="chatPageSingleChatContent">
                     <ChatPageGroupContent theme={theme} currentUser={currentUser} currentCategory={currentCategory}/>

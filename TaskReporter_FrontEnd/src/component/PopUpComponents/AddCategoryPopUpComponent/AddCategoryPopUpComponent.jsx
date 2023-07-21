@@ -57,9 +57,6 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
                     <div className="addCategoryName">
                         Add Category
                     </div>
-                    {/* <div className="closeAddCategoryBtn" onClick={()=>{setIsOpened(false)}}>
-                        <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div> */}
                 </div>
                 {
                     addCategoryElements.map((elem,index)=>{

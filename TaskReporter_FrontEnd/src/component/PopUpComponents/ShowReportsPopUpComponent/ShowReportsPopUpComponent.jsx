@@ -7,18 +7,11 @@ import DeadlinesComponent from '../../ReportsComponent/DeadlinesComponent/Deadli
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
 import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
+import React from 'react';
 
-function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) {
+const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'categoryDetails',categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) =>  {
 
     const [currentReportTab , setCurrentReportTab] = useState(`${defaultReportPage}`);
-
-//     useEffect(()=>{
-//         if(reportObject && reportObject.categoryId){
-//                 setIsReportObjectOpen((prevState)=>{ return {...prevState,categoryId : reportObject.categoryId}});
-//         }else if(categoryList!=null && categoryList[0] && categoryList[0]._id!=undefined){
-//                 setIsReportObjectOpen((prevState)=>{ return {...prevState,categoryId : categoryList[0]._id}});
-//         }
-//     },[])
 
         useEffect(()=>{
                 disableScroll();
@@ -152,6 +145,6 @@ function ShowReportsPopUpComponent({theme,defaultReportPage = 'categoryDetails',
                                 </div>
                     </div>
             </> );
-}
+})
 
 export default ShowReportsPopUpComponent;

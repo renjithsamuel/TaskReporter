@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import './App.css'
 // router dom
 import {  Routes, Route } from "react-router-dom";
@@ -66,16 +66,16 @@ function App(){
   const [taskList , setTaskList] = useState([]);
   const [reportList , setReportList] = useState([]);
 
-  useEffect(()=>{
-
+  useMemo(()=>{
       console.log("current user" , currentUser);
       console.log("current user At tasks, ",currentUser);
       if(currentUser && currentUser._id!=undefined){
           getCategoriesByUserId(currentUser._id , setCategoryList);
       }
+      return [];
   },[currentUser]);
 
-  useEffect(()=>{
+  useMemo(()=>{
       console.log("category list at tasks" , categoryList);
       if(categoryList && categoryList.some((elem)=>!elem || elem._id===undefined)){
         let tempCategoryList = categoryList.filter((elem)=>elem && elem._id!==undefined);
@@ -83,9 +83,8 @@ function App(){
         setCategoryList(tempCategoryList);
       }
       else if(categoryList!=null){
-          
           categoryList.map((category) => {
-                 getTasksByCategoryId(category._id,setTaskList);
+                 getTasksByCategoryId(category._id,setTaskList);  
                  getReportsByCategoryId(category._id,setReportList);
           });
       }
@@ -114,26 +113,28 @@ function App(){
   },[reportList]);
     
     //   to check current online status
-    isOnline = useOnlineStatus();
-    // isOnline = false ;
-    function useOnlineStatus() {
-        const [isOnline, setIsOnline] = useState(true);
-        useEffect(() => {
-        function handleOnline() {
-            setIsOnline(true);
-        }
-        function handleOffline() {
-            setIsOnline(false);
-        }
-        window.addEventListener('online', handleOnline);
-        window.addEventListener('offline', handleOffline);
-        return () => {
-            window.removeEventListener('online', handleOnline);
-            window.removeEventListener('offline', handleOffline);
-        };
-        }, []);
-        return isOnline;
-    };
+      isOnline = useOnlineStatus();
+      // isOnline = false ;
+      function useOnlineStatus() {
+          const [isOnline, setIsOnline] = useState(true);
+          useEffect(() => {
+            const handleOnline = () => {
+              setIsOnline(true);
+            }
+            
+            const handleOffline = () => {
+              setIsOnline(false);
+            }
+
+          window.addEventListener('online', handleOnline);
+          window.addEventListener('offline', handleOffline);
+          return () => {
+              window.removeEventListener('online', handleOnline);
+              window.removeEventListener('offline', handleOffline);
+          };
+          }, []);
+          return isOnline;
+      };
 
 
   return (

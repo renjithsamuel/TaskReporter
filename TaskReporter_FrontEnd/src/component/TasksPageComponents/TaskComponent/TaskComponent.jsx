@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TaskComponent.css'
 import deleteIconDark from '../../../assets/delete-dark.svg'
 import deleteIconLight from '../../../assets/delete-light.svg'
@@ -6,7 +6,7 @@ import { deleteTask, patchTask } from '../../../utils/ApiHandlers';
 import AddReportPopUpComponent from '../../PopUpComponents/AddReportPopUpComponent/AddReportPopUpComponent';
 import RemoveReportPopUpComponent from '../../PopUpComponents/RemoveReportPopUpComponent/RemoveReportPopUpComponent';
 
-function TaskComponent({theme,taskName,taskDescription,category,elem,setTaskList,taskList,addReportEffectObj,setCategoryList,setAddReportEffectObj,currentUser}) {
+const TaskComponent = React.memo(({theme,taskName,taskDescription,category,elem,setTaskList,taskList,addReportEffectObj,setCategoryList,setAddReportEffectObj,currentUser}) => {
 
 
     const handleTaskCompletion = ()=>{
@@ -37,6 +37,6 @@ function TaskComponent({theme,taskName,taskDescription,category,elem,setTaskList
         </div>
         </>
      );
-}
+})
 
 export default TaskComponent;

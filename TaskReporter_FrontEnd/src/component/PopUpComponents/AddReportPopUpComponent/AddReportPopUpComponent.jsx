@@ -48,9 +48,7 @@ function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTas
                     <div className="addReportName">
                         Mark "{addReportEffectObj.taskName}" as complete
                     </div>
-                    {/* <div className="closeAddReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
-                        <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div> */}
+
                 </div>
                 {
                     addReportElementsInput.map((elem,index)=>{

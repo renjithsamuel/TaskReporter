@@ -6,7 +6,7 @@ import arrowRightLight from '../../../assets/arrow-right-light.svg'
 import arrowRightDark from '../../../assets/arrow-right-dark.svg'
 import deleteIconDark from '../../../assets/delete-dark.svg'
 import deleteIconLight from '../../../assets/delete-light.svg'
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo,useState } from 'react';
 import AddTaskPopUpComponent from '../../PopUpComponents/AddTaskPopUpComponent/AddTaskPopUpComponent';
 import AddCategoryPopUpComponent from '../../PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent'
 import RemoveReportPopUpComponent from '../../PopUpComponents/RemoveReportPopUpComponent/RemoveReportPopUpComponent';
@@ -14,7 +14,7 @@ import AddReportPopUpComponent from '../../PopUpComponents/AddReportPopUpCompone
 import ShowReportsPopUpComponent from '../../PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
 import { deleteCategory } from '../../../utils/ApiHandlers';
 
-function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,currentUser,setCategoryList,reportList,setReportList}) {
+const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList,theme,currentUser,setCategoryList,reportList,setReportList}) => {
     
     const [showCompleted,setShowCompleted] = useState([]);
     const [isAddTaskPopUpOpen,setIsAddTaskPopUpOpen] = useState({isOpen : false , category : '',categoryId:''});
@@ -23,14 +23,8 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
     const [addShowReportsComponent,setAddShowReportsComponent] = useState({isOpen : false , category : '',categoryId:'',categoryList : categoryList,taskList : taskList,reportList:reportList});
 
     useEffect(() => {
-        // deleting undefined
-        if(categoryList && categoryList.some((elem)=>!elem || elem._id===undefined)){
-            let tempCategoryList = categoryList.filter((elem)=> elem && elem._id!==undefined);
-            setCategoryList(tempCategoryList);
-        }
-
-        else{
-        setShowCompleted(Array(categoryList.length).fill(false));
+        if(categoryList){
+           setShowCompleted(Array(categoryList.length).fill(false)) , [categoryList]
         console.log("category list at page content task",categoryList);
         if(categoryList!=null){
             setAddShowReportsComponent({isOpen : false , category : '',categoryId:'',categoryList : categoryList,taskList : taskList,reportList:reportList})
@@ -38,22 +32,13 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
       }, [categoryList]);
 
 
-
-    useEffect(()=>{
-        if(taskList!=null && taskList.some((elem)=>!elem || elem._id===undefined)){
-            let tempTaskList = taskList.filter((elem) => elem && elem!=undefined);
-
-            setTaskList(tempTaskList);
-        }
-    },[taskList])
-    
-      const handleSwitchCompleted = (status,cateindex) => {
+      const handleSwitchCompleted = useCallback((status,cateindex) => {
         setShowCompleted(prevState => {
           const updatedCompleted = [...prevState];
           updatedCompleted[cateindex] = (status=='completed')?true:false;
           return updatedCompleted;
         });
-      };
+      },[])
     
 
 
@@ -129,7 +114,7 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                                     : (<h3>No Tasks</h3>) 
                                                                 }
                                     {   
-                                        (taskList && (Array.isArray(taskList) && taskList.length > 0))?
+                                        (taskList && Object.keys(taskList).length > 0)?
                                             taskList.map((elem)=>{
                                                 if(elem && elem.category && category && category.categoryName == elem.category.categoryName && ((showCompleted[cateindex]==false && elem.completed==false) || (showCompleted[cateindex]==true && elem.completed==true))){
                                                 return <TaskComponent  key={elem._id}
@@ -152,15 +137,11 @@ function PageContentTasksComponent({taskList,categoryList,setTaskList,theme,curr
                         )
 
                         :(<div style={{width:'100%',height:'100%'}}><h1 style={{display:'flex',justifyContent:'center',alignItems:'center'}}>No Categories</h1></div>)
-                    }
-
-                    
+                    }                 
                 </div>
-        
-        
         </div>
     </>
     );
-}
+})
 
 export default PageContentTasksComponent;
