@@ -8,7 +8,7 @@ import {  Link } from "react-router-dom";
 // lottie
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isOnline  } from '../../App';
 import { disableScroll ,enableScroll } from '../../utils/ApiHandlers';
 import NotificationComponent from '../NotificationsComponent/NotificationComponent';
@@ -19,12 +19,20 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList}) 
 
     const [isNotificationOpen , setIsNotificationOpen] = useState(false);
 
+    const scrollToTop = ()=>{
+        window.scrollTo({
+            top: 0,
+            left : 0,
+            behavior : 'smooth'
+        })
+    }
+
     return ( 
             <>
                 {
                     (isNotificationOpen)?
-                    <div className="notificationsPopUpBackDrop">
-                        <div className="notificationsWrapperFromTopNav">
+                    <div className="notificationsPopUpBackDrop" >
+                        <div className="notificationsWrapperFromTopNav" >
                             <NotificationComponent theme={theme} currentUser={currentUser} setIsNotificationOpen={setIsNotificationOpen} fromPage={currPage} setCategoryList={setCategoryList}/>
                         </div>
                     </div> : ''
@@ -51,7 +59,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList}) 
                         <div className="noInternetIndicator" style={{display:(isOnline)?'none':'flex'}}>
                             <img src={(theme=='light')?noInternetLight: noInternetDark} alt="user" height={30} width={30} />
                         </div>
-                        <div className="notifications" onClick={()=>{setIsNotificationOpen(true);disableScroll()}} 
+                        <div className="notifications" onClick={()=>{setIsNotificationOpen(true);disableScroll();scrollToTop()}} 
                                               style={{display:(fromPage=='Dashboard' || currPage=='Dashboard')?'none':'flex'}}
                                             >
                             <lord-icon

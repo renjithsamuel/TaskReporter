@@ -13,10 +13,6 @@ import {UserContext} from '../../App'
 
 function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage,setCategoryList}) {
 
-    useEffect(()=>{
-        console.log("invites check ",currentUser);
-    },[])
-
     const setCurrentUser = useContext(UserContext);
 
     return ( <>

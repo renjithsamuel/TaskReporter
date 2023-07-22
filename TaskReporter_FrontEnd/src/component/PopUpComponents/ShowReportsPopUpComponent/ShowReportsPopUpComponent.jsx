@@ -130,7 +130,7 @@ const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'catego
                                         <div className="reportContentWrapper">
                                                 <div className="reportContentBar">
                                                         {(currentReportTab=='categoryDetails')?
-                                                                <CategoryDetailsComponent theme={theme} reportObject={reportObject} currentCategory={currentCategory}/>
+                                                                <CategoryDetailsComponent theme={theme} currentCategory={currentCategory}/>
                                                                 : (currentReportTab=='reports')?
                                                                 <CategoryReportsComponent theme={theme} reportObject={reportObject} currentReports={currentReports} />
                                         

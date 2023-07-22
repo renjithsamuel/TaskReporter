@@ -8,10 +8,12 @@ import ShowReportsPopUpComponent from '../../component/PopUpComponents/ShowRepor
 
 function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,taskList,reportList}) {
     const [addShowReportsComponentFromDashBoard,setAddShowReportsComponentFromDashBoard] = useState({isOpen : false , category : '',categoryId:'',categoryList : categoryList , taskList:  taskList,reportList: reportList});
+    
+
 
     return ( <>
          {(addShowReportsComponentFromDashBoard.isOpen==true)?<div className='showReportsPopUpBackDropFromDashBoard'><ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={categoryList} taskList={taskList} reportList={reportList} reportObject={addShowReportsComponentFromDashBoard} setIsReportObjectOpen={setAddShowReportsComponentFromDashBoard}/></div>:''}
-        <div className="dashBoardComponentWrapper">
+        <div className="dashBoardComponentWrapper" >
             <TopNavComponent currPage={"Dashboard"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>
             <div className="dashBoardContentWrapper">
                 <div className="dashBoardContentLeft">

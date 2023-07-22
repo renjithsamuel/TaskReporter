@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './CategoryDetailsComponent.css';
 
 
-function CategoryDetailsComponent({reportObject,currentCategory}) {
+function CategoryDetailsComponent({currentCategory}) {
 
     const categoryDetailsElements = [
         {dbKey : "categoryName",key : 1 ,  label : "Category Name" , value : "SIH Project"},
@@ -12,31 +12,6 @@ function CategoryDetailsComponent({reportObject,currentCategory}) {
         {dbKey : "createdBy",key  : 5 , label : "Created By" , value :  " renjithsamuelking@gmail.com"},
         {dbKey : "colaborators",key  : 6 , label : "Colaborators" , value :  [" ranjithsamuelking@gmail.com","Balasuriya@gmail.com","arunPR@gmail.com"]},
     ]
-
-    // const [categoryDetailsElements , setCategoryDetailsElements ] = useState([
-    //     {dbKey : "categoryName",key : 1 ,  label : "Category Name" , value : "SIH Project"},
-    //     {dbKey : "description",key  : 2 , label : "Description" , value :  " Smart India hackathon 2022 Software edition conducted by Government of India."},
-    //     {dbKey : "startDate",key  : 3 , label : "Start Date" , value :  "20 Oct 2022"},
-    //     {dbKey : "endDate",key  : 4 , label : "End Date" , value :  " 20 Nov 2022 "},
-    //     {dbKey : "createdBy",key  : 5 , label : "Created By" , value :  " renjithsamuelking@gmail.com"},
-    //     {dbKey : "colaborators",key  : 6 , label : "Colaborators" , value :  [" ranjithsamuelking@gmail.com","Balasuriya@gmail.com","arunPR@gmail.com"]},
-    // ]);
-
-    // const [currentCategory , setCurrentCategory ] = useState({});
-
-    // useEffect(()=>{
-    //     categoryList.map((category)=>{
-    //             if(reportObject.categoryId == category._id){
-    //                 setCurrentCategory(category);
-    //             }
-    //     });
-    //     console.log("current category",currentCategory,"reportObject: " , reportObject);
-    // },[reportObject,currentCategory])
-
-    useEffect(() => {
-      console.log(currentCategory);
-    }, [currentCategory])
-    
 
 
     return ( <>

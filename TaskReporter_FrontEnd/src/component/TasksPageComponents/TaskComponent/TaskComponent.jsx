@@ -6,14 +6,16 @@ import { deleteTask, patchTask } from '../../../utils/ApiHandlers';
 import AddReportPopUpComponent from '../../PopUpComponents/AddReportPopUpComponent/AddReportPopUpComponent';
 import RemoveReportPopUpComponent from '../../PopUpComponents/RemoveReportPopUpComponent/RemoveReportPopUpComponent';
 
-const TaskComponent = React.memo(({theme,taskName,taskDescription,category,elem,setTaskList,taskList,addReportEffectObj,setCategoryList,setAddReportEffectObj,currentUser}) => {
+const TaskComponent = React.memo(({theme,taskName,taskDescription,category,elem,setTaskList,taskList,addReportEffectObj,setCategoryList,setAddReportEffectObj,currentUser,popUpComponentTaskPage}) => {
 
 
     const handleTaskCompletion = ()=>{
         if(elem.completed==false){
+            popUpComponentTaskPage.current.scrollIntoView();
             setAddReportEffectObj({toOpen : 'addReport',isOpen : true , success : false,categoryId:elem.category._id,taskId:elem._id,taskName:taskName,weight:elem.weight,emailId : currentUser.emailId});
         }
         else if(elem.completed==true){
+            popUpComponentTaskPage.current.scrollIntoView();
             setAddReportEffectObj({toOpen : 'removeReport',isOpen : true , success : false,categoryId:elem.category._id,taskId:elem._id,taskName:taskName,weight : elem.weight,emailId : currentUser.emailId})
         }
     }

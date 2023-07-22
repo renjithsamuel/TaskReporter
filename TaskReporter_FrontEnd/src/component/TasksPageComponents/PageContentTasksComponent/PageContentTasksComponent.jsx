@@ -6,7 +6,7 @@ import arrowRightLight from '../../../assets/arrow-right-light.svg'
 import arrowRightDark from '../../../assets/arrow-right-dark.svg'
 import deleteIconDark from '../../../assets/delete-dark.svg'
 import deleteIconLight from '../../../assets/delete-light.svg'
-import React, { useCallback, useEffect, useMemo,useState } from 'react';
+import React, { useCallback, useEffect,useRef,useState } from 'react';
 import AddTaskPopUpComponent from '../../PopUpComponents/AddTaskPopUpComponent/AddTaskPopUpComponent';
 import AddCategoryPopUpComponent from '../../PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent'
 import RemoveReportPopUpComponent from '../../PopUpComponents/RemoveReportPopUpComponent/RemoveReportPopUpComponent';
@@ -16,6 +16,7 @@ import { deleteCategory } from '../../../utils/ApiHandlers';
 
 const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList,theme,currentUser,setCategoryList,reportList,setReportList}) => {
     
+    const popUpComponentTaskPage = useRef();
     const [showCompleted,setShowCompleted] = useState([]);
     const [isAddTaskPopUpOpen,setIsAddTaskPopUpOpen] = useState({isOpen : false , category : '',categoryId:''});
     const [isOpened,setIsOpened] = useState(false);
@@ -44,7 +45,7 @@ const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList
 
     return ( 
     <>  
-        <div className="popUpTasksPage">
+        <div className="popUpTasksPage" ref={popUpComponentTaskPage}>
             {(isAddTaskPopUpOpen.isOpen)?<AddTaskPopUpComponent theme={theme} setIsAddTaskPopUpOpen={setIsAddTaskPopUpOpen} categoryStartDate={isAddTaskPopUpOpen.startDate} categoryEndDate={isAddTaskPopUpOpen.endDate} category={isAddTaskPopUpOpen.category} categoryId={isAddTaskPopUpOpen.categoryId} setTaskList={setTaskList} setCategoryList={setCategoryList}/>:''}
             {(isOpened==true)?<AddCategoryPopUpComponent theme={theme} setIsOpened={setIsOpened} currentUser={currentUser} setCategoryList={setCategoryList}/>:''}
             {(addReportEffectObj.toOpen=='addReport' && addReportEffectObj.isOpen == true)?<AddReportPopUpComponent  currentUser={currentUser} setAddReportEffectObj={setAddReportEffectObj} addReportEffectObj={addReportEffectObj} theme={theme} setTaskList={setTaskList} setCategoryList={setCategoryList} reportList={reportList} setReportList={setReportList}/>:''}
@@ -57,7 +58,7 @@ const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList
                             Projects
                     </div>
                     <div className="sortByTime">
-                        <div className="categoryAddButton" onClick={()=>{setIsOpened(true)}}>
+                        <div className="categoryAddButton" onClick={()=>{setIsOpened(true);popUpComponentTaskPage.current.scrollIntoView();}}>
                                 <div className="AddCategoryName">
                                     Add Category
                                 </div>
@@ -84,10 +85,10 @@ const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList
                                                  <div className="deleteTaskButton" onClick={()=>{deleteCategory(category._id,setCategoryList)}}>
                                                     <img src={(theme=='light')?deleteIconLight:deleteIconDark} alt="delete" height={30} width={30} />
                                                 </div>
-                                                 <div className="addTaskButton" onClick={()=>{setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id,startDate:category.startDate,endDate:category.endDate});}}>
+                                                 <div className="addTaskButton" onClick={()=>{popUpComponentTaskPage.current.scrollIntoView();setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id,startDate:category.startDate,endDate:category.endDate});}}>
                                                     <img src={(theme=='light')?addIconLight:addIconDark} alt="add" height={30} width={30} />
                                                 </div>
-                                                 <div className="goToReportPageFromTask" onClick={()=>{setAddShowReportsComponent((prevState)=>{return {...prevState,isOpen:true,categoryId:category._id}})}} >
+                                                 <div className="goToReportPageFromTask" onClick={()=>{popUpComponentTaskPage.current.scrollIntoView();setAddShowReportsComponent((prevState)=>{return {...prevState,isOpen:true,categoryId:category._id}})}} >
                                                     <img src={(theme=='light')?arrowRightLight:arrowRightDark} alt="projectView" height={30} />
                                                 </div>
                                             </div>
@@ -118,6 +119,7 @@ const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList
                                             taskList.map((elem)=>{
                                                 if(elem && elem.category && category && category.categoryName == elem.category.categoryName && ((showCompleted[cateindex]==false && elem.completed==false) || (showCompleted[cateindex]==true && elem.completed==true))){
                                                 return <TaskComponent  key={elem._id}
+                                                            popUpComponentTaskPage={popUpComponentTaskPage}
                                                             taskName={elem.taskName}
                                                             taskDescription={elem.description}
                                                             elem={elem} setTaskList={setTaskList}

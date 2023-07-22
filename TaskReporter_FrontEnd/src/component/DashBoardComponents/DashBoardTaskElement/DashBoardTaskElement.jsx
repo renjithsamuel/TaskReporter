@@ -20,6 +20,14 @@ function DashBoardTaskElement({theme,category,setReportObject,reportObject}) {
             }
     },[])
     
+    const scrollToTop = ()=>{
+        window.scrollTo({
+            top: 0,
+            left : 0,
+            behavior : 'smooth'
+        })
+    }
+
     return ( <>
         <div className="dashBoardTaskElementWrapper">
             <div className="categoryDetails">
@@ -37,7 +45,7 @@ function DashBoardTaskElement({theme,category,setReportObject,reportObject}) {
                  </div>
             </div>
             <div className="CategoryRemainder">
-                <div className="resumeButton" onClick={()=>{setReportObject((prevState)=>{return {...prevState,categoryId:category._id,isOpen:true}})}}>
+                <div className="resumeButton" onClick={()=>{scrollToTop(); setReportObject((prevState)=>{return {...prevState,categoryId:category._id,isOpen:true}})}}>
                     <img src={(theme=='light')?playLight:playDark} alt="play" height={30} width={30} />
                 </div>
             </div>
