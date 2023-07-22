@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import './SettingsPageContent.css'
 import BannerCoverComponent from './BannerCoverComponent/BannerCoverComponent';

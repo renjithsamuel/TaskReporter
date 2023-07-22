@@ -36,9 +36,6 @@ function ContributionsComponent({theme,reportObject,currentCategory}) {
        }
     },[updatedContributionvals]);
 
-    useEffect(()=>{
-        console.log(contributionsState);
-    },[contributionsState])
 
     return ( <>
     

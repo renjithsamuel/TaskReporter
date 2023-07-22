@@ -8,7 +8,6 @@ defineElement(lottie.loadAnimation);
 
 function LeftNavComponent({compName,compIcon,svgIcon,selectedNavElem , setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
 
-    useEffect(()=>{console.log(compName);},[]);
 
     return (
         <Link to={(compName=='logout')? '/': (compName!='tasks')?"/"+compName:'/'} style={{textDecoration:'none',color:'var(--text-color)'}}>

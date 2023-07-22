@@ -1,12 +1,7 @@
-import { useEffect } from 'react';
 import './DeadlinesComponent.css';
 
 function DeadlinesComponent({theme,currentCategory,currentTasks}) {
                         
-    useEffect(()=>{
-            console.log("deadline", currentCategory );
-            console.log(currentTasks.some((elem)=>elem.completed==false));
-    },[])
 
     return ( <>
                {

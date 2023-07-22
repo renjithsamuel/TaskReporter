@@ -4,7 +4,6 @@ import taskReporterIconLight from '../../assets/taskReporter-light.svg';
 import taskReporterIconDark from '../../assets/taskReporter-dark.svg';
 import logoutIconLight from '../../assets/logout-light.svg'
 import logoutIconDark from '../../assets/logout-dark.svg'
-import { useEffect } from 'react';
 
 function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
     let LeftNavCompList = [
@@ -16,13 +15,6 @@ function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,set
 
     const settingsIcon = `https://cdn.lordicon.com/hwuyodym.json`;
     // const logoutIcon = `https://cdn.lordicon.com/moscwhoj.json`;
-
-
-
-    useEffect(()=>{
-        console.log(selectedNavElem);
-        
-    },[selectedNavElem]);
 
     return ( 
     <>

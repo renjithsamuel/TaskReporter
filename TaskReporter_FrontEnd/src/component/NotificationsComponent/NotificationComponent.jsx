@@ -7,7 +7,7 @@ import acceptLight from '../../assets/accept-light.svg'
 import acceptDark from '../../assets/accept-dark.svg'
 import closeLight from '../../assets/close-light.svg'
 import closeDark from '../../assets/close-dark.svg'
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { acceptInvite,rejectInvite ,enableScroll, clearNotifications} from '../../utils/ApiHandlers';
 import {UserContext} from '../../App'
 

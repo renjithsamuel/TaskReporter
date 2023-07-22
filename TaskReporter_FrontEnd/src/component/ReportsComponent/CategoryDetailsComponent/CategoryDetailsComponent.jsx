@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import './CategoryDetailsComponent.css';
 
 

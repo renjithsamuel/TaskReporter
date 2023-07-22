@@ -10,11 +10,6 @@ function ChatPageContent({theme,currentUser,categoryList,setCategoryList}) {
     const [currentCategory , setCurrentCategory] = useState({});
 
     useEffect(()=>{
-        console.log("current category for chat ", currentCategory);
-    },[currentCategory])
-
-
-    useEffect(()=>{
         if(categoryList && categoryList.length > 0 && categoryList[0]._id != undefined ){
             setCurrentCategory(categoryList[0]);
         }

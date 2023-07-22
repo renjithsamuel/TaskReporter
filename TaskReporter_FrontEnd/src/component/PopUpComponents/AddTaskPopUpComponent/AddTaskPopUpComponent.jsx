@@ -22,7 +22,6 @@ function AddTaskPopUpComponent({category,categoryStartDate,categoryEndDate,theme
     },[]);
 
     useEffect(()=>{
-        console.log(categoryEndDate,categoryStartDate);
         disableScroll();
         return ()=>{enableScroll()}
     },[])
@@ -46,7 +45,6 @@ function AddTaskPopUpComponent({category,categoryStartDate,categoryEndDate,theme
         setIsAddTaskPopUpOpen(false);
     }
 
-    useEffect(()=>{   console.log(addTaskObject);},[addTaskObject])
 
     return ( 
     <>
