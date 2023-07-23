@@ -10,12 +10,12 @@ import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import { useEffect, useRef, useState } from 'react';
 import { isOnline  } from '../../App';
-import { disableScroll ,enableScroll } from '../../utils/ApiHandlers';
+import { disableScroll ,enableScroll , debounce } from '../../utils/ApiHandlers';
 import NotificationComponent from '../NotificationsComponent/NotificationComponent';
 
 defineElement(lottie.loadAnimation);    
 
-function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList}) {
+function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,setSearchText}) {
 
     const [isNotificationOpen , setIsNotificationOpen] = useState(false);
 
@@ -27,8 +27,12 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList}) 
         })
     }
 
+    const handleSearchText = debounce((searchValue) => {
+        setSearchText(searchValue);
+    })
+
     return ( 
-            <>
+            <>  
                 {
                     (isNotificationOpen)?
                     <div className="notificationsPopUpBackDrop" >
@@ -49,7 +53,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList}) 
                                 >
                                 </lord-icon>
                             </div>
-                            <input type="text"  id='searchBarInp' placeholder='search' style={{color:'var(--text-color)'}}/>
+                            <input type="text"  id='searchBarInp' placeholder='search' onChange={(e)=>{handleSearchText(e.target.value)}} style={{color:'var(--text-color)'}}/>
                         </div>
                     </div>
                     <div className="topNavMiddle">

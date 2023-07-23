@@ -54,14 +54,3 @@ const io = socketio(server,{
 })
 // chat socket handler
 chatSocketHandler(io);
-
-
-// const io = socketio(3001,{
-//     cors:{
-//         origin : '*'
-//     }
-// }); 
-
-// socket
-// const server = require('http').createServer(app);
-// const io = require('socket.io')(server); 

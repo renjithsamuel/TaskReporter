@@ -1,16 +1,14 @@
 import './RemoveReportPopUpComponent.css';
-import closeLight from '../../../assets/close-light.svg'
-import closeDark from '../../../assets/close-dark.svg'
 import { patchTask, deleteReport , patchCategoryOnTaskCompletion } from '../../../utils/ApiHandlers';
 
 function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList,reportList,setReportList}) {
 
-    const handleSubmitRemoveReport = ()=>{
-        deleteReport(addReportEffectObj.taskId,setReportList);
+    const handleSubmitRemoveReport = async ()=>{
+        await patchCategoryOnTaskCompletion('incomplete',null,addReportEffectObj.weight,addReportEffectObj.categoryId,setCategoryList,addReportEffectObj.taskId);
         patchTask(addReportEffectObj.taskId,{completed : false},setTaskList);
+        deleteReport(addReportEffectObj.taskId,setReportList);
         setAddReportEffectObj((prev)=>{return {...prev,isOpen : false,success : true}});
         console.log("atRemoveReports",'incomplete',addReportEffectObj.emailId,addReportEffectObj.weight,addReportEffectObj.categoryId);
-        patchCategoryOnTaskCompletion('incomplete',addReportEffectObj.emailId,addReportEffectObj.weight,addReportEffectObj.categoryId,setCategoryList);
     }
 
     return ( 
@@ -21,9 +19,6 @@ function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,add
                     <div className="removeReportName">
                        Mark  "{addReportEffectObj.taskName}" as incomplete
                     </div>
-                    {/* <div className="closeRemoveReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
-                        <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                    </div> */}
                 </div>
                     <div className="areYouSureToRemoveReport" >
                             Are you sure want to mark this as incomplete and remove the report associated with it?

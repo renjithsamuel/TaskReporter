@@ -15,7 +15,7 @@ import ReportsPageContent from './pages/ReportsPageContent/ReportsPageContent';
 import LoginWithGooglePopUpComponent from './component/PopUpComponents/LoginWithGooglePopUpComponent/LoginWithGooglePopUpComponent';
 
 // importing functions from utils.js
-import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests, getReportsByCategoryId} from './utils/ApiHandlers';
+import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests, getReportsByCategoryId, throttle} from './utils/ApiHandlers';
 
 
 export let isOnline = false;
@@ -111,6 +111,15 @@ function App(){
           console.log("reportlist : " ,reportList);
       }
   },[reportList]);
+
+
+  useEffect(()=>{
+    const func = throttle(()=>{console.log("throttling resize");}, 2000)
+    window.addEventListener('resize', func)
+    return ()=>{
+      window.removeEventListener('resize',func);
+    }
+  },[])
     
     //   to check current online status
       isOnline = useOnlineStatus();

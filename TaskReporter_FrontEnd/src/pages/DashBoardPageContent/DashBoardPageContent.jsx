@@ -3,18 +3,32 @@ import DashBoardTimeLineComponent from '../../component/DashBoardComponents/Dash
 import DashBoardTaskElement from '../../component/DashBoardComponents/DashBoardTaskElement/DashBoardTaskElement'
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import NotificationComponent from '../../component/NotificationsComponent/NotificationComponent';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShowReportsPopUpComponent from '../../component/PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
 
 function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,taskList,reportList}) {
     const [addShowReportsComponentFromDashBoard,setAddShowReportsComponentFromDashBoard] = useState({isOpen : false , category : '',categoryId:'',categoryList : categoryList , taskList:  taskList,reportList: reportList});
-    
+    const [ tempCategoryList , setTempCategoryList ] = useState([]);
+    const [searchText , setSearchText ] = useState('');
 
+
+    useEffect(()=>{
+        setTempCategoryList(categoryList);
+    },[categoryList]);
+
+
+    useEffect(()=>{
+        console.log(searchText);
+        if(categoryList && categoryList.length > 0 && categoryList[0]._id != undefined ) {
+            let tempTempCategoryList = categoryList.filter(category => category.categoryName.includes(searchText));
+            setTempCategoryList(tempTempCategoryList);
+        }
+    },[searchText])
 
     return ( <>
          {(addShowReportsComponentFromDashBoard.isOpen==true)?<div className='showReportsPopUpBackDropFromDashBoard'><ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={categoryList} taskList={taskList} reportList={reportList} reportObject={addShowReportsComponentFromDashBoard} setIsReportObjectOpen={setAddShowReportsComponentFromDashBoard}/></div>:''}
         <div className="dashBoardComponentWrapper" >
-            <TopNavComponent currPage={"Dashboard"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList}/>
+            <TopNavComponent currPage={"Dashboard"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList} setSearchText={setSearchText}/>
             <div className="dashBoardContentWrapper">
                 <div className="dashBoardContentLeft">
                     <div className="dashBoardTimeLineElement">
@@ -23,8 +37,8 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,ta
                     <div className="dashBoardReportsLabel">Reports</div>
                     <div className="DashBoardTaskElements">
                         {
-                        (categoryList && categoryList.length > 0) ?
-                            categoryList.map((category,index)=>{    
+                        (tempCategoryList && tempCategoryList.length > 0) ?
+                            tempCategoryList.map((category,index)=>{    
                                     return <DashBoardTaskElement key={index} category={category} theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
                                     })
                                     :

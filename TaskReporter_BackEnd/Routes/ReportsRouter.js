@@ -4,11 +4,12 @@ const cors = require('cors');
 
 router.use(cors({origin : '*'}));
 
-const {getReports,getUniqueReportById,getReportsByCategoryId,postReport,patchReportById,deleteReportById,deleteReportByTaskId,deleteManyReportsByCategoryId} = require('../Controllers/ReportsController');
+const {getReports,getUniqueReportById,getReportsByCategoryId,getReportByTaskId,postReport,patchReportById,deleteReportById,deleteReportByTaskId,deleteManyReportsByCategoryId} = require('../Controllers/ReportsController');
 
 router.get('/getReports',getReports);
 router.get('/getUniqueReportById/:id',getUniqueReportById);
 router.get('/getReportsByCategoryId/:id',getReportsByCategoryId);
+router.get('/getReportByTaskId/:id',getReportByTaskId);
 router.post('/postReport',postReport);
 router.patch('/patchReportById/:id',patchReportById);
 router.delete('/deleteReportById/:id',deleteReportById);

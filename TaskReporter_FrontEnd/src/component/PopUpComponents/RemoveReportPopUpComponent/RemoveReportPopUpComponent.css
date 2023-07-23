@@ -44,26 +44,6 @@
     margin-bottom: 3vh;
 }
 
-.closeRemoveReportBtn{
-    position: absolute;
-    top: 0;
-    right:-30vw;
-    width: 3vw;
-    height: 3vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-    background-color: var(--hover-color);
-    border-radius: 50%;
-    filter: drop-shadow(1px 2px 2px var(--shadow-color));
-}
-
-.closeRemoveReportBtn:hover{
-    cursor: pointer;
-    background-color: var(--shadow-color);
-    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
-}
 
 .areYouSureToRemoveReport{
     font-size: larger;

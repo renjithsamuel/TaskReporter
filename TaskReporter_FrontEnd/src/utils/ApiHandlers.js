@@ -445,8 +445,9 @@ export const deleteReport = async (taskId,setReportList) =>{
 }
 
 // updating category with weightsCompleted and contributors : 
-export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , weight, categoryId,setCategoryList) => {
-    if(status==null || updationEmailId ==null || weight == null || categoryId == null){
+export const patchCategoryOnTaskCompletion  = async (status  , updationEmailId ,  weight, categoryId,setCategoryList , taskId) => {
+    console.log("inside patch category on task completgion");
+    if(status==null  || weight == null || categoryId == null){
         console.log("send valid completed data");
         return;
     }
@@ -462,9 +463,25 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
     }else{
         console.log("Something else went wrong while patching Task!");
     }
- 
+    
+    
+    
+    
     let updatedCategoryData = {};
     if(status != 'completed'){
+        // find updation email id if status is incomplete
+        const getReportByTaskIdUrl =  `https://taskreporternode.onrender.com/api/v1/reports/getReportByTaskId/${taskId}`;
+        const reportResponse = await sendHttpRequest(getReportByTaskIdUrl , 'GET');
+        if(reportResponse && reportResponse.success == false){
+            console.log("something went wrong while getting report object");
+        }else if(reportResponse && reportResponse.success == true){
+            console.log("report object recieved successfully!", reportResponse);
+            updationEmailId = reportResponse.data.reportedBy.emailId;   
+        }else{
+            console.log("something else went wrong!");
+            return;
+        }
+        
         updatedCategoryData.contributions = responseObject.data.contributions.map((contribution)=>{
             if(contribution.emailId != updationEmailId ){
                 return  contribution;
@@ -473,6 +490,7 @@ export const patchCategoryOnTaskCompletion  = async (status , updationEmailId , 
                 return updatedContribution;
             }     
         });
+
     }else {
         // let tempOverallWeight = (responseObject.data.weightsCompleted==null)?0 : responseObject.data.weightsCompleted + weight;
         let flag = false;
@@ -813,3 +831,39 @@ export const postChatByDate = async (chatObject) => {
         console.log("something else went wrong!");
     }
 }
+
+
+
+export function debounce(cb,delay=250){
+    let timeout;
+    return (...args)=>{
+      clearTimeout(timeout);
+      timeout = setTimeout(()=>{
+        cb(...args);
+      },delay);
+    }
+  } 
+  
+  
+export  function throttle(cb,delay = 250){
+    let shouldWait = false;
+    let waitingArgs ;
+    let timeoutfunc = ()=>{
+        if(waitingArgs==null){
+        shouldWait = false;}
+        else{
+            cb(...waitingArgs);
+            waitingArgs = null;
+             setTimeout(timeoutfunc,delay);
+        }
+    }
+    return (...args) => {
+        if(shouldWait){
+            waitingArgs = args;
+            return;
+        }
+        cb(...args)
+        shouldWait = true;
+        setTimeout(timeoutfunc,delay)
+    }
+  }

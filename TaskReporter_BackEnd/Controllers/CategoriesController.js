@@ -141,7 +141,6 @@ exports.postCategory = async (req,res,next) => {
 
 // patch Categories
 exports.patchCategoryById = async (req,res,next) => {
-    console.log(req.params.id);
     if(!req.params.id){
         return res.status(404).json({
             success : false,

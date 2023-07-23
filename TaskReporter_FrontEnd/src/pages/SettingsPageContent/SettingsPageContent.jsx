@@ -2,8 +2,10 @@ import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import './SettingsPageContent.css'
 import BannerCoverComponent from './BannerCoverComponent/BannerCoverComponent';
 import { toggleTheme } from '../../utils/ApiHandlers';
+import { useState } from 'react';
 
 function SettingsPageContent({theme,currentUser,setCategoryList}) {
+    const [searchText , setSearchText ] = useState('');
 
     const themeArray = [
         { key : 1 , theme : 'light',pallete : "default",setTheme : theme[1],displayColor : '#ffffff'},
@@ -25,7 +27,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
     return ( 
     <>
         <div className="settingsPageWrapper">
-            <TopNavComponent currPage={"Settings"} theme={theme[0]}  currentUser={currentUser} setCategoryList={setCategoryList}/>
+            <TopNavComponent currPage={"Settings"} theme={theme[0]}  currentUser={currentUser} setCategoryList={setCategoryList} setSearchText={setSearchText}/>
 
                 <div className="userBanners">
                     <div className="userBannerCoverImage">

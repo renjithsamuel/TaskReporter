@@ -8,18 +8,31 @@ function ReportsPageContent({theme,currentUser,categoryList,taskList,reportList}
         // const navigate = useNavigate();
         // const redirectToHome = () => navigate('/tasks')
         const [isReportObjectOpen,setIsReportObjectOpen ]  = useState({categoryList : categoryList , taskList:  taskList,reportList: reportList}); 
-
+        const [ tempCategoryList , setTempCategoryList ] = useState([]);
+        const [searchText , setSearchText ] = useState('');
+    
+    
         useEffect(()=>{
-                if(categoryList && categoryList[0] && categoryList[0]._id){
-                        setIsReportObjectOpen((prevState) => { return {...prevState,categoryId : categoryList[0]._id} })
+            setTempCategoryList(categoryList);
+            if(categoryList && categoryList[0] && categoryList[0]._id){
+                setIsReportObjectOpen((prevState) => { return {...prevState,categoryId : categoryList[0]._id} })
                 }
-        },[categoryList])
+        },[categoryList]);
+    
+    
+        useEffect(()=>{
+            console.log(searchText);
+            if(categoryList && categoryList.length > 0 && categoryList[0]._id != undefined ) {
+                let tempTempCategoryList = categoryList.filter(category => category.categoryName.includes(searchText));
+                setTempCategoryList(tempTempCategoryList);
+            }
+        },[searchText])
 
     return ( <> 
                         <div className="ReportsPageWrapper">
-                                <TopNavComponent currPage={"Reports"} theme={theme}  currentUser={currentUser}/>
+                                <TopNavComponent currPage={"Reports"} theme={theme}  currentUser={currentUser} setSearchText={setSearchText}/>
                                 <div className="reportsPageMiddleContent">
-                                        <ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={categoryList} reportList={reportList} taskList={taskList} fromPage={'reportsContent'} reportObject={isReportObjectOpen} setIsReportObjectOpen={setIsReportObjectOpen}/>
+                                        <ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={tempCategoryList} reportList={reportList} taskList={taskList} fromPage={'reportsContent'} reportObject={isReportObjectOpen} setIsReportObjectOpen={setIsReportObjectOpen}/>
                                 </div>
                         </div>
              </> );

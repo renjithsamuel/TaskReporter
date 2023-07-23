@@ -91,6 +91,36 @@ exports.getReportsByCategoryId = async (req,res,next) => {
 }
 
 
+exports.getReportByTaskId = async (req,res,next) => {
+    if(req.params.id == null){
+        return res.status(400).json({
+            success : false,
+            message : "send valid taskId"
+        })
+    }
+    const taskId = req.params.id;
+    try{
+        const reportData = await reports.find({taskCompleted : taskId}).populate("category").populate("reportedBy").populate("taskCompleted")
+        if(!reportData){
+            return res.status(400).json({
+                success : false,
+                message: "something went wrong while fetching report! or cannot find document"
+            })
+        }
+        return res.status(200).json({
+            success : true , 
+            data : reportData[0],
+            count : 1
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error!" + err,
+        })
+    }
+}
+
+
 exports.postReport = async (req,res,next) => {
     if(req.body.reportedDate == null || req.body.reportStatement == null || req.body.taskCompleted == null  || req.body.category == null || req.body.reportedBy == null   ){
         return res.status(404).json({
