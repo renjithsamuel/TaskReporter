@@ -4,7 +4,7 @@ import ShowReportsPopUpComponent from '../../component/PopUpComponents/ShowRepor
 import { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
-function ReportsPageContent({theme,currentUser,categoryList,taskList,reportList}) {
+function ReportsPageContent({theme,currentUser,setCategoryList,categoryList,taskList,reportList}) {
         // const navigate = useNavigate();
         // const redirectToHome = () => navigate('/tasks')
         const [isReportObjectOpen,setIsReportObjectOpen ]  = useState({categoryList : categoryList , taskList:  taskList,reportList: reportList}); 
@@ -32,7 +32,7 @@ function ReportsPageContent({theme,currentUser,categoryList,taskList,reportList}
                         <div className="ReportsPageWrapper">
                                 <TopNavComponent currPage={"Reports"} theme={theme}  currentUser={currentUser} setSearchText={setSearchText}/>
                                 <div className="reportsPageMiddleContent">
-                                        <ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={tempCategoryList} reportList={reportList} taskList={taskList} fromPage={'reportsContent'} reportObject={isReportObjectOpen} setIsReportObjectOpen={setIsReportObjectOpen}/>
+                                        <ShowReportsPopUpComponent theme={theme} setCategoryList={setCategoryList} defaultReportPage='categoryDetails' categoryList={tempCategoryList} reportList={reportList} taskList={taskList} fromPage={'reportsContent'} reportObject={isReportObjectOpen} setIsReportObjectOpen={setIsReportObjectOpen}/>
                                 </div>
                         </div>
              </> );

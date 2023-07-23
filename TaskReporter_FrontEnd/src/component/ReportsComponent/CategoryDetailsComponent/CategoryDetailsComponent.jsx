@@ -1,7 +1,8 @@
 import './CategoryDetailsComponent.css';
+import editBtnLight from '../../../assets/edit-light.svg'
+import editBtnDark from '../../../assets/edit-dark.svg'
 
-
-function CategoryDetailsComponent({currentCategory}) {
+function CategoryDetailsComponent({currentCategory,setEditCategoryOpen,theme}) {
 
     const categoryDetailsElements = [
         {dbKey : "categoryName",key : 1 ,  label : "Category Name" , value : "SIH Project"},
@@ -56,6 +57,7 @@ function CategoryDetailsComponent({currentCategory}) {
                             :
                                 <h3>No data to Show</h3>
                 }
+                 <div className="editCategoryButton" onClick={()=>setEditCategoryOpen(true)}>Edit Category <img src={(theme=='light')?editBtnLight:editBtnDark} alt="edit" height={20} width={20} /></div>
             </div>
             </> );
 }

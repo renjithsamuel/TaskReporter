@@ -8,9 +8,11 @@ import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
 import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
 import React from 'react';
+import EditCategoryPopUpComponent from '../EditCategoryPopUpComponent/EditCategoryPopUpComponent';
 
-const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'categoryDetails',categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) =>  {
+const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'categoryDetails',setCategoryList,categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) =>  {
 
+    const [editCategoryOpen , setEditCategoryOpen] = useState(false);
     const [currentReportTab , setCurrentReportTab] = useState(`${defaultReportPage}`);
 
         useEffect(()=>{
@@ -81,7 +83,8 @@ const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'catego
         return newArr;
       }
 
-    return ( <>
+    return ( <>         
+                {(editCategoryOpen)?  <EditCategoryPopUpComponent  theme={theme} currentCategory={currentCategory} setCategoryList={setCategoryList} setEditCategoryOpen={setEditCategoryOpen}/> : ''}
                     <div className="showReportContentWrapper" >
                                 <div className="showReportContentLeftWrapper">
                                         <div className="showReportContentLeftName">
@@ -130,7 +133,7 @@ const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'catego
                                         <div className="reportContentWrapper">
                                                 <div className="reportContentBar">
                                                         {(currentReportTab=='categoryDetails')?
-                                                                <CategoryDetailsComponent theme={theme} currentCategory={currentCategory}/>
+                                                                <CategoryDetailsComponent theme={theme} currentCategory={currentCategory} setEditCategoryOpen={setEditCategoryOpen}/>
                                                                 : (currentReportTab=='reports')?
                                                                 <CategoryReportsComponent theme={theme} reportObject={reportObject} currentReports={currentReports} />
                                         

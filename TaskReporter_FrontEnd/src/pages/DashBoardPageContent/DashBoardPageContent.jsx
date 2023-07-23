@@ -26,7 +26,7 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,ta
     },[searchText])
 
     return ( <>
-         {(addShowReportsComponentFromDashBoard.isOpen==true)?<div className='showReportsPopUpBackDropFromDashBoard'><ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' categoryList={categoryList} taskList={taskList} reportList={reportList} reportObject={addShowReportsComponentFromDashBoard} setIsReportObjectOpen={setAddShowReportsComponentFromDashBoard}/></div>:''}
+         {(addShowReportsComponentFromDashBoard.isOpen==true)?<div className='showReportsPopUpBackDropFromDashBoard'><ShowReportsPopUpComponent theme={theme} defaultReportPage='categoryDetails' setCategoryList={setCategoryList} categoryList={categoryList} taskList={taskList} reportList={reportList} reportObject={addShowReportsComponentFromDashBoard} setIsReportObjectOpen={setAddShowReportsComponentFromDashBoard}/></div>:''}
         <div className="dashBoardComponentWrapper" >
             <TopNavComponent currPage={"Dashboard"} theme={theme}  currentUser={currentUser} setCategoryList={setCategoryList} setSearchText={setSearchText}/>
             <div className="dashBoardContentWrapper">

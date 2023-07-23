@@ -52,3 +52,23 @@
     background-color: var(--secondary-light-color);
     border-radius: var(--border-radius);
 }
+
+
+.editCategoryButton{
+    padding: 1vh;
+    margin: 1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-hover-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+.editCategoryButton img{
+    margin-left: 0.7vh;
+}
+.editCategoryButton:hover , .editCategoryButton:active{
+    cursor: pointer;
+    background-color: var(--secondary-light-color);
+    filter: drop-shadow(1px 1px 5px var(--shadow-color));
+}

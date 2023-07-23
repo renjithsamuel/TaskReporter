@@ -867,3 +867,76 @@ export  function throttle(cb,delay = 250){
         setTimeout(timeoutfunc,delay)
     }
   }
+
+
+  // patching new category and side effects : 
+  export const patchCategory = async (updatedCategory,colaboratorEmails=[],previousEmailList,setCategoryList) => {
+    console.log(" Inside patch Category! : ",colaboratorEmails);
+    updatedCategory['startDate'] = new Date(updatedCategory.startDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
+    updatedCategory['endDate'] = new Date(updatedCategory.endDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
+    updatedCategory['createdBy'] = null;
+    updatedCategory['contributions'] = null;
+    console.log(updatedCategory);
+    // validating datas
+    if(updatedCategory.categoryName == null || updatedCategory.description == null || updatedCategory.startDate == null || updatedCategory.endDate == null ){
+        console.log("Enter valid category details!");
+        alert('Enter valid category details!');
+        return;
+    }
+    let colaboratorIdArray = [];
+    console.log("colaborator emails ",colaboratorEmails);
+    const hasNonEmptyEmails = colaboratorEmails.some(email => email.trim() !== '');
+    if(hasNonEmptyEmails){
+            // fetching colaborator IDs
+            colaboratorIdArray = await getColaboratorsIdArray(colaboratorEmails);
+            // validating fetched colaborator ID's
+            console.log(colaboratorEmails.length , colaboratorIdArray.length);
+            if(colaboratorEmails.length == colaboratorIdArray.length){
+                console.log("colaborators fetched successfully!");
+            }else{
+                console.log("Something went wrong while adding colaborators!");
+                return;
+            }
+    }
+    const hasNonEmptyPrevEmails = previousEmailList.some(email => email.trim() !== '');
+    if(hasNonEmptyPrevEmails){
+        let prevColaboratorsEmailIds = await getColaboratorsIdArray(previousEmailList);
+        // validating fetched colaborator ID's
+        console.log(previousEmailList.length , prevColaboratorsEmailIds.length);
+        if(previousEmailList.length == colaboratorIdArray.length){
+            updatedCategory['colaborators'] = [...prevColaboratorsEmailIds];
+        }else{
+            console.log("Something went wrong while updating previous colaborators!");
+            return;
+        }
+    }
+    // patching new category
+    const patchCategoryUrl = `https://taskreporternode.onrender.com/api/v1/categories/patchCategoryById/${updatedCategory._id}`;
+    console.log(patchCategoryUrl);
+    const patchedCategoryResponse = await sendHttpRequest(patchCategoryUrl,'PATCH',updatedCategory);
+    console.log(patchedCategoryResponse);
+    if(patchedCategoryResponse && patchedCategoryResponse.success == false){
+        console.log("Something went wrong while patching category!");
+    }else if(patchedCategoryResponse && patchedCategoryResponse.success == true){
+        console.log("New category patched successfully ");
+        console.log(patchedCategoryResponse.data);
+        setCategoryList((prevCategoryList)=>{
+            let updatedCategoryList = prevCategoryList.map((category)=>{
+                if(category._id!=patchedCategoryResponse.data._id){
+                    return category;
+                }else{
+                    return patchedCategoryResponse.data;
+                }
+            });
+            return updatedCategoryList;
+        })
+        if(colaboratorEmails.length!=0){
+            // inviting other users for colaborating
+            patchUserForInvites(colaboratorIdArray,patchedCategoryResponse.data._id);
+        }
+    }else{
+        console.log("Something else went wrong while patching category!");
+    }
+}
+
+// End of patching new category and side effects -----------------------------------------------------------------------------------------

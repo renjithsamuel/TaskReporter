@@ -1,0 +1,148 @@
+
+.popUpBackDropEditCategory{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: -0vh;
+    left: -0vw;
+    z-index: 10;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: var(--popup-cover-color);
+    backdrop-filter: blur(1px);
+}
+
+.popUpContentEditCategoryWrapper{
+    margin-top: 10vh;
+    width: 40vw;
+    height: max-content;
+    max-height: 80vh;
+    overflow-y: scroll;
+    backdrop-filter: blur(10px);    
+    background-color: var(--cover-color);
+    padding: 4vh;
+    border-radius: var(--border-radius);
+    z-index: 5;
+}
+
+.titleOfEditCategory{
+    display: flex;
+    width:90%;
+    align-items: center;
+    position: relative;
+    margin-bottom: 5vh  ;
+}
+
+
+
+.editCategoryName{
+    font-size: x-large;
+    font-weight: 600;
+}
+
+
+.editCategoryControlElem{
+
+    margin-top: 3vh;
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: auto;
+}
+
+.submitEditCategoryBtn{
+    width: 10vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);    
+    margin-right: 3vw;
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+}
+
+.cancelEditCategoryBtn{
+    width: 5vw;
+    height: 5vh;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancelEditCategoryBtn:hover , .submitEditCategoryBtn:hover{
+    cursor: pointer;
+    background-color: var(--shadow-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+
+.editCategoryInputWrapper{
+   
+    width: 90%;
+    display: flex;
+        padding: 1vh;
+}
+
+.editCategoryLabelLeft{
+    width: 40%;
+    font-size: medium;
+    text-align: end;
+}
+
+.editCategoryInputRight{
+    width: 70%;
+    text-align: start;
+    margin-left: 1vw;
+}
+
+.editCategoryInputs{
+    border: none;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-hover-color);
+    width: 90%;
+    margin-right: 1vw;
+    color: var(--text-color);
+}
+
+.editCategoryInputs:focus , .editCategoryInputs:active{
+    outline: none;
+    background-color: var(--secondary-light-color);
+}
+
+.editCategoryInputs::placeholder {
+    color: var(--text-color);
+    opacity: 1;
+}
+
+
+.colaboratorsInputComponentWrapper{
+    
+    display: flex;
+    margin-bottom: 1vh;
+}
+
+
+.addBtnColaborator{
+    width: 2vw;
+    height: 2vw;
+    padding: 0.5vh;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    filter: drop-shadow(1px 2px 2px var(--shadow-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addBtnColaborator:hover {
+    cursor: pointer;
+    background-color: var(--shadow-color);
+    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
