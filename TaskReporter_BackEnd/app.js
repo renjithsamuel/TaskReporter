@@ -9,7 +9,23 @@ const socketio = require('socket.io')
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors({origin:'*'}));
+// app.use(cors({origin:'*'}));
+
+const allowedOrigins = [
+    'https://taskreporter.vercel.app', 'https://taskreporter.vercel.app/dashboard' ,'https://taskreporter.vercel.app/chat' ,'https://taskreporter.vercel.app/reports' ,'https://taskreporter.vercel.app/settings',
+    'http://localhost:5173', 'http://localhost:5173/dashboard' ,'http://localhost:5173/chat' ,'http://localhost:5173/reports' ,'http://localhost:5173/settings'
+
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(null , false);
+        }
+    }
+}));
 
 // router imports 
 const usersRoutes = require('./Routes/UsersRouter');
@@ -49,8 +65,10 @@ const server = app.listen(port , ()=>{
 
 const io = socketio(server,{
     cors:{
-        origin : '*'
+        // origin : '*'
+        origin : allowedOrigins
     }
 })
 // chat socket handler
 chatSocketHandler(io);
+

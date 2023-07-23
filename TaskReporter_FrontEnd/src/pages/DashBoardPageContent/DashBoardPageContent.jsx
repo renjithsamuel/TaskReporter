@@ -20,7 +20,7 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,ta
     useEffect(()=>{
         console.log(searchText);
         if(categoryList && categoryList.length > 0 && categoryList[0]._id != undefined ) {
-            let tempTempCategoryList = categoryList.filter(category => category.categoryName.includes(searchText));
+            let tempTempCategoryList = categoryList.filter(category => category.categoryName.trim().toLowerCase().includes(searchText));
             setTempCategoryList(tempTempCategoryList);
         }
     },[searchText])

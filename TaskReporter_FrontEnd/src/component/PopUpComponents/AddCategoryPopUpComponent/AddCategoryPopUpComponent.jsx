@@ -4,8 +4,6 @@ import addIconCircleLight from '../../../assets/add-circle-light.svg'
 import addIconCircleDark from '../../../assets/add-circle-dark.svg'
 import minusIconLight from '../../../assets/minus-light.svg'
 import minusIconDark from '../../../assets/minus-dark.svg'
-import closeLight from '../../../assets/close-light.svg'
-import closeDark from '../../../assets/close-dark.svg'
 import { disableScroll, enableScroll, postCategory } from '../../../utils/ApiHandlers';
 
 function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpened}) {

@@ -28,7 +28,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,se
     }
 
     const handleSearchText = debounce((searchValue) => {
-        setSearchText(searchValue);
+        setSearchText(searchValue.trim().toLowerCase());
     })
 
     return ( 
