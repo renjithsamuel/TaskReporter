@@ -115,10 +115,11 @@ export const connectToServerFunc = async (setConnectedToServer)=>{
     }
 }
 
-export const toggleTheme = (newTheme,newPallete,setTheme)=>{
+export const toggleTheme = (newTheme,newPallete,setTheme) => {
     localStorage.setItem('data-theme',newTheme);
     localStorage.setItem('data-pallete',newPallete);
     setTheme(newTheme);
+    console.log(typeof(newPallete));
     document.documentElement.setAttribute('data-theme',newTheme);
     document.documentElement.setAttribute('data-pallete',newPallete);
 }
@@ -940,3 +941,44 @@ export  function throttle(cb,delay = 250){
 }
 
 // End of patching new category and side effects -----------------------------------------------------------------------------------------
+
+
+// export const socketListeningSystemFunction = (setCategoryList , setTasksList , setReportList , currentCategory ) => {
+//     if (currentCategory._id) {
+//         setCurrentSkipCount(0);
+//         setTimeout(()=>{  chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;},1000)
+//         getPreviousChats(currentCategory._id,setMessages,currentSkipCount,setCurrentSkipCount);
+        
+//       // Join the room when the category ID is available
+//       socket = io('https://taskreporternode.onrender.com/');
+//         //   socket = io('http://localhost:3000');
+
+//         socket.emit('joinRoom', currentCategory._id);
+//         socket.on("connect",()=>{
+//             console.log(`you have connected with the server with socket id : ${socket.id}`);
+//         })
+      
+//       // Listen to 'message' event from the server
+//       socket.on('categoryPosted', (data) => {
+//         setCategoryList((prevCategoryData) =>
+//             {
+//                 return [...prevCategoryData,data];
+//             }
+//         );
+//       });
+//       socket.on('taskPosted', (data) => {
+//         setTasksList((prevTaskList) =>
+//             {
+//                 return [...prevTaskList,data];
+//             }
+//         );
+//       });
+//       socket.on('reportPosted', (data) => {
+//         setCategoryList((prevReportList) =>
+//             {
+//                 return [...prevReportList,data];
+//             }
+//         );
+//       });
+//     }
+// }

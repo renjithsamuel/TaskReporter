@@ -6,15 +6,15 @@ import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 defineElement(lottie.loadAnimation);
 
-function LeftNavComponent({compName,compIcon,svgIcon,selectedNavElem , setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
+function LeftNavComponent({pathname,compName,compIcon,svgIcon,selectedNavElem , setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
 
 
     return (
         <Link to={(compName=='logout')? '/': (compName!='tasks')?"/"+compName:'/'} style={{textDecoration:'none',color:'var(--text-color)'}}>
         <div className="LeftNavComponentWrapper" 
-                style={{backgroundColor:(selectedNavElem==compName)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==compName)?'var(--border-color)':'var(--primary-color)' }} 
+                style={{backgroundColor:(selectedNavElem==pathname)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==compName)?'var(--border-color)':'var(--primary-color)' }} 
                     onClick={   ()=>{
-                             setSelectedNavElem(compName);
+                            //  setSelectedNavElem(compName);
                              if(compName=='logout'){
                                 if(confirm("Are you sure want to logout?")){
                                     setCurrentUser({});

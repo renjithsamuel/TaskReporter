@@ -7,14 +7,13 @@ import logoutIconDark from '../../assets/logout-dark.svg'
 
 function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
     let LeftNavCompList = [
-        {compName : "dashboard" , compIcon : `https://cdn.lordicon.com/usxfmtjg.json`},
-        {compName : "tasks" , compIcon : `https://cdn.lordicon.com/egiwmiit.json`},
-        {compName : "reports" , compIcon :`https://cdn.lordicon.com/iiixgoqp.json`},
-        {compName : "chat" , compIcon :`https://cdn.lordicon.com/hpivxauj.json`},
+        {compName : "dashboard" , compIcon : `https://cdn.lordicon.com/usxfmtjg.json` , pathname : '/dashboard'},
+        {compName : "tasks" , compIcon : `https://cdn.lordicon.com/egiwmiit.json` , pathname : '/'},
+        {compName : "reports" , compIcon :`https://cdn.lordicon.com/iiixgoqp.json` , pathname : '/reports'},
+        {compName : "chat" , compIcon :`https://cdn.lordicon.com/hpivxauj.json` , pathname : '/chat'},
     ];
 
     const settingsIcon = `https://cdn.lordicon.com/hwuyodym.json`;
-    // const logoutIcon = `https://cdn.lordicon.com/moscwhoj.json`;
 
     return ( 
     <>
@@ -25,12 +24,12 @@ function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,set
             </div>
             {
                 LeftNavCompList.map((elem,index)=>{
-                   return <LeftNavComponent key={index} compName = {elem.compName} compIcon={elem.compIcon} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme}/>
+                   return <LeftNavComponent key={index} compName = {elem.compName} pathname={elem.pathname} compIcon={elem.compIcon} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme}/>
                 })
             }
         </div>
         <div className="bottomOfLeftNav"> 
-                <LeftNavComponent key={LeftNavCompList.length+1} theme={theme} compName={"settings"} compIcon={settingsIcon} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem}/>
+                <LeftNavComponent key={LeftNavCompList.length+1} theme={theme} compName={"settings"} pathname={'/settings'} compIcon={settingsIcon} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem}/>
                 <LeftNavComponent key={LeftNavCompList.length+2} theme={theme} compName={"logout"} compIcon={'null'} svgIcon={(theme=='light')?logoutIconLight:logoutIconDark} selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} setCurrentUser={setCurrentUser} setIsLoggedIn={setIsLoggedIn}/>
         </div>
     </div>

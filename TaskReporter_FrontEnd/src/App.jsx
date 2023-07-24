@@ -1,7 +1,7 @@
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import './App.css'
 // router dom
-import {  Routes, Route } from "react-router-dom";
+import {  Routes, Route , useLocation} from "react-router-dom";
 // redux
 // import { Provider } from 'react-redux';
 // import store from './redux/store';
@@ -31,6 +31,8 @@ function App(){
   const [isLoggedIn , setIsLoggedIn] = useState(false);
   const [gotUser,setGotUser] = useState(false);
 
+  const location = useLocation();
+
 
   useEffect(()=>{
     const queuedRequests = JSON.parse(localStorage.getItem('queuedRequests')) || [];
@@ -38,7 +40,9 @@ function App(){
     if ((isOnline && queuedRequests.length > 0)) {
       executeQueuedRequests();
     }
-  },[isOnline])
+  },[isOnline]);
+  
+
 
   useEffect(()=>{
       connectToServerFunc(setConnectedToServer);
@@ -112,8 +116,16 @@ function App(){
       }
   },[reportList]);
 
+  useEffect(()=>{
+    setSelectedNavElem(location.pathname);
+  },[location.pathname])
+
 
   useEffect(()=>{
+    // listen with socket
+    // categoryList.forEach((category)=>{
+    //   socketListeningSystemFunction(setCategoryList , setTaskList , setReportList , category );
+    // });
     const func = throttle(()=>{console.log("throttling resize");}, 2000)
     window.addEventListener('resize', func)
     return ()=>{
@@ -123,7 +135,6 @@ function App(){
     
     //   to check current online status
       isOnline = useOnlineStatus();
-      // isOnline = false ;
       function useOnlineStatus() {
           const [isOnline, setIsOnline] = useState(true);
           useEffect(() => {
@@ -151,18 +162,7 @@ function App(){
     {(!gotUser  )?<LoginWithGooglePopUpComponent theme={theme} setIsLoggedIn={setIsLoggedIn} connectedToServer={connectedToServer}/>:''}
     <UserContext.Provider value={setCurrentUser}>
       <div className='AppWrapper'>
-          
             <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme} setCurrentUser={setCurrentUser}/>
-            {/* {(selectedNavElem=='tasks')?    
-              <PageContent theme={theme} currentUser={currentUser}/>
-              :(selectedNavElem=='chat')?
-              <ChatPageContent theme={theme}  currentUser={currentUser}/>
-              :(selectedNavElem=='dashboard')?
-              <DashBoardPageContent theme={theme}  currentUser={currentUser}/>
-              :(selectedNavElem=='settings')?
-              <SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser}/>
-              :'Logging out!'
-            } */}
             <Routes >
                 <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
                 <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>}/>
@@ -179,18 +179,3 @@ function App(){
 }
 
 export default App;
-
-
-
-    // <Provider store={store}>
-    // </Provider>
-    // <BrowserRouter>
-    //     <Routes>
-    //       <Route exact path='/' element={<DashBoardPageContent theme={theme}/>}/>
-    //       <Route path='/myProjects' element={<MyProjects/>}/>
-    //       <Route path='/newproject' element={<NewProject/>}/>
-
-    //       <Route path='/counter' element={<Counter />}/>   
- 
-    //     </Routes>
-    // </BrowserRouter>

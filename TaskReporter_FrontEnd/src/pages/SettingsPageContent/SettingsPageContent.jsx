@@ -2,10 +2,11 @@ import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import './SettingsPageContent.css'
 import BannerCoverComponent from './BannerCoverComponent/BannerCoverComponent';
 import { toggleTheme } from '../../utils/ApiHandlers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function SettingsPageContent({theme,currentUser,setCategoryList}) {
     const [searchText , setSearchText ] = useState('');
+    const [pallete , setPallete ] = useState(''); 
 
     const themeArray = [
         { key : 1 , theme : 'light',pallete : "default",setTheme : theme[1],displayColor : '#ffffff'},
@@ -22,6 +23,14 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
         { key : 12 , theme : 'light',pallete : "desertSand",setTheme : theme[1],displayColor : '#f1dfaa'},
         { key : 13 , theme : 'light',pallete : "diaryMilk",setTheme : theme[1],displayColor : '#1E56A0'},
     ]
+
+    useEffect(()=>{
+        if(localStorage.getItem('data-pallete')!=null){
+            setPallete(localStorage.getItem('data-pallete'));
+        }else{
+            setPallete('default')
+        }
+    },[])
 
 
     return ( 
@@ -61,7 +70,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                                     {
                                         themeArray.map((themeElement,index)=>{
                                             if(themeElement.theme=='light')
-                                            return <ThemeRightElement key={index} theme={themeElement.theme} pallete={themeElement.pallete} setTheme={themeElement.setTheme} displayColor={themeElement.displayColor}/>
+                                            return <ThemeRightElement key={index} currentPallete={pallete} setPallete={setPallete} theme={themeElement.theme} pallete={themeElement.pallete} setTheme={themeElement.setTheme} displayColor={themeElement.displayColor}/>
                                         })
                                     }
                                 </div>
@@ -74,7 +83,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                                     {
                                         themeArray.map((themeElement,index)=>{
                                             if(themeElement.theme=='dark')
-                                            return <ThemeRightElement key={index} theme={themeElement.theme} pallete={themeElement.pallete} setTheme={themeElement.setTheme} displayColor={themeElement.displayColor}/>
+                                            return <ThemeRightElement key={index} currentPallete={pallete} setPallete={setPallete} theme={themeElement.theme} pallete={themeElement.pallete} setTheme={themeElement.setTheme} displayColor={themeElement.displayColor}/>
                                         })
                                     }
                                 </div>
@@ -88,9 +97,9 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
 export default SettingsPageContent;
 
 
-function ThemeRightElement({theme,pallete,setTheme,displayColor}) {
+function ThemeRightElement({theme,pallete,setTheme,displayColor,setPallete,currentPallete}) {
     return (   
-    <div className="themeSelectorsRight" onClick={()=>{toggleTheme(theme,pallete,setTheme)}} style={{backgroundColor:displayColor , borderRadius: (localStorage.getItem('data-pallete')==pallete)?'15px':'10px'}}>                     
+    <div className="themeSelectorsRight" onClick={()=>{toggleTheme(theme,pallete,setTheme);setPallete(pallete);}} style={{backgroundColor:displayColor , borderRadius: (currentPallete==pallete)?'50%':'10px'}}>                     
     </div>
 );
 }
