@@ -1,10 +1,14 @@
 import './RemoveReportPopUpComponent.css';
-import { patchTask, deleteReport , patchCategoryOnTaskCompletion } from '../../../utils/ApiHandlers';
+import { patchTask, deleteReport , patchCategoryOnTaskCompletion , patchUserWithPoints} from '../../../utils/ApiHandlers';
+import { useContext } from 'react';
+import { UserContext } from '../../../App';
 
 function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList,reportList,setReportList}) {
+    const {setCurrentUser , currentUser } = useContext(UserContext); 
 
     const handleSubmitRemoveReport = async ()=>{
         await patchCategoryOnTaskCompletion('incomplete',null,addReportEffectObj.weight,addReportEffectObj.categoryId,setCategoryList,addReportEffectObj.taskId);
+        patchUserWithPoints("incomplete",addReportEffectObj.weight,currentUser,setCurrentUser);
         patchTask(addReportEffectObj.taskId,{completed : false},setTaskList);
         deleteReport(addReportEffectObj.taskId,setReportList);
         setAddReportEffectObj((prev)=>{return {...prev,isOpen : false,success : true}});

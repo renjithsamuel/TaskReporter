@@ -334,3 +334,94 @@ exports.deleteManyReportsByCategoryId = async (req, res, next) => {
       });
     }
   };
+
+  exports.getStreaksByUserId = async (req, res, next) => { 
+    try {
+      const userId = req.params.id; 
+    //   console.log("user id" , userId);
+      const { currentStreak, longestStreak } = await calculateStreak(userId);
+      return res.status(200).json({
+        success: true,
+        currentStreak,
+        longestStreak,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error!" + err,
+      });
+    }
+  };
+
+  const calculateStreak = async (userId) => {
+    try {
+      const userReports = await reports.find({ reportedBy: userId }).sort({ reportedDate: 1 }).exec();
+        // console.log(userReports);
+      let currentStreak = 0;
+      let longestStreak = 0;
+      let previousDate;
+  
+      for (const report of userReports) {
+        const currentDate = new Date(report.reportedDate);
+        if (!previousDate) {
+          previousDate = currentDate;
+          currentStreak = 1;
+        } else {
+          const dayDifference = Math.ceil((currentDate - previousDate) / (1000 * 60 * 60 * 24));
+          if (dayDifference === 1) {
+            currentStreak++;
+          } else if (dayDifference > 1) {
+            currentStreak = 1;
+          }
+          previousDate = currentDate;
+        }
+          if (currentStreak > longestStreak) {
+          longestStreak = currentStreak;
+        }
+        // console.log(currentStreak);
+        // console.log(longestStreak);
+      }
+      return { currentStreak, longestStreak };
+    } catch (err) {
+      throw new Error('Error while calculating streak: ' + err.message);
+    }
+  };
+
+
+  exports.getGraphData = async (req,res,next) => {
+    const requestDates= req.body.dates;
+    const userId = req.body.userId;
+    if(requestDates == null || userId == null){
+        return res.status(400).json({
+            success : false,
+            message : "send valid details!"
+        })
+    }
+    try{
+        const graphData = [];
+        for (const date of requestDates) {
+
+            const startDate = new Date(date);
+            const endDate = new Date(date);
+            endDate.setDate(endDate.getDate() + 1);
+
+            const numberOfTasksCompleted = await reports
+              .find({ reportedBy: userId, createdAt :  { $gte: startDate, $lt: endDate } })
+              .countDocuments()
+              .exec()
+              ;
+      
+            graphData.push({ date: date, numberOfTasksCompleted: numberOfTasksCompleted });
+        }
+        // console.log(graphData);
+        return res.status(200).json({
+            success : true,
+            data : graphData
+        })
+    }catch(err){
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error !" , err
+        })
+    }
+  }

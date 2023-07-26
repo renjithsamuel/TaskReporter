@@ -1,13 +1,14 @@
 import './AddReportPopUpComponent.css';
-import closeLight from '../../../assets/close-light.svg'
-import closeDark from '../../../assets/close-dark.svg'
-import { patchTask, postReport ,patchCategoryOnTaskCompletion, enableScroll, disableScroll} from '../../../utils/ApiHandlers';
+import { patchTask, postReport ,patchCategoryOnTaskCompletion, enableScroll, disableScroll ,patchUserWithPoints } from '../../../utils/ApiHandlers';
 import { useEffect, useState } from 'react';
+import {UserContext} from '../../../App'
+import { useContext } from 'react';
 
 function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTaskList,addReportEffectObj,setCategoryList,reportList,setReportList}) {
 
     const [addReportElementsInput,setAddReportElementsInput ] = useState([]);
     const [addReportObject,setAddReportObject] = useState({category : addReportEffectObj.categoryId,taskCompleted: addReportEffectObj.taskId,reportedBy : currentUser._id,reportedDate : new Date()});
+    const {setCurrentUser} = useContext(UserContext);
 
     useEffect(()=>{
         const newArr = [
@@ -35,6 +36,7 @@ function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTas
             return;
         }
         postReport(addReportObject,setReportList);
+        patchUserWithPoints("complete",addReportEffectObj.weight,currentUser,setCurrentUser);
         patchTask(addReportEffectObj.taskId,{completed : true},setTaskList);
         patchCategoryOnTaskCompletion('completed',currentUser.emailId,addReportEffectObj.weight,addReportEffectObj.categoryId,setCategoryList);
         setAddReportEffectObj((prev)=>{return {...prev,isOpen : false,success : true}});

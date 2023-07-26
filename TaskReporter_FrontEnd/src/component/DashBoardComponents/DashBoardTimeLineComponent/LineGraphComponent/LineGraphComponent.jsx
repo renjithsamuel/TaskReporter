@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const LineGraphComponent = ({ theme }) => {
+const LineGraphComponent = ({ theme , graphData }) => {
 
   // Sample data
   const data2 = [
-    { month: 'january', tasksCompleted: 4 },
-    { month: 'febraury', tasksCompleted: 5 },
-    { month: 'march', tasksCompleted: 0 },
-    { month: 'april', tasksCompleted: 2 },
-    { month: 'may', tasksCompleted: 5 },
-    { month: 'june', tasksCompleted: 7 },
-    { month: 'july', tasksCompleted: 5 },
+    { date: 'january', numberOfTasksCompleted: 4 },
+    { date: 'febraury', numberOfTasksCompleted: 5 },
+    { date: 'march', numberOfTasksCompleted: 0 },
+    { date: 'april', numberOfTasksCompleted: 2 },
+    { date: 'may', numberOfTasksCompleted: 5 },
+    { date: 'june', numberOfTasksCompleted: 7 },
+    { date: 'july', numberOfTasksCompleted: 5 },
   ];
+
+
 
   return (
     <div className="lineGraphWrapper" style={{ color: 'var(--text-color)' }}>
       <LineChart
         width={740}
         height={240}
-        data={data2} // Replace data with data2
+        data={( graphData && graphData.length > 0 && graphData[0].date==null)?data2:graphData} 
         margin={{
           top: 5,
           right: 30,
@@ -28,11 +30,11 @@ const LineGraphComponent = ({ theme }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
+        <XAxis dataKey="date" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="tasksCompleted" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="numberOfTasksCompleted" stroke="#8884d8" activeDot={{ r: 8 }} />
       </LineChart>
     </div>
   );

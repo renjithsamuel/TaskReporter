@@ -164,7 +164,7 @@ exports.postUser = async (req,res,next) => {
             message: "send valid details!"
         })
     }
-    const postableData = {username : req.body.username, emailId : req.body.emailId };
+    const postableData = {username : req.body.username, emailId : req.body.emailId , productivityPoints : 0 , streak : 0 };
 
     try{
         const postedData = await users.create(postableData);
@@ -205,9 +205,11 @@ exports.patchUserById = async (req,res,next) => {
                 success : false 
             })
         }
-    
+    console.log(req.body);
     if(req.body.username == null && req.body.emailId == null  
-        && req.body.invites == null && req.body.updateInvite == null ){
+        && req.body.invites == null && req.body.updateInvite == null && req.body.productivityPoints == null
+        && req.body.streak == null  
+        ){
         return res.status(404).json({
             success : false,
             message : "send valid data to patch!"
@@ -227,6 +229,8 @@ exports.patchUserById = async (req,res,next) => {
         username :  req.body.username || userData.username, 
         emailId : req.body.emailId || userData.emailId,
         invites : (req.body.updateInvite==true || req.body.invites!=null)?req.body.invites : userData.invites,
+        productivityPoints : (req.body.productivityPoints != null ) ? req.body.productivityPoints : userData.productivityPoints,
+        streak : (req.body.streak != null ) ? req.body.streak : userData.streak,
     }
     try{
         const patchedData = await users.findByIdAndUpdate(userID , { $set: { ...patchableData } }, {new : true});

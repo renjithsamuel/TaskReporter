@@ -141,6 +141,19 @@ export const getCategoriesByUserId = async (userId,setCategoryList) => {
     }
 }
 
+export const getStreakOfUser = async (userId,setStreak) => {
+    const getStreakByUserIdUrl = `https://taskreporternode.onrender.com/api/v1/reports/getStreaksByUserId/${userId}`;
+    const gottenReponse = await sendHttpRequest(getStreakByUserIdUrl,'GET');
+    console.log("streak response data ",gottenReponse);
+    if(gottenReponse && gottenReponse.success == true){
+        console.log("streak fetched successfully!");
+        setStreak({currentStreak : gottenReponse.currentStreak , longestStreak : gottenReponse.longestStreak});
+    }else if(gottenReponse && gottenReponse.success == false){
+        console.log("error while fetching streak " , gottenReponse.message);
+    }else{
+        console.log("something else went wrong while fetching streak!");
+    }
+}
 
 // get tasks by category ID
 export const getTasksByCategoryId = async (categoryId,setTaskList) => {
@@ -393,6 +406,27 @@ export const patchTask = async (taskId , patchableData,setTaskList) => {
     }
 }
 
+// patch tasks completed by dates with increased productivity points
+export const patchUserWithPoints = async (status,weight , currentUser , setCurrentUser ) => {
+    let points = weight * 12;
+    const patchUserByIdUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
+    const patchableData = {productivityPoints : (status=="complete")?currentUser.productivityPoints + points : currentUser.productivityPoints -  points };
+    console.log(patchableData);
+    try{
+        const patchedUserResponse = await sendHttpRequest(patchUserByIdUrl,'PATCH',patchableData);
+        console.log(patchedUserResponse,"checking patch user");
+        if(patchedUserResponse && patchedUserResponse.success == false){
+            console.log("Something went wrong while patching user!");
+        }else if(patchedUserResponse && patchedUserResponse.success == true){
+            console.log("patched user!");
+            console.log(patchedUserResponse.data);
+            setCurrentUser(patchedUserResponse.data);
+        }
+    }catch(err){
+        console.log("something else went wrong!",err);
+    }
+}
+
 // post report while completing a task
 export const postReport = async (addReportObj,setReportList) =>{
     if(addReportObj.category == null || addReportObj.taskCompleted == null || addReportObj.reportedBy==null || addReportObj.reportedDate==null || addReportObj.reportStatement ==null){
@@ -400,7 +434,7 @@ export const postReport = async (addReportObj,setReportList) =>{
         console.log("send valid details!");
         return;
     }
-    // addReportObj['reportedDate'] = new Date(addReportObj.reportedDate).toLocaleDateString('en-US',{day : 'numeric' , month : 'short',year : 'numeric'});
+    addReportObj['reportedDate'] = new Date();
     const postReportUrl = `https://taskreporternode.onrender.com/api/v1/reports/postReport`;
     console.log("task  check",addReportObj);
     const postedReportResponse = await sendHttpRequest(postReportUrl , 'POST' , addReportObj);
@@ -645,7 +679,52 @@ export const rejectInvite = async (currentUser , invitedCategoryId , setCurrentU
     }
 }
 
+// delete User
+export const deleteUser = async (userId,setCategoryList,setCurrentUser) => {
+    if(!confirm("Are you sure want to delete your account?")){
+        return;
+    }
+ 
+    console.log("get categories check ",userId);
+    const getCategoriesByUserIdUrl = `https://taskreporternode.onrender.com/api/v1/categories/getCategoriesByUserId/${userId}`;
+    const categoriesResponseData = await sendHttpRequest(getCategoriesByUserIdUrl,'GET');
+    console.log("categories response data ",categoriesResponseData);
+    if(categoriesResponseData && categoriesResponseData.success == true){
+        console.log("category fetched successfully!");
+        let tempCategoryList = categoriesResponseData.data;
+        try{
+            let promises = await Promise.all(tempCategoryList.map((category)=>{
+                        if ( category.colaborators.length == 1 && category.colaborators[0]._id == userId ){
+                        deleteCategory(category._id , setCategoryList);
+                    }
+                    
+                }));
+            console.log(promises , "all promises are fullfilled!");
+        }catch(err){
+            console.log("something went wrong while deleting category!");
+        }
+    }else if(categoriesResponseData && categoriesResponseData.success == false){
+        console.log("error while fetching categories " , categoriesResponseData.message);
+    }else{
+        console.log("something else went wrong while fetching categories!");
+    }
 
+
+    // deleteUser
+    const deleteUserUrl = `https://taskreporternode.onrender.com/api/v1/users/deleteUserById/${userId}`;
+    const gottenResponse = await sendHttpRequest(deleteUserUrl,'DELETE');
+    if(gottenResponse && gottenResponse.success == true){
+        console.log("transaction succesful", gottenResponse.data);
+    }else if(gottenResponse && gottenResponse.success == false){
+        console.log("error during transaction",gottenResponse.message);
+    }else {
+        console.log("something else went wrong in the server");
+    }
+
+    setCurrentUser({});
+    localStorage.clear();
+    location.reload()
+} 
 
 
 
@@ -702,7 +781,7 @@ const deleteManyReportsByCategoryId = async (categoryId) => {
 }
 
 const deleteManyChatsByCategoryId = async (categoryId) => {
-    const deleteManyChatsUrl = `https://taskreporternode.onrender.com/api/v1/reports/deleteManyChatsByCategoryId/${categoryId}`;
+    const deleteManyChatsUrl = `https://taskreporternode.onrender.com/api/v1/chatByDates/deleteManyChatsByCategoryId/${categoryId}`;
     const gottenResponse = await sendHttpRequest(deleteManyChatsUrl,'DELETE');
     if(gottenResponse && gottenResponse.success == true){
         console.log("transaction succesful", gottenResponse.data);
@@ -945,13 +1024,9 @@ export  function throttle(cb,delay = 250){
 
 // export const socketListeningSystemFunction = (setCategoryList , setTasksList , setReportList , currentCategory ) => {
 //     if (currentCategory._id) {
-//         setCurrentSkipCount(0);
-//         setTimeout(()=>{  chatContentsBox.current.scrollTop = chatContentsBox.current.scrollHeight;},1000)
-//         getPreviousChats(currentCategory._id,setMessages,currentSkipCount,setCurrentSkipCount);
-        
-//       // Join the room when the category ID is available
-//       socket = io('https://taskreporternode.onrender.com/');
-//         //   socket = io('http://localhost:3000');
+//          // Join the room when the category ID is available
+//             socket = io('https://taskreporternode.onrender.com');
+//         //   socket = io('https://taskreporternode.onrender.com');
 
 //         socket.emit('joinRoom', currentCategory._id);
 //         socket.on("connect",()=>{
@@ -959,26 +1034,98 @@ export  function throttle(cb,delay = 250){
 //         })
       
 //       // Listen to 'message' event from the server
-//       socket.on('categoryPosted', (data) => {
-//         setCategoryList((prevCategoryData) =>
-//             {
-//                 return [...prevCategoryData,data];
-//             }
-//         );
-//       });
 //       socket.on('taskPosted', (data) => {
-//         setTasksList((prevTaskList) =>
+//         setTasksList((prevData) =>
 //             {
-//                 return [...prevTaskList,data];
+//                 let tempList = prevData.filter((elem)=>elem._id!=data._id);
+//                 tempList = [...tempList,data];
+//                 return tempList;
 //             }
 //         );
 //       });
 //       socket.on('reportPosted', (data) => {
-//         setCategoryList((prevReportList) =>
+//         setReportList((prevData) =>
 //             {
-//                 return [...prevReportList,data];
+//                 let tempList = prevData.filter((elem)=>elem._id!=data._id);
+//                 tempList = [...tempList,data];
+//                 return tempList;
 //             }
 //         );
 //       });
+//     //   end of listening posts
+//     //   start of listening deleted posts
+//     socket.on('taskDeleted', (data) => {
+//         setTasksList((prevData) =>
+//             {
+//                 let tempList = prevData.filter((elem)=>elem._id!=data._id);
+//                 return tempList;
+//             }
+//         );
+//       });
+//       socket.on('reportDeleted', (data) => {
+//         setReportList((prevData) =>
+//             {
+//                 let tempList = prevData.filter((elem)=>elem._id!=data._id);
+//                 return tempList;
+//             }
+//         );
+//       });
+//     //   end of listening deleted posts
+//     //   start  of listeing patched posts
+//       socket.on('taskPatched', (data) => {
+//         setTasksList((prevData) =>
+//             {
+//                 let tempList = prevData.filter((elem)=>elem._id!=data._id);
+//                 tempList = [...tempList,data];
+//                 return tempList;
+//             }
+//         );
+//       });
+//     //   end of patching posts
 //     }
 // }
+
+
+
+
+
+// delete user button!
+// in userSchema
+// Overall points and streak
+
+// month wise tasks completed for each user get it and show the last 7 dates data for dashboard
+// use the same for streak system
+
+// current.setMonth(current.getMonth()-1);
+// const previousMonth = current.toLocaleString('default', { month: 'long' });
+
+// console.log(previousMonth); 
+
+
+
+export const getGraphData = async (userId,setGraphData)=>{
+    let datesArray = [new Date()];
+    for(let i=1;i<7;i++){
+        datesArray.push(getPreviousDay(datesArray[i-1]))
+    }
+    try{   
+        const getGraphDataUrl = `https://taskreporternode.onrender.com/api/v1/reports/getGraphData`;
+            let responseData = await sendHttpRequest(getGraphDataUrl , 'POST',{userId : userId , dates : datesArray});
+            if(responseData && responseData.success ){
+                let  tempGraphData = responseData.data.map((elem)=> {return {date : new Date(elem.date).toLocaleDateString('en-US', {day : 'numeric',month : 'short',year: '2-digit' }), 
+                                                        numberOfTasksCompleted : elem.numberOfTasksCompleted} });
+                tempGraphData = tempGraphData.sort((a,b)=> new Date(a.date) - new Date(b.date));
+                console.log("graph",tempGraphData);
+                setGraphData(tempGraphData);
+            }
+    }catch(err){
+        console.log("something went wrong while fetching graph data",err);
+    }
+}
+
+
+function getPreviousDay(date = new Date()) {
+    const previous = new Date(date.getTime());
+    previous.setDate(date.getDate() - 1);
+    return previous;
+}

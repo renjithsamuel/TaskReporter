@@ -13,7 +13,7 @@ import {UserContext} from '../../App'
 
 function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage,setCategoryList}) {
 
-    const setCurrentUser = useContext(UserContext);
+    const {setCurrentUser} = useContext(UserContext);
 
     return ( <>
         <div className="notificationsWrapper">

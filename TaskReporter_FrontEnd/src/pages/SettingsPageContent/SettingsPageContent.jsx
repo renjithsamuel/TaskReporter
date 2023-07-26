@@ -1,10 +1,14 @@
 import TopNavComponent from '../../component/TopNavComponent/TopNavComponent';
 import './SettingsPageContent.css'
 import BannerCoverComponent from './BannerCoverComponent/BannerCoverComponent';
-import { toggleTheme } from '../../utils/ApiHandlers';
+import { deleteUser, toggleTheme } from '../../utils/ApiHandlers';
 import { useEffect, useState } from 'react';
+import coinImage from '../../assets/coin.svg'
+import fireImage from '../../assets/fire.svg'
+import deleteIconDark from '../../assets/delete-dark.svg'
+import deleteIconLight from '../../assets/delete-light.svg'
 
-function SettingsPageContent({theme,currentUser,setCategoryList}) {
+function SettingsPageContent({theme,currentUser,setCategoryList,streak,setCurrentUser}) {
     const [searchText , setSearchText ] = useState('');
     const [pallete , setPallete ] = useState(''); 
 
@@ -25,6 +29,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
     ]
 
     useEffect(()=>{
+        console.log(streak);
         if(localStorage.getItem('data-pallete')!=null){
             setPallete(localStorage.getItem('data-pallete'));
         }else{
@@ -37,7 +42,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
     <>
         <div className="settingsPageWrapper">
             <TopNavComponent currPage={"Settings"} theme={theme[0]}  currentUser={currentUser} setCategoryList={setCategoryList} setSearchText={setSearchText}/>
-
+                {/* top banner */}
                 <div className="userBanners">
                     <div className="userBannerCoverImage">
                         <BannerCoverComponent />
@@ -57,6 +62,48 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                     </div>
                 </div>
 
+                {/* user achievements */}
+
+                <div className="userAcheivements">
+                    <div className="userAcheivementsName">
+                        Acheivements
+                    </div>
+                    <div className="userStreaks">
+                            <div className="userCurrentStreak">
+                                <div className="userCurrentStreakName">
+                                        Current Streak 
+                                </div>
+                                <div className="userCurrentStreakDisplay">
+                                            {(JSON.stringify(streak)!='{}')?streak.currentStreak:  0}
+                                          <div className="userCurrentStreakIcon">
+                                                <img src={fireImage} alt="points" height={30} width={30} />
+                                        </div>
+                                </div>
+
+                            </div>
+                            <div className="userLongestStreak">
+                                <div className="userLongestStreakName">
+                                        Longest Streak 
+                                </div>
+                                <div className="userLongestStreakDisplay">
+                                        {(JSON.stringify(streak)!='{}')?streak.longestStreak:  0}
+                                </div>
+                            </div>
+                    </div>
+                    <div className="userProductivityPoints">
+                        <div className="productivityPointsName">
+                                Productivity Points
+                        </div>
+                        <div className="productivityPointsDisplay">
+                                {currentUser? currentUser.productivityPoints : 0}
+                            <div className="productivityPointsIcon">
+                                <img src={coinImage} alt="points" height={20} width={20} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* theme switcher */}
                     <div className="themeSwitcher">
                         <div className="themeName">
                             Themes  
@@ -87,6 +134,21 @@ function SettingsPageContent({theme,currentUser,setCategoryList}) {
                                         })
                                     }
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* delete user */}
+                    <div className="deleteUserWrapper">
+                        <div className="deleteUserName">
+                            Delete User 
+                        </div>
+                        <div className="deleteUserButtonWrapper" onClick={()=>{deleteUser(currentUser._id,setCategoryList,setCurrentUser);}}>
+                            <div className="deleteButton">
+                                delete Account 
+                            </div>
+                            <div className="deleteIcon">
+                                 <img src={(theme[0]=='light')?deleteIconLight:deleteIconDark} alt="points" height={20} width={20} />
                             </div>
                         </div>
                     </div>

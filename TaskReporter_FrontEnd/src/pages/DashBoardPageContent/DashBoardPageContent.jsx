@@ -32,7 +32,7 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,ta
             <div className="dashBoardContentWrapper">
                 <div className="dashBoardContentLeft">
                     <div className="dashBoardTimeLineElement">
-                        <DashBoardTimeLineComponent />
+                        <DashBoardTimeLineComponent theme={theme} currentUser={currentUser}/>
                     </div>
                     <div className="dashBoardReportsLabel">Reports</div>
                     <div className="DashBoardTaskElements">

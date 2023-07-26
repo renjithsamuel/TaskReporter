@@ -62,6 +62,23 @@
     /* margin-left: 50vw; */
 }
 
+.productivityPoints{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    padding: 1vh;
+    margin-right: 0.5vw;
+    border-radius: var(--border-radius); 
+    background-color: var(--secondary-light-color);
+}
+
+.pointsName{
+  
+    margin-right: 0.5vw;
+}
+
 .noInternetIndicator{
     margin-right: 0.5vw;
     border-radius: 50%; 

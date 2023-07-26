@@ -50,7 +50,7 @@ exports.getPreviousChats = async (req, res, next) => {
 exports.getUniqueChatByDateById = async (req,res,next) => {
     const chatByDateID  = req.params.id;
         // if data not in db:
-        let dataInDB = await ChatByDates.findById({_id:chatByDateID});
+        let dataInDB = await chatByDates.findById({_id:chatByDateID});
         if(!dataInDB){
             return res.status(404).json({
                 message : "cannot find document",
@@ -130,7 +130,7 @@ exports.patchChatByDateById = async (req,res,next) => {
 
     const chatByDateID = req.params.id;
         // if data not in db:
-        let dataInDB = await ChatByDates.findById({_id:chatByDateID});
+        let dataInDB = await chatByDates.findById({_id:chatByDateID});
         if(!dataInDB){
             return res.status(404).json({
                 message : "cannot find document",
@@ -155,12 +155,12 @@ exports.patchChatByDateById = async (req,res,next) => {
         })
     }
     const patchableData = {
-        text :  req.body.text || userData.text, 
-        senderEmail : req.body.senderEmail || userData.senderEmail,
-        senderName : req.body.senderName || userData.senderName,
-        chatDate : req.body.chatDate || userData.chatDate,
-        category : req.body.category || userData.category,
-        room : req.body.room || userData.room,
+        text :  req.body.text || chatByDateData.text, 
+        senderEmail : req.body.senderEmail || chatByDateData.senderEmail,
+        senderName : req.body.senderName || chatByDateData.senderName,
+        chatDate : req.body.chatDate || chatByDateData.chatDate,
+        category : req.body.category || chatByDateData.category,
+        room : req.body.room || chatByDateData.room,
     }
     try{
         const patchedData = await chatByDates.findByIdAndUpdate(chatByDateID , { $set: { ...patchableData } }, {new : true});
@@ -195,7 +195,7 @@ exports.deleteChatByDateById = async (req,res,next) => {
     }
 
     // if data not in db:
-    let dataInDB = await ChatByDates.findById({_id:chatByDateID});
+    let dataInDB = await chatByDates.findById({_id:chatByDateID});
     if(!dataInDB){
         return res.status(404).json({
             message : "cannot find document",

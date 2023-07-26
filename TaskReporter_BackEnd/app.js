@@ -14,7 +14,7 @@ app.use(helmet());
 const allowedOrigins = [
     'https://taskreporter.vercel.app', 'https://taskreporter.vercel.app/dashboard' ,'https://taskreporter.vercel.app/chat' ,'https://taskreporter.vercel.app/reports' ,'https://taskreporter.vercel.app/settings',
     'http://localhost:5173', 'http://localhost:5173/dashboard' ,'http://localhost:5173/chat' ,'http://localhost:5173/reports' ,'http://localhost:5173/settings'
-
+    
 ];
 
 app.use(cors({

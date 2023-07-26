@@ -3,6 +3,7 @@ import notificationIcon from '../../assets/notification-light.svg'
 import userIcon from '../../assets/user-light.svg'
 import noInternetLight from '../../assets/noInternet-light.svg'
 import noInternetDark from '../../assets/noInternet-dark.svg'
+import coinImage from '../../assets/coin.svg'
 import './TopNavComponent.css';
 import {  Link } from "react-router-dom";
 // lottie
@@ -60,6 +61,10 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,se
                         {currPage}
                     </div>
                     <div className="topNavRight">
+                        <div className="productivityPoints">
+                            <div className="pointsName"> {currentUser? currentUser.productivityPoints : 0}</div>
+                            <img src={coinImage} alt="points" height={20} width={20} />
+                        </div>
                         <div className="noInternetIndicator" style={{display:(isOnline)?'none':'flex'}}>
                             <img src={(theme=='light')?noInternetLight: noInternetDark} alt="user" height={30} width={30} />
                         </div>

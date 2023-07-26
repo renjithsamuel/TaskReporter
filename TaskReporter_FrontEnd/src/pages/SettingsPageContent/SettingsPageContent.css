@@ -61,9 +61,109 @@
     border: 2px solid var(--text-color);
 }
 
+/* user achievements */
+.userAcheivements{
+    margin: 2vh;
+    margin-top: 3vh;
+    width: 48vw;
+    align-self: flex-start;
+    margin-left: 15vw;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+
+}
+
+.userAcheivementsName{
+    padding: 1vh;
+    margin: 1vh;
+    font-size: large;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+}
+
+.userStreaks{
+    width: 15vw;
+    margin: 1vh;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+}
+
+.userCurrentStreak , .userLongestStreak{
+    display: flex;
+    width: 90%;
+    padding: 1vh;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userCurrentStreakName{
+
+}
+
+.userCurrentStreakDisplay{
+    font-size: large;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userLongestStreakDisplay{
+    margin-right: 3vh;
+    font-size: large;
+    font-weight: 600;
+}
+
+.userCurrentStreakIcon{
+    margin-left: 0.4vw;
+}
+
+.userProductivityPoints{
+    padding: 2vh;
+    margin: 1vh;
+    display: flex;
+    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+}
+
+.productivityPointsName{
+    margin: 0.5vh;
+}
+
+.productivityPointsDisplay{
+    font-size: large;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vh;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.productivityPointsIcon{
+    margin-left: 0.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* theme switcher */
+
 .themeSwitcher{
     display: flex;
-    margin-left: 5vw;
+    margin-left: 15vw;
     align-self: flex-start;
     justify-content: start;
     align-items: center;
@@ -82,8 +182,10 @@
     width: max-content;
     padding: 1vh;
     margin: 1vh;
+    font-size: large;
+    font-weight: 600;
     border-radius: var(--border-radius);
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-light-color);
 }
 
 .themeSelectorsRight{
@@ -105,6 +207,7 @@
     border-radius: var(--border-radius);
     /* background-color: var(--secondary-light-color); */
 }
+
 .themesLight,.themesDark{
     margin  : 1vh;
     padding: 1vh;
@@ -125,4 +228,54 @@
 }
 .themesDisplayLight,.themesDisplayDark{
     display: flex;
+}
+
+.deleteUserWrapper{
+    margin: 2vh;
+    margin-top: 3vh;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 28vw;
+    align-self: start;
+    padding: 2vh;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+}
+
+.deleteUserName{
+    padding: 1vh;
+    font-size: large;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-light-color);
+}
+
+.deleteUserButtonWrapper{
+    margin: 1vh;
+    margin-left: 2vh;
+    padding: 1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+}
+
+.deleteButton{
+    margin-right: 0.5vw;
+}
+
+.deleteIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.deleteUserButtonWrapper:hover ,.deleteUserButtonWrapper:active {
+    cursor: pointer;
+    background-color: var(--shadow-color);
+    filter: drop-shadow(1px 5px 5px var(--shadow-color));
 }

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const reportsSchema = mongoose.Schema({
-    reportedDate : {type : String},
+    reportedDate : {type : Date},
     reportStatement : {type : String },
     category : {type :  mongoose.Schema.Types.ObjectId,ref : 'categories'},
     reportedBy : {type :  mongoose.Schema.Types.ObjectId,ref : 'users'},

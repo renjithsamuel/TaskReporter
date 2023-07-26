@@ -15,7 +15,7 @@ import ReportsPageContent from './pages/ReportsPageContent/ReportsPageContent';
 import LoginWithGooglePopUpComponent from './component/PopUpComponents/LoginWithGooglePopUpComponent/LoginWithGooglePopUpComponent';
 
 // importing functions from utils.js
-import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests, getReportsByCategoryId, throttle} from './utils/ApiHandlers';
+import { loginCurrentUser , connectToServerFunc , toggleTheme , getCategoriesByUserId , getTasksByCategoryId ,executeQueuedRequests, getReportsByCategoryId, throttle, getStreakOfUser} from './utils/ApiHandlers';
 
 
 export let isOnline = false;
@@ -69,12 +69,14 @@ function App(){
   const [categoryList,setCategoryList] = useState([]);
   const [taskList , setTaskList] = useState([]);
   const [reportList , setReportList] = useState([]);
+  const [streak , setStreak ] = useState({});
 
   useMemo(()=>{
       console.log("current user" , currentUser);
       console.log("current user At tasks, ",currentUser);
       if(currentUser && currentUser._id!=undefined){
           getCategoriesByUserId(currentUser._id , setCategoryList);
+          getStreakOfUser(currentUser._id , setStreak);
       }
       return [];
   },[currentUser]);
@@ -160,14 +162,14 @@ function App(){
   return (
     <>
     {(!gotUser  )?<LoginWithGooglePopUpComponent theme={theme} setIsLoggedIn={setIsLoggedIn} connectedToServer={connectedToServer}/>:''}
-    <UserContext.Provider value={setCurrentUser}>
+    <UserContext.Provider value={{setCurrentUser,currentUser}}>
       <div className='AppWrapper'>
             <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme} setCurrentUser={setCurrentUser}/>
             <Routes >
                 <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
                 <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>}/>
                 <Route path='/dashboard' element={<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} reportList={reportList}/>}/>
-                <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCategoryList={setCategoryList} reportList={reportList}/>}/>
+                <Route path='/settings' element={<SettingsPageContent theme={[theme,setTheme]}  currentUser={currentUser} setCurrentUser={setCurrentUser} setCategoryList={setCategoryList} reportList={reportList} streak={streak}/>}/>
                 <Route path='/reports' element={(currentUser._id!=undefined && categoryList!=null)?<ReportsPageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />:<DashBoardPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} reportList={reportList} taskList={taskList} />}/>
             </Routes>
       </div>

@@ -1,19 +1,30 @@
+import { useState , useEffect } from 'react';
 import './DashBoardTimeLineComponent.css'
 import LineGraphComponent from './LineGraphComponent/LineGraphComponent';
+import { getGraphData } from '../../../utils/ApiHandlers';
 
-function DashBoardTimeLineComponent({}) {
+
+function DashBoardTimeLineComponent({theme,currentUser}) {
+
+    const [graphData , setGraphData ] = useState([]);
+
+    useEffect(()=>{
+        getGraphData(currentUser._id,setGraphData);
+    },[currentUser])
+
+
     return ( <>
         <div className="timeLineComponentWrapper">
             <div className="timeLineTopNav">
                 <div className="timeLineTopNavLeft">
-                        Task Done
+                        Tasks Done
                 </div>
                 <div className="timeLineTopNavRight">
-                    Monthly
+                        Daily
                 </div>
             </div>
             <div className="timeLineContentWrapper">
-                    <LineGraphComponent />
+                    <LineGraphComponent theme={theme} graphData={graphData}/>
             </div>
         </div>
     </> );
