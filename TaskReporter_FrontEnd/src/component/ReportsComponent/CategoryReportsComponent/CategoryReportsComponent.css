@@ -14,14 +14,14 @@
     margin: 1vh;
     padding: 1vh;
     border-radius: var(--border-radius);
-    background-color: var(--primary-color);
+    background-color: var(--secondary-light-color);
     filter: drop-shadow(1px 0.5px 2px var(--shadow-color));
 }
 
 .categoryReportCardSingleCardElement:hover{
     cursor: default;
-    background-color: var(--secondary-light-color);
-    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+    /* background-color: var(--primary-hover-color); */
+    filter: drop-shadow(1px 1px 4px var(--shadow-color));
 }
 
 .categoryReportCardDetais{

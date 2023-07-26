@@ -95,7 +95,7 @@ function SettingsPageContent({theme,currentUser,setCategoryList,streak,setCurren
                                 Productivity Points
                         </div>
                         <div className="productivityPointsDisplay">
-                                {currentUser? currentUser.productivityPoints : 0}
+                                {currentUser && currentUser.productivityPoints? currentUser.productivityPoints : 0}
                             <div className="productivityPointsIcon">
                                 <img src={coinImage} alt="points" height={20} width={20} />
                             </div>

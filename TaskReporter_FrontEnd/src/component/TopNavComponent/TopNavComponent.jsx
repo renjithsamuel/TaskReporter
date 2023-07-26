@@ -62,7 +62,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,se
                     </div>
                     <div className="topNavRight">
                         <div className="productivityPoints">
-                            <div className="pointsName"> {currentUser? currentUser.productivityPoints : 0}</div>
+                            <div className="pointsName">  {currentUser && currentUser.productivityPoints? currentUser.productivityPoints : 0}</div>
                             <img src={coinImage} alt="points" height={20} width={20} />
                         </div>
                         <div className="noInternetIndicator" style={{display:(isOnline)?'none':'flex'}}>

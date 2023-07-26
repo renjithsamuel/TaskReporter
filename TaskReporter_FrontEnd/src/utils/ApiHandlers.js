@@ -408,9 +408,9 @@ export const patchTask = async (taskId , patchableData,setTaskList) => {
 
 // patch tasks completed by dates with increased productivity points
 export const patchUserWithPoints = async (status,weight , currentUser , setCurrentUser ) => {
-    let points = weight * 12;
+    let points = weight * 2;
     const patchUserByIdUrl = `https://taskreporternode.onrender.com/api/v1/users/patchUserById/${currentUser._id}`;
-    const patchableData = {productivityPoints : (status=="complete")?currentUser.productivityPoints + points : currentUser.productivityPoints -  points };
+    const patchableData = {productivityPoints : (status=="complete")?currentUser.productivityPoints? currentUser.productivityPoints + points  : points : currentUser.productivityPoints?(currentUser.productivityPoints  -  points >= 0)?currentUser.productivityPoints  -  points : 0 : 0 };
     console.log(patchableData);
     try{
         const patchedUserResponse = await sendHttpRequest(patchUserByIdUrl,'PATCH',patchableData);
