@@ -6,7 +6,7 @@ import arrowRightLight from '../../../assets/arrow-right-light.svg'
 import arrowRightDark from '../../../assets/arrow-right-dark.svg'
 import deleteIconDark from '../../../assets/delete-dark.svg'
 import deleteIconLight from '../../../assets/delete-light.svg'
-import React, { useCallback, useEffect,useRef,useState } from 'react';
+import { useCallback, useEffect,useRef,useState } from 'react';
 import AddTaskPopUpComponent from '../../PopUpComponents/AddTaskPopUpComponent/AddTaskPopUpComponent';
 import AddCategoryPopUpComponent from '../../PopUpComponents/AddCategoryPopUpComponent/AddCategoryPopUpComponent'
 import RemoveReportPopUpComponent from '../../PopUpComponents/RemoveReportPopUpComponent/RemoveReportPopUpComponent';
@@ -14,7 +14,7 @@ import AddReportPopUpComponent from '../../PopUpComponents/AddReportPopUpCompone
 import ShowReportsPopUpComponent from '../../PopUpComponents/ShowReportsPopUpComponent/ShowReportsPopUpComponent';
 import { deleteCategory } from '../../../utils/ApiHandlers';
 
-const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList,theme,currentUser,setCategoryList,reportList,setReportList}) => {
+const PageContentTasksComponent = ({taskList,categoryList,setTaskList,theme,currentUser,setCategoryList,reportList,setReportList}) => {
     
     const popUpComponentTaskPage = useRef();
     const [showCompleted,setShowCompleted] = useState([]);
@@ -144,6 +144,6 @@ const PageContentTasksComponent = React.memo(({taskList,categoryList,setTaskList
         </div>
     </>
     );
-})
+}
 
 export default PageContentTasksComponent;

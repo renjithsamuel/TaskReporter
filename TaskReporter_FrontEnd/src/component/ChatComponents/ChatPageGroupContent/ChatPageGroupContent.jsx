@@ -5,10 +5,9 @@ import sendDark from '../../../assets/send-dark.svg'
 // socket
 import io from 'socket.io-client';
 import { getPreviousChats, postChatByDate } from '../../../utils/ApiHandlers';
-import React from 'react';
 let socket;
 
-const ChatPageGroupContent = React.memo(({theme,currentUser,currentCategory}) =>  {
+const ChatPageGroupContent = ({theme,currentUser,currentCategory}) =>  {
     const [messages,setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
     const [currentSkipCount,setCurrentSkipCount] = useState(0);
@@ -122,7 +121,7 @@ const ChatPageGroupContent = React.memo(({theme,currentUser,currentCategory}) =>
                 </div>
         </div>
     </> );
-})
+}
 
 export default ChatPageGroupContent;
 

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const LineGraphComponent = ({ theme , graphData }) => {

@@ -9,7 +9,7 @@ import {  Link } from "react-router-dom";
 // lottie
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { isOnline  } from '../../App';
 import { disableScroll ,enableScroll , debounce } from '../../utils/ApiHandlers';
 import NotificationComponent from '../NotificationsComponent/NotificationComponent';

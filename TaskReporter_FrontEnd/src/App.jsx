@@ -174,7 +174,6 @@ function App(){
             </Routes>
       </div>
     </UserContext.Provider>
-
     </>
     // <ShowReportsPopUpComponent theme={theme} />
   );

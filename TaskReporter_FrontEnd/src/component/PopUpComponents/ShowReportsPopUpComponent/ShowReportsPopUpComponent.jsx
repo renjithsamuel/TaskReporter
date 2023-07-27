@@ -7,10 +7,9 @@ import DeadlinesComponent from '../../ReportsComponent/DeadlinesComponent/Deadli
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
 import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
-import React from 'react';
 import EditCategoryPopUpComponent from '../EditCategoryPopUpComponent/EditCategoryPopUpComponent';
 
-const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'categoryDetails',setCategoryList,categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) =>  {
+const ShowReportsPopUpComponent = ({theme,defaultReportPage = 'categoryDetails',setCategoryList,categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) =>  {
 
     const [editCategoryOpen , setEditCategoryOpen] = useState(false);
     const [currentReportTab , setCurrentReportTab] = useState(`${defaultReportPage}`);
@@ -148,6 +147,6 @@ const ShowReportsPopUpComponent = React.memo(({theme,defaultReportPage = 'catego
                                 </div>
                     </div>
             </> );
-})
+}
 
 export default ShowReportsPopUpComponent;

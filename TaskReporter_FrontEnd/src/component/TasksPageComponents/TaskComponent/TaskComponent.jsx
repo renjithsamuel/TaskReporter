@@ -1,10 +1,9 @@
-import {memo } from 'react';
 import './TaskComponent.css'
 import deleteIconDark from '../../../assets/delete-dark.svg'
 import deleteIconLight from '../../../assets/delete-light.svg'
 import { deleteTask } from '../../../utils/ApiHandlers';
 
-const TaskComponent = memo(({theme,taskName,taskDescription,category,elem,setTaskList,taskList,addReportEffectObj,setCategoryList,setAddReportEffectObj,currentUser,popUpComponentTaskPage}) => {
+const TaskComponent = ({theme,taskName,taskDescription,category,elem,setTaskList,taskList,addReportEffectObj,setCategoryList,setAddReportEffectObj,currentUser,popUpComponentTaskPage}) => {
 
 
     const handleTaskCompletion = ()=>{
@@ -37,6 +36,6 @@ const TaskComponent = memo(({theme,taskName,taskDescription,category,elem,setTas
         </div>
         </>
      );
-})
+}
 
 export default TaskComponent;
