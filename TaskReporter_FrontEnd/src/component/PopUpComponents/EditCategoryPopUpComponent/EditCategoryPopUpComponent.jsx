@@ -73,10 +73,10 @@ function EditCategoryPopUpComponent({theme,currentCategory,setCategoryList,setEd
                                     <div className="editCategoryInputRight">
                                         {  
                                            (elem.id!='categoryColaboratorsInput')?
-                                           <input type={elem.inputType}  placeholder={currentCategory.keyForDB} value={categoryData[elem.keyForDB] }  id={elem.id} className='editCategoryInputs' onChange={(e)=>{handleInputChange(elem.keyForDB,e.target.value)}}/>
+                                           <input type={elem.inputType}  tabIndex={index}  placeholder={currentCategory.keyForDB} value={categoryData[elem.keyForDB] }  id={elem.id} className='editCategoryInputs' onChange={(e)=>{handleInputChange(elem.keyForDB,e.target.value)}}/>
                                            :
                                            (elem.id=='categoryColaboratorsInput')?
-                                            <ColaboratorsInputComponent theme={theme} colaboratorEmails={colaboratorEmails} setColaboratorEmails={setColaboratorEmails}/>
+                                            <ColaboratorsInputComponent theme={theme}  tabIndex={index} colaboratorEmails={colaboratorEmails} setColaboratorEmails={setColaboratorEmails}/>
                                             : ''
                                         }
                                     </div>
@@ -87,12 +87,12 @@ function EditCategoryPopUpComponent({theme,currentCategory,setCategoryList,setEd
                 }
 
                 <div className="editCategoryControlElem">
-                    <div className="submitEditCategoryBtn" onClick={()=>{handleCategorySubmit();}}>
+                    <button className="submitEditCategoryBtn" tabIndex={5} onClick={()=>{handleCategorySubmit();}}>
                         Edit Category
-                    </div>
-                    <div className="cancelEditCategoryBtn" onClick={()=>{setEditCategoryOpen(false)}}>
+                    </button>
+                    <button className="cancelEditCategoryBtn" tabIndex={6} onClick={()=>{setEditCategoryOpen(false)}}>
                         Cancel
-                    </div>
+                    </button>
                 </div>
                 
             </div>
@@ -137,15 +137,15 @@ function ColaboratorsInputComponent({theme,colaboratorEmails,setColaboratorEmail
              Array.from({length : colaboratorCount} , (_,index)=>
                 {   
                     return (<div className="colaboratorsInputComponentWrapper" key={index}>
-                        <input type="text" placeholder='Enter Colaborator Email Id'  className='editCategoryInputs'
+                        <input type="text" placeholder='Enter Colaborator Email Id'  className='editCategoryInputs' tabIndex={0}
                             value={colaboratorEmails[index]} onChange={(e) => handleEmailChange(index, e.target.value)} 
                         />
                         {(index==colaboratorCount-1)?
-                            <div className="addBtnColaborator" onClick={()=>handleEditBtnColaborator('add')}>
+                            <div className="addBtnColaborator" onClick={()=>handleEditBtnColaborator('add')} tabIndex={0}> 
                                     <img src={(theme=='light')?addIconCircleLight:addIconCircleDark} alt={"add"} height={25} width={25} />
                             </div>
                                     :
-                            <div className="addBtnColaborator" onClick={()=>handleEditBtnColaborator('minus')}>
+                            <div className="addBtnColaborator" onClick={()=>handleEditBtnColaborator('minus')} tabIndex={0}>
                                 <img src={(theme=='light')?minusIconLight:minusIconDark} alt={"minus"} height={25} width={25} />
                             </div>
                             }

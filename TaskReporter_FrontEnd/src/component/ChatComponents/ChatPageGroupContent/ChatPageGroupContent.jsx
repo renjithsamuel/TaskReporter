@@ -106,6 +106,7 @@ const ChatPageGroupContent = ({theme,currentUser,currentCategory}) =>  {
                    
                     <div className="messageInputBox">
                         <input type="text"  placeholder='type message' id='messageBoxInput' 
+                          tabIndex={0}
                                 value={inputMessage}
                                 onChange={(e) => setInputMessage(e.target.value)} 
                                 onKeyUp={(e) => {
@@ -115,9 +116,9 @@ const ChatPageGroupContent = ({theme,currentUser,currentCategory}) =>  {
                                 }}
                         />
                     </div>
-                    <div className="messageSendButton"  onClick={sendMessage}>
+                    <button className="messageSendButton"   tabIndex={0}  onClick={sendMessage}>
                             <img src={(theme=='light')?sendLight:sendDark} alt="send" height={30}  width={30}/>
-                    </div>
+                    </button>
                 </div>
         </div>
     </> );

@@ -161,7 +161,7 @@ export default SettingsPageContent;
 
 function ThemeRightElement({theme,pallete,setTheme,displayColor,setPallete,currentPallete}) {
     return (   
-    <div className="themeSelectorsRight" onClick={()=>{toggleTheme(theme,pallete,setTheme);setPallete(pallete);}} style={{backgroundColor:displayColor , borderRadius: (currentPallete==pallete)?'50%':'10px'}}>                     
+    <div className="themeSelectorsRight"   tabIndex={0} onClick={()=>{toggleTheme(theme,pallete,setTheme);setPallete(pallete);}} style={{backgroundColor:displayColor , borderRadius: (currentPallete==pallete)?'50%':'10px'}}>                     
     </div>
 );
 }

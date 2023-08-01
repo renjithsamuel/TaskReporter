@@ -12,7 +12,7 @@ function LeftNavComponent({pathname,compName,compIcon,svgIcon,selectedNavElem , 
     return (
         <Link to={(compName=='logout')? '/': (compName!='tasks')?"/"+compName:'/'} style={{textDecoration:'none',color:'var(--text-color)'}}>
         <div className="LeftNavComponentWrapper" 
-                style={{backgroundColor:(selectedNavElem==pathname)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==compName)?'var(--border-color)':'var(--primary-color)' }} 
+                style={{backgroundColor:(selectedNavElem==pathname)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==pathname)?'var(--border-color)':'var(--primary-color)' }} 
                     onClick={   ()=>{
                             //  setSelectedNavElem(compName);
                              if(compName=='logout'){

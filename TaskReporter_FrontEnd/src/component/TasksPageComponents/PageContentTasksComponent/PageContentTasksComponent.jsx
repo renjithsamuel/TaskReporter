@@ -58,7 +58,7 @@ const PageContentTasksComponent = ({taskList,categoryList,setTaskList,theme,curr
                             Projects
                     </div>
                     <div className="sortByTime">
-                        <div className="categoryAddButton" onClick={()=>{setIsOpened(true);popUpComponentTaskPage.current.scrollIntoView();}}>
+                        <button className="categoryAddButton" tabIndex={0} onClick={()=>{setIsOpened(true);popUpComponentTaskPage.current.scrollIntoView();}}>
                                 <div className="AddCategoryName">
                                     Add Category
                                 </div>
@@ -69,7 +69,7 @@ const PageContentTasksComponent = ({taskList,categoryList,setTaskList,theme,curr
                                     style={{width:30,height:30  }}
                                     >
                                 </lord-icon>
-                        </div>
+                        </button>
                     </div>
                 </div>
                 <div className="tasksCategoryWise">
@@ -82,27 +82,27 @@ const PageContentTasksComponent = ({taskList,categoryList,setTaskList,theme,curr
                                     <div className="categoryTopNav">
                                             <div className="categoryName">{(category && category._id)?category.categoryName:''}</div>
                                             <div className="taskBottomElems">
-                                                 <div className="deleteTaskButton" onClick={()=>{deleteCategory(category._id,setCategoryList)}}>
+                                                 <button className="deleteTaskButton" tabIndex={0} onClick={()=>{deleteCategory(category._id,setCategoryList)}}>
                                                     <img src={(theme=='light')?deleteIconLight:deleteIconDark} alt="delete" height={30} width={30} />
-                                                </div>
-                                                 <div className="addTaskButton" onClick={()=>{popUpComponentTaskPage.current.scrollIntoView();setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id,startDate:category.startDate,endDate:category.endDate});}}>
+                                                </button>
+                                                 <button className="addTaskButton"  tabIndex={0} onClick={()=>{popUpComponentTaskPage.current.scrollIntoView();setIsAddTaskPopUpOpen({category:category.categoryName,isOpen:true,categoryId:category._id,startDate:category.startDate,endDate:category.endDate});}}>
                                                     <img src={(theme=='light')?addIconLight:addIconDark} alt="add" height={30} width={30} />
-                                                </div>
-                                                 <div className="goToReportPageFromTask" onClick={()=>{popUpComponentTaskPage.current.scrollIntoView();setAddShowReportsComponent((prevState)=>{return {...prevState,isOpen:true,categoryId:category._id}})}} >
+                                                </button>
+                                                 <button className="goToReportPageFromTask" tabIndex={0} onClick={()=>{popUpComponentTaskPage.current.scrollIntoView();setAddShowReportsComponent((prevState)=>{return {...prevState,isOpen:true,categoryId:category._id}})}} >
                                                     <img src={(theme=='light')?arrowRightLight:arrowRightDark} alt="projectView" height={30} />
-                                                </div>
+                                                </button>
                                             </div>
         
                                     </div>
                                     <div className="switchCompletedOrPending">
-                                        <div className="switchPending" onClick={()=>{handleSwitchCompleted('pending',cateindex)}} style={{backgroundColor:(showCompleted[cateindex]!=true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
+                                        <button className="switchPending" tabIndex={0} onClick={()=>{handleSwitchCompleted('pending',cateindex)}} style={{backgroundColor:(showCompleted[cateindex]!=true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
                                             Pending
-                                        </div>
+                                        </button>
                                         <div className="switchSeparator">
                                         </div>
-                                        <div className="switchCompleted" onClick={()=>{handleSwitchCompleted('completed',cateindex)}}    style={{backgroundColor:(showCompleted[cateindex]==true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
+                                        <button className="switchCompleted"  tabIndex={0} onClick={()=>{handleSwitchCompleted('completed',cateindex)}}    style={{backgroundColor:(showCompleted[cateindex]==true)?'var(--hover-color)':'var(--secondary-light-color)'}}>
                                             Completed
-                                        </div>
+                                        </button>
                                     </div>
                                     <div className="tasklists">
                                         {/* show if an element has no tasks */}

@@ -83,6 +83,8 @@
 }
 
 .submitAddTaskBtn{
+    font-size: inherit;
+    color: var(--text-color);
     width: 8vw;
     height: 5vh;
     display: flex;
@@ -95,6 +97,8 @@
 }
 
 .cancelAddTaskBtn{
+    font-size: inherit;
+    color: var(--text-color);
     width: 5vw;
     height: 5vh;
     background-color: var(--secondary-color);

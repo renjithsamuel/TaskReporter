@@ -22,13 +22,13 @@ const TaskComponent = ({theme,taskName,taskDescription,category,elem,setTaskList
         <>
         <div className="taskComponent">
             <div className="topOfTaskComp" style={{textDecoration:(elem.completed)?'line-through':''}}>
-                <input type="checkbox" id='taskCheckBox' onChange={()=>handleTaskCompletion()} checked={(elem.completed)? true:false}/>
+                <input type="checkbox" id='taskCheckBox' tabIndex={0} onChange={()=>handleTaskCompletion()} checked={(elem.completed)? true:false}/>
                 <div className="taskName" style={{textDecoration:(elem.completed)?'line-through':''}} onClick={()=>{handleTaskCompletion()}}>
                     {taskName}
                 </div>
-                <div className="deleteTaskIcon" style={{display : (elem.completed==true)?'none':'flex'}} onClick={()=>{deleteTask(elem._id,elem.weight,setTaskList,category._id,setCategoryList)}}>
+                <button className="deleteTaskIcon" tabIndex={0} style={{display : (elem.completed==true)?'none':'flex'}} onClick={()=>{deleteTask(elem._id,elem.weight,setTaskList,category._id,setCategoryList)}}>
                     <img src={(theme=='light')?deleteIconLight:deleteIconDark} alt="delete" height={30} width={30} />
-                </div>
+                </button>
             </div>
             <div className="taskDescription" style={{textDecoration:(elem.completed)?'line-through':''}} onClick={()=>{handleTaskCompletion()}}>
                 {taskDescription}

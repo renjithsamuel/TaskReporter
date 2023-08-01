@@ -94,6 +94,7 @@ const ShowReportsPopUpComponent = ({theme,defaultReportPage = 'categoryDetails',
                                                         categoryList.map((category,categoryIndex)=>{
                                                                 return (
                                                                         <div className="showReportContentEachCategory" 
+                                                                        tabIndex={0}
                                                                         key={categoryIndex} onClick={()=>handleCategorySelectionClick(category._id)} 
                                                                         style={{backgroundColor:(reportObject.categoryId == category._id) ? 'var(--secondary-color)':'var(--secondary-light-color)',
                                                                                  borderColor:(reportObject.categoryId == category._id)?'var(--text-color)':'transparent'}}>
@@ -109,25 +110,26 @@ const ShowReportsPopUpComponent = ({theme,defaultReportPage = 'categoryDetails',
                                 <div className="showReportContentRightWrapper">
                                         <div className="reportTopNavWrapper">
                                                 <div className="reportTopNavBar">
-                                                        <div className={`reportTabSwitch ${(currentReportTab=='categoryDetails')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('categoryDetails');}}>
+                                                        <div  tabIndex={0} className={`reportTabSwitch ${(currentReportTab=='categoryDetails')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('categoryDetails');}}>
                                                                 Category Details
                                                         </div>
-                                                        <div className={`reportTabSwitch ${(currentReportTab=='reports')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('reports')}}>
+                                                        <div tabIndex={0} className={`reportTabSwitch ${(currentReportTab=='reports')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('reports')}}>
                                                                 Reports
                                                         </div>
-                                                        <div className={`reportTabSwitch ${(currentReportTab=='contributions')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('contributions')}}>
+                                                        <div tabIndex={0} className={`reportTabSwitch ${(currentReportTab=='contributions')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('contributions')}}>
                                                                 Contributions
                                                         </div>
-                                                        <div className={`reportTabSwitch ${(currentReportTab=='deadlines')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('deadlines');}}>
+                                                        <div  tabIndex={0} className={`reportTabSwitch ${(currentReportTab=='deadlines')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('deadlines');}}>
                                                                 Deadlines
                                                         </div>
                                                 </div>
-                                                <div className="closeShowReportsBtn"
+                                                <button className="closeShowReportsBtn"
+                                                        tabIndex={0}
                                                         onClick={()=>{setIsReportObjectOpen((prevState)=>{return {...prevState,isOpen:false}})}}
                                                         style={{display:(fromPage=='reportsContent')?'none':'flex'}}
                                                         >
                                                         <img src={(theme=='light')?closeLight:closeDark} alt="close" height={40} width={40} />
-                                                </div>
+                                                </button>
                                         </div>
                                         <div className="reportContentWrapper">
                                                 <div className="reportContentBar">

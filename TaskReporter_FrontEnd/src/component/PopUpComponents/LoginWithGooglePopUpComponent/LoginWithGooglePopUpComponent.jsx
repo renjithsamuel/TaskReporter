@@ -72,8 +72,9 @@ function LoginWithGooglePopUpComponent({theme,setIsLoggedIn,connectedToServer}) 
                     :
                 <>
                     <div className="loginTitle">Login with google to continue!</div>
-                    <div className="loginWithGoogle">
-                        <LoginSocialGoogle
+                    <div className="loginWithGoogle"   >
+                        <LoginSocialGoogle 
+                                   
                                     client_id={import.meta.env.VITE_TASKREPORTER_CLIENTID}
                                     scope="openid profile email"
                                     discoveryDocs="claims_supported"
@@ -87,7 +88,7 @@ function LoginWithGooglePopUpComponent({theme,setIsLoggedIn,connectedToServer}) 
                                         console.log(err);
                                     }}
                                 >
-                            <div className="googleBtn"><img src={googleImg} alt="google" height={30} width={30} /><span id="loginWord">Login</span></div>
+                            <button className="googleBtn"  tabIndex={0}><img src={googleImg} alt="google" height={30} width={30}/><span id="loginWord">Login</span></button>
                         </LoginSocialGoogle>
                     </div>
                 </>}

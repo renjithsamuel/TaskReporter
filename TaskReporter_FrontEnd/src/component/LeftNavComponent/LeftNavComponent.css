@@ -7,7 +7,7 @@
     transition: 0.3s all ease-in-out;
     margin-top: 2vh;
     background-color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 2px solid transparent;
     filter: drop-shadow(1px 0.5px 3px var(--shadow-color));
 }
 

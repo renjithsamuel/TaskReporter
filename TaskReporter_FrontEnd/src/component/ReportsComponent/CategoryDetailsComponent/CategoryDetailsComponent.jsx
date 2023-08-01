@@ -57,7 +57,7 @@ function CategoryDetailsComponent({currentCategory,setEditCategoryOpen,theme}) {
                             :
                                 <h3>No data to Show</h3>
                 }
-                 <div className="editCategoryButton" style={{display:(currentCategory._id)?'flex':'none'}}  onClick={()=>setEditCategoryOpen(true)}>Edit Category <img src={(theme=='light')?editBtnLight:editBtnDark} alt="edit" height={20} width={20} /></div>
+                 <div className="editCategoryButton"   tabIndex={0} style={{display:(currentCategory._id)?'flex':'none'}}  onClick={()=>setEditCategoryOpen(true)}>Edit Category <img src={(theme=='light')?editBtnLight:editBtnDark} alt="edit" height={20} width={20} /></div>
             </div>
             </> );
 }

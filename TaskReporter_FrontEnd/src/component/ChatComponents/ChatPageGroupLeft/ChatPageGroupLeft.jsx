@@ -30,7 +30,7 @@ export default chatPageGroupLeft;
 function SingleGroup({category,setCurrentCategory,currentCategory,theme}) {
     return ( 
     <>  
-        <div className="singleGroupWrapper" onClick={()=>{setCurrentCategory(category)}}   style={{backgroundColor:(currentCategory._id == category._id) ? 'var(--secondary-color)':'var(--secondary-light-color)',
+        <div className="singleGroupWrapper"   tabIndex={0} onClick={()=>{setCurrentCategory(category)}}   style={{backgroundColor:(currentCategory._id == category._id) ? 'var(--secondary-color)':'var(--secondary-light-color)',
                                                                                  borderColor:(currentCategory._id == category._id)?'var(--text-color)':'transparent'}}>
             <div className="groupPictureLeft">
                 <img src={(theme=='light')?groupIconLight : groupIconDark } alt="group" height={30} width={30}/>

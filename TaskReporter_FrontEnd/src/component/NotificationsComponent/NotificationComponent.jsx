@@ -21,6 +21,7 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
                 <div className="notificationsTitleWrapper">Notifications</div>
                 <div className="notificationControlElems">
                     <div className="closeShowNotoficationsBtn"
+                      tabIndex={0}
                         onClick={()=>{setIsNotificationOpen(false);enableScroll()}}
                         style={{visibility:(fromPage=='Dashboard')?'hidden':'none'}}
                         >
@@ -61,10 +62,10 @@ function SingleNotificationComponent({theme,invitedBy,categoryName,invitedCatego
                 </div>
             </div>
             <div className="singleNotificaitonControlElem">
-                <div className="notificationAcceptBtn" onClick={()=>{acceptInvite(currentUser,invitedCategoryId,setCategoryList,setCurrentUser)}}>
+                <div className="notificationAcceptBtn"   tabIndex={0} onClick={()=>{acceptInvite(currentUser,invitedCategoryId,setCategoryList,setCurrentUser)}}>
                     <img src={(theme=='light')?acceptLight:acceptDark} alt="accept" height={30} width={30} />
                 </div>
-                <div className="notificationRejectBtn" onClick={()=>{rejectInvite(currentUser,invitedCategoryId,setCurrentUser)}}>
+                <div className="notificationRejectBtn"   tabIndex={0} onClick={()=>{rejectInvite(currentUser,invitedCategoryId,setCurrentUser)}}>
                     <img src={(theme=='light')?rejectLight:rejectDark} alt="reject" height={30} width={30} />
                 </div>      
             </div>

@@ -60,19 +60,19 @@ function AddReportPopUpComponent({theme,currentUser,setAddReportEffectObj,setTas
                                     {elem.inputLabel}
                                 </div>
                                 <div className="addReportInputRight">
-                                    <textarea type={elem.inputType} placeholder={elem.placeholder} id={elem.id}  className='addReportInputs' onChange={(e)=>{handleAddReportInputChange(elem.keyForDB,e.target.value)}}/>
+                                    <textarea  tabIndex={0} type={elem.inputType} placeholder={elem.placeholder} id={elem.id}  className='addReportInputs' onChange={(e)=>{handleAddReportInputChange(elem.keyForDB,e.target.value)}}/>
                                 </div>
                             </div>
                         )
                     })
                 }
                 <div className="addReportControlElem">
-                    <div className="submitAddReportBtn" onClick={()=>{handleSubmitAddReport()}}>
+                    <button className="submitAddReportBtn"  tabIndex={0} onClick={()=>{handleSubmitAddReport()}}>
                         Add Report
-                    </div>
-                    <div className="cancelAddReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
+                    </button>
+                    <button className="cancelAddReportBtn"  tabIndex={0} onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
                         Cancel
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

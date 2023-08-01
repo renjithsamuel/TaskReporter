@@ -54,7 +54,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,se
                                 >
                                 </lord-icon>
                             </div>
-                            <input type="text"  id='searchBarInp' placeholder='search' onChange={(e)=>{handleSearchText(e.target.value)}} style={{color:'var(--text-color)'}}/>
+                            <input type="text" tabIndex={0} id='searchBarInp' placeholder='search' onChange={(e)=>{handleSearchText(e.target.value)}} style={{color:'var(--text-color)'}}/>
                         </div>
                     </div>
                     <div className="topNavMiddle">
@@ -82,7 +82,7 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,se
                         <div className="userNameTop">
                             {(currentUser.username==null)?'user':currentUser.username}
                         </div>
-                            <Link to={'/settings'} style={{textDecoration:'none',color:'var(--text-color)'}}>
+                            <Link to={'/settings'} tabIndex={0} style={{textDecoration:'none',color:'var(--text-color)'}}>
                                 <div className="userNameIcon"  >
                                     {
                                         (currentUser._id==null )?

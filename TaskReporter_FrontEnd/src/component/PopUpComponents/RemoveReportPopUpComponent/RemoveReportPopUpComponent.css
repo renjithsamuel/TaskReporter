@@ -62,6 +62,8 @@
 }
 
 .submitRemoveReportBtn{
+    font-size: inherit;
+    color: var(--text-color);
     width: 10vw;
     height: 6vh;
     display: flex;
@@ -74,6 +76,8 @@
 }
 
 .cancelRemoveReportBtn{
+    font-size: inherit;
+    color: var(--text-color);
     width: 5vw;
     height: 6vh;
     background-color: var(--secondary-color);

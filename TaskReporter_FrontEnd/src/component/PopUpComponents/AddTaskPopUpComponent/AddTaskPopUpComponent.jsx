@@ -67,10 +67,10 @@ function AddTaskPopUpComponent({category,categoryStartDate,categoryEndDate,theme
                                         <WeightSelector setAddTaskObject={setAddTaskObject} addTaskObject={addTaskObject}/>
                                         :
                                         (elem.keyForDB=='endDate')?
-                                        <input type={elem.inputType} placeholder={elem.inputPlaceHolder}  min={startDate} id={elem.id} 
+                                        <input type={elem.inputType} tabIndex={0} placeholder={elem.inputPlaceHolder}  min={startDate} id={elem.id} 
                                             max={endDate}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
                                         :
-                                        <input type={elem.inputType} placeholder={elem.inputPlaceHolder} id={elem.id}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
+                                        <input type={elem.inputType}  tabIndex={0} placeholder={elem.inputPlaceHolder} id={elem.id}  className='addTaskInputs' onChange={(e)=>{handleAddTaskInputChange(elem.keyForDB,e.target.value)}}/>
                                     }
                                 </div>
                             </div>
@@ -78,12 +78,12 @@ function AddTaskPopUpComponent({category,categoryStartDate,categoryEndDate,theme
                     })
                 }
                 <div className="addTaskControlElem">
-                    <div className="submitAddTaskBtn" onClick={()=>{handleSubmitAddtask()}}>
+                    <button className="submitAddTaskBtn"  tabIndex={0} onClick={()=>{handleSubmitAddtask()}}>
                         Add Task
-                    </div>
-                    <div className="cancelAddTaskBtn" onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>
+                    </button>
+                    <button className="cancelAddTaskBtn"   tabIndex={0} onClick={()=>{setIsAddTaskPopUpOpen({category:category,isOpen:false})}}>
                         Cancel
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@ function WeightSelector({setAddTaskObject,addTaskObject}) {
         <div className="selectWeightWrapper">
             {
                 Array.from({length : 10} , ( _ , index) => {
-                 return <SelectWeightElem key={index} handleWeightChange={handleWeightChange} num={index+1} addTaskObject={addTaskObject}/>})
+                 return <SelectWeightElem key={index}   handleWeightChange={handleWeightChange} num={index+1} addTaskObject={addTaskObject}/>})
             }
         </div>
     </> );
@@ -117,7 +117,7 @@ function WeightSelector({setAddTaskObject,addTaskObject}) {
 function SelectWeightElem({handleWeightChange,num,addTaskObject}) {
 
     return ( <>
-        <div className="selectWeight" onClick={()=>{handleWeightChange(num)}}
+        <div className="selectWeight"  tabIndex={0} onClick={()=>{handleWeightChange(num)}}
          style={{backgroundColor:(addTaskObject.weight==num)?
             'var(--secondary-light-color)':'var(--secondary-color)' ,
                 borderRadius : (addTaskObject.weight==num)?'50%' : ''}}>{num}</div>   

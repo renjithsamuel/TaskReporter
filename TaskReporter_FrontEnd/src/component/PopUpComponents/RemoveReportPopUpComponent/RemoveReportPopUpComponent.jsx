@@ -28,12 +28,12 @@ function RemoveReportPopUpComponent({theme,setAddReportEffectObj,setTaskList,add
                             Are you sure want to mark this as incomplete and remove the report associated with it?
                     </div>
                 <div className="removeReportControlElem">
-                    <div className="submitRemoveReportBtn" onClick={()=>{handleSubmitRemoveReport()}}>
+                    <button className="submitRemoveReportBtn" tabIndex={0} onClick={()=>{handleSubmitRemoveReport()}}>
                         Remove Report
-                    </div>
-                    <div className="cancelRemoveReportBtn" onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
+                    </button>
+                    <button className="cancelRemoveReportBtn" tabIndex={0} onClick={()=>{setAddReportEffectObj((prev)=>{return {...prev,isOpen : false}})}}>
                         Cancel
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

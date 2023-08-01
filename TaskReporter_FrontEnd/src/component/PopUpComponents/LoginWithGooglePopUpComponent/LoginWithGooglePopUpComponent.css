@@ -63,13 +63,16 @@
 
 
 .googleBtn{
+    color: var(--text-color);
+    font-family: inherit;
+    border: transparent;
     font-size: small;
     border-radius: 50%;
     padding: 1.5vh;
-    width: 6vw;
+    width: auto;
+    height: auto;
     background-color: var(--primary-color);
     display: flex;
-    height: 4vh;
     border-radius: 15px;
     transition: all 0.2s ease;
     margin-right: 0.7vw;

@@ -52,6 +52,8 @@
 }
 
 .submitAddCategoryBtn{
+    color: var(--text-color);
+    font-size: inherit;
     width: 10vw;
     height: 5vh;
     display: flex;
@@ -64,6 +66,8 @@
 }
 
 .cancelAddCategoryBtn{
+    font-size: inherit;
+    color: var(--text-color);
     width: 5vw;
     height: 5vh;
     background-color: var(--secondary-color);

@@ -66,9 +66,9 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
                                     </div>
                                     <div className="addCategoryInputRight">
                                         {(elem.id!='categoryColaboratorsInput')?
-                                           <input type={elem.inputType}  placeholder={elem.inputPlaceHolder}  id={elem.id} className='addCategoryInputs' onChange={(e)=>{handleInputChange(elem.keyForDB,e.target.value)}}/>
+                                           <input type={elem.inputType}  tabIndex={0}  placeholder={elem.inputPlaceHolder}  id={elem.id} className='addCategoryInputs' onChange={(e)=>{handleInputChange(elem.keyForDB,e.target.value)}}/>
                                             :
-                                            <ColaboratorsInputComponent theme={theme} colaboratorEmails={colaboratorEmails} setColaboratorEmails={setColaboratorEmails}/>
+                                            <ColaboratorsInputComponent   theme={theme} colaboratorEmails={colaboratorEmails} setColaboratorEmails={setColaboratorEmails}/>
                                         }
                                     </div>
                                 </div>
@@ -78,12 +78,12 @@ function AddCategoryPopUpComponent({theme,currentUser,setCategoryList,setIsOpene
                 }
 
                 <div className="addCategoryControlElem">
-                    <div className="submitAddCategoryBtn" onClick={()=>{handleCategorySubmit();}}>
+                    <button className="submitAddCategoryBtn"  tabIndex={0} onClick={()=>{handleCategorySubmit();}}>
                         Add Category
-                    </div>
-                    <div className="cancelAddCategoryBtn" onClick={()=>{setIsOpened(false)}}>
+                    </button>
+                    <button className="cancelAddCategoryBtn"  tabIndex={0} onClick={()=>{setIsOpened(false)}}>
                         Cancel
-                    </div>
+                    </button>
                 </div>
                 
             </div>
@@ -125,17 +125,17 @@ function ColaboratorsInputComponent({theme,colaboratorEmails,setColaboratorEmail
              Array.from({length : colaboratorCount} , (_,index)=>
                 {   
                     return (<div className="colaboratorsInputComponentWrapper" key={index}>
-                        <input type="text" placeholder='Enter Colaborator Email Id'  className='addCategoryInputs'
+                        <input type="text" placeholder='Enter Colaborator Email Id'  className='addCategoryInputs'  tabIndex={0}
                             value={colaboratorEmails[index]} onChange={(e) => handleEmailChange(index, e.target.value)} 
                         />
                         {(index==colaboratorCount-1)?
-                            <div className="addBtnColaborator" onClick={()=>handleAddBtnColaborator('add')}>
+                            <button className="addBtnColaborator" onClick={()=>handleAddBtnColaborator('add')}  tabIndex={0}>
                                     <img src={(theme=='light')?addIconCircleLight:addIconCircleDark} alt={"add"} height={25} width={25} />
-                            </div>
+                            </button>
                                     :
-                            <div className="addBtnColaborator" onClick={()=>handleAddBtnColaborator('minus')}>
+                            <button className="addBtnColaborator" onClick={()=>handleAddBtnColaborator('minus')}  tabIndex={0}>
                                 <img src={(theme=='light')?minusIconLight:minusIconDark} alt={"minus"} height={25} width={25} />
-                            </div>
+                            </button>
                             }
                     </div>)
                 })            
