@@ -25,11 +25,13 @@ function App(){
   const [connectedToServer,setConnectedToServer] = useState(false);
   const [selectedNavElem , setSelectedNavElem] = useState('none');
   const [theme , setTheme ] = useState("light");
+  const [navOpen , setNavOpen ] = useState(false);
 
   // login states
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn , setIsLoggedIn] = useState(false);
   const [gotUser,setGotUser] = useState(false);
+  const [screenSize, setScreenSize] = useState(getCurrentDimension());
 
   const location = useLocation();
 
@@ -70,6 +72,7 @@ function App(){
   const [taskList , setTaskList] = useState([]);
   const [reportList , setReportList] = useState([]);
   const [streak , setStreak ] = useState({});
+
 
   useMemo(()=>{
       console.log("current user" , currentUser);
@@ -123,17 +126,20 @@ function App(){
   },[location.pathname])
 
 
+  function getCurrentDimension(){
+    return {
+      	width: window.innerWidth,
+      	height: window.innerHeight
+     }
+  }
+
   useEffect(()=>{
-    // listen with socket
-    // categoryList.forEach((category)=>{
-    //   socketListeningSystemFunction(setCategoryList , setTaskList , setReportList , category );
-    // });
-    const func = throttle(()=>{console.log("throttling resize");}, 2000)
+    const func = throttle(()=>{ setScreenSize(getCurrentDimension());console.log(screenSize);}, 2000)
     window.addEventListener('resize', func)
     return ()=>{
       window.removeEventListener('resize',func);
     }
-  },[])
+  },[screenSize])
     
     //   to check current online status
       isOnline = useOnlineStatus();
@@ -159,12 +165,14 @@ function App(){
       };
 
 
+
   return (
     <>
     {(!gotUser  )?<LoginWithGooglePopUpComponent theme={theme} setIsLoggedIn={setIsLoggedIn} connectedToServer={connectedToServer}/>:''}
-    <UserContext.Provider value={{setCurrentUser,currentUser}}>
+    <UserContext.Provider value={{setCurrentUser,currentUser,navOpen : {navOpen , setNavOpen} , screenSize}}>
       <div className='AppWrapper'>
             <LeftNavBar selectedNavElem={selectedNavElem} setSelectedNavElem={setSelectedNavElem} theme={theme} setCurrentUser={setCurrentUser}/>
+            {(navOpen)?<div className="navOpenBackDrop" onClick={()=>{setNavOpen(false)}}></div> : ''}
             <Routes >
                 <Route path='/' element={<PageContent theme={theme} currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList} taskList={taskList} setTaskList={setTaskList} setIsLoggedIn={setIsLoggedIn} reportList={reportList} setReportList={setReportList}/>}/>
                 <Route path='/chat' element={<ChatPageContent theme={theme}  currentUser={currentUser} categoryList={categoryList} setCategoryList={setCategoryList}/>}/>

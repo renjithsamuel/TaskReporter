@@ -25,6 +25,10 @@
     margin-left: 4vw;
 }
 
+.mobileNotifications{
+    display: none;
+}
+
 .showReportsPopUpBackDropFromDashBoard{
     position: absolute;
     top: 0;
@@ -37,4 +41,21 @@
     align-items: center;
     z-index: 5;
     overflow: hidden;
+}
+
+@media only screen and (max-width : 600px) {
+    .dashBoardContentRight{
+        display: none;
+    }
+    .mobileNotifications{
+        display: block;
+    }
+    .dashBoardContentLeft{
+        margin-left: 10vw;
+    }
+    .mobileNotificationsName{
+        font-size: x-large;
+        font-weight: 600;
+        margin: 1vh;
+    }
 }

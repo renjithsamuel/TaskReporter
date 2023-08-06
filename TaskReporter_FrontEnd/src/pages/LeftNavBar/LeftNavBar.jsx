@@ -4,8 +4,12 @@ import taskReporterIconLight from '../../assets/taskReporter-light.svg';
 import taskReporterIconDark from '../../assets/taskReporter-dark.svg';
 import logoutIconLight from '../../assets/logout-light.svg'
 import logoutIconDark from '../../assets/logout-dark.svg'
+import { useContext } from 'react';
+import { UserContext } from '../../App';
 
 function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
+    const {navOpen} = useContext(UserContext);
+
     let LeftNavCompList = [
         {compName : "dashboard" , compIcon : `https://cdn.lordicon.com/usxfmtjg.json` , pathname : '/dashboard'},
         {compName : "tasks" , compIcon : `https://cdn.lordicon.com/egiwmiit.json` , pathname : '/'},
@@ -17,7 +21,7 @@ function LeftNavBar({selectedNavElem,setSelectedNavElem,theme,setCurrentUser,set
 
     return ( 
     <>
-    <div className="LeftNavWrapper">
+    <div className={`LeftNavWrapper ${(navOpen.navOpen)?"openNav" : 'closeNav'}`}>
         <div className="topOfLeftNav">
             <div className="titleBar" style={{fontSize:'large',fontWeight:'600'}}>
                <img src={(theme=='light')?taskReporterIconLight:taskReporterIconDark} alt="taskReporter" height={25} width={25}/> Task Reporter

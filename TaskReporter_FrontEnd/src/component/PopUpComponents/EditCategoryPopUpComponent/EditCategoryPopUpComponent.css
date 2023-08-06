@@ -131,20 +131,53 @@
 }
 
 
-.addBtnColaborator{
-    width: 2vw;
-    height: 2vw;
-    padding: 0.5vh;
-    background-color: var(--secondary-color);
-    border-radius: 50%;
-    filter: drop-shadow(1px 2px 2px var(--shadow-color));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.addBtnColaborator:hover {
-    cursor: pointer;
-    background-color: var(--shadow-color);
-    filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+
+@media only screen and (max-width : 600px) {
+
+
+        .popUpBackDropEditCategory{
+            left: 0;
+        }
+        .popUpContentEditCategoryWrapper{
+            width: 80vw;
+        }
+        .editCategoryName{
+            font-size: large !important;
+        }
+        .popUpContentEditCategoryWrapper  * {
+            font-size: small;
+        }
+    
+        .cancelEditCategoryBtn , .submitEditCategoryBtn{
+            width: 25vw;
+        }
+    
+        .editCategoryInputWrapper{
+            width: 95%  ;
+            flex-direction: column;
+        }
+    
+        .editCategoryLabelLeft{
+            margin: 1vw;
+            text-align: start;
+            font-size: medium;
+            width: 90%;
+        }
+    
+        .editCategoryInputRight{
+               width: 90%;
+               text-align: end;
+        }
+        .editCategoryInputs{
+            width: 90%;
+        }
+        .addBtnColaborator{
+            width: 5vw;
+            height: 5vw;
+            justify-self: center;
+            align-self: center;
+            background-color: transparent;
+        }
+
 }

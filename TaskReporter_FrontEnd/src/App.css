@@ -283,3 +283,22 @@ body{
     display: flex;
     z-index: 0;
   }
+
+
+  .navOpenBackDrop{
+    position: absolute;
+    z-index: 2;
+    filter: blur(5px);
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--popup-cover-color);
+  }
+
+
+  @media only screen and (max-width : 600px){
+
+    :root{
+      --border-radius : 10px;
+    }
+
+  }

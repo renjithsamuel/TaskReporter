@@ -117,3 +117,24 @@
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 5px 4px var(--shadow-color));
 }
+
+
+@media only screen and (max-width : 600px) {
+
+    .notificationsWrapper{
+         width: 80vw;
+         height: auto;
+         min-height: 20vh;
+         margin: 1vh;
+         margin-bottom: 10vh;
+    }
+
+    .notificationControlElems{
+        margin-left: 40vw;
+    }
+
+    .singleNotificationWrapper{
+           width: 60vw;
+    }
+
+}

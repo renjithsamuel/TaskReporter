@@ -1,0 +1,10 @@
+.lineGraphWrapper{
+
+}
+
+@media only screen and (max-width : 600px) {
+    .lineGraphWrapper{
+        scale: 0.6;
+    }
+
+}

@@ -127,3 +127,27 @@
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
 }
+
+
+@media only screen and (max-width : 600px) {
+
+    .addReportPopUpBackDrop{
+        left: 0vw;
+    }
+
+    .addReportContentWrapper{
+          width: 80vw;
+    }
+    .addReportInputWrapper{
+        flex-direction:  column;
+    }
+    
+    .addReportLabelLeft , .addReportInputRight{
+       text-align: center;
+        width: 70vw;
+    }
+
+    .cancelAddReportBtn , .submitAddReportBtn{
+        width: 25vw ;
+    }
+}

@@ -1,4 +1,5 @@
 .LeftNavWrapper{
+    display: block;
     position: sticky;
     top: 1vh;
     width: 15%;
@@ -25,4 +26,55 @@
 
 .bottomOfLeftNav{
     margin-top: 30vh;
+}
+
+@media only screen and (max-width : 600px) {
+    .LeftNavWrapper{
+        position: absolute;
+        z-index: 5;
+        margin-left: 2vw;
+        width: 34%;
+        background-color: var(--cover-color);
+    }
+
+    .LeftNavWrapper *{
+        animation: slide-right 0.4s ease-in-out   forwards ;
+    }
+
+    .openNav{
+        display: flex;
+        flex-direction: column;
+        animation: slide-right 0.4s ease-in-out   forwards ;
+    }
+    .closeNav{
+        animation: slide-left 0.4s ease-in-out   forwards ;
+        display: none;
+    }
+
+    
+    .bottomOfLeftNav{
+        margin-top: 13vh;
+    }
+
+    @keyframes slide-left {
+        from {
+            transform: translateX(0px);
+            opacity: 1;
+        }
+        to{
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+    }
+    @keyframes slide-right {
+        from {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        to{
+            transform: translateX(0px);
+            opacity: 1;
+        }
+    }
+    
 }

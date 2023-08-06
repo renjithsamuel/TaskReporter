@@ -59,3 +59,17 @@
     background-color: var(--primary-color);
     filter: drop-shadow(1px 5px 10px var(--shadow-color));
 }
+
+
+@media only screen and (max-width : 600px) {
+
+    .dashBoardTaskElementWrapper{
+        width: 80vw;
+    }
+
+    .resumeButton{
+        width: 8vw;
+        height: 8vw;
+    }
+
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './ShowReportsPopUpComponent.css';
 import CategoryDetailsComponent from '../../ReportsComponent/CategoryDetailsComponent/CategoryDetailsComponent'
 import CategoryReportsComponent from '../../ReportsComponent/CategoryReportsComponent/CategoryReportsComponent'
@@ -6,15 +6,22 @@ import ContributionsComponent from '../../ReportsComponent/ContributionsComponen
 import DeadlinesComponent from '../../ReportsComponent/DeadlinesComponent/DeadlinesComponent'
 import closeLight from '../../../assets/close-light.svg'
 import closeDark from '../../../assets/close-dark.svg'
+import menuDark from '../../../assets/menu-dark.svg'
+import menuLight from '../../../assets/menu-light.svg'
 import { disableScroll, enableScroll } from '../../../utils/ApiHandlers';
 import EditCategoryPopUpComponent from '../EditCategoryPopUpComponent/EditCategoryPopUpComponent';
+import { UserContext } from '../../../App';
 
 const ShowReportsPopUpComponent = ({theme,defaultReportPage = 'categoryDetails',setCategoryList,categoryList,taskList,reportList,reportObject,setIsReportObjectOpen,fromPage}) =>  {
 
+        const {screenSize} = useContext(UserContext);
+
     const [editCategoryOpen , setEditCategoryOpen] = useState(false);
     const [currentReportTab , setCurrentReportTab] = useState(`${defaultReportPage}`);
+    const [ reportNavOpen,setReportNavOpen ] = useState(false)
 
         useEffect(()=>{
+                console.log(screenSize.width);
                 disableScroll();
                 return ()=>{enableScroll()}
         },[])
@@ -85,7 +92,8 @@ const ShowReportsPopUpComponent = ({theme,defaultReportPage = 'categoryDetails',
     return ( <>         
                 {(editCategoryOpen)?  <EditCategoryPopUpComponent  theme={theme} currentCategory={currentCategory} setCategoryList={setCategoryList} setEditCategoryOpen={setEditCategoryOpen}/> : ''}
                     <div className="showReportContentWrapper" >
-                                <div className="showReportContentLeftWrapper">
+
+                                <div className="showReportContentLeftWrapper" style={{display : (reportNavOpen || (screenSize.width > '600'))?'block': 'none'}}>
                                         <div className="showReportContentLeftName">
                                                         Categories
                                         </div>
@@ -109,7 +117,11 @@ const ShowReportsPopUpComponent = ({theme,defaultReportPage = 'categoryDetails',
                                 </div> 
                                 <div className="showReportContentRightWrapper">
                                         <div className="reportTopNavWrapper">
+
                                                 <div className="reportTopNavBar">
+                                                        <div className="hamburgerMenu" style={{borderColor : (reportNavOpen)?'var(--text-color)':'transparent'}} onClick={()=>{setReportNavOpen((prev)=>!prev)}}>
+                                                                <img src={(theme=='light')?menuLight: menuDark} alt="user" height={30} width={30} />
+                                                        </div>
                                                         <div  tabIndex={0} className={`reportTabSwitch ${(currentReportTab=='categoryDetails')?'activeReportNavTab':''}` } onClick={(e)=>{setCurrentReportTab('categoryDetails');}}>
                                                                 Category Details
                                                         </div>

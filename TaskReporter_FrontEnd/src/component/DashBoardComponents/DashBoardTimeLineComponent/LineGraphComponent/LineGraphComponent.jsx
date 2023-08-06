@@ -1,4 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import './LineGraphComponent.css'
 
 const LineGraphComponent = ({ theme , graphData }) => {
 

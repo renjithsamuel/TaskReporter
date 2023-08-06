@@ -2,12 +2,14 @@ import './ChatPageGroupContent.css'
 import { useEffect, useRef, useState } from "react";
 import sendLight from '../../../assets/send-light.svg'
 import sendDark from '../../../assets/send-dark.svg'
+import menuDark from '../../../assets/menu-dark.svg'
+import menuLight from '../../../assets/menu-light.svg'
 // socket
 import io from 'socket.io-client';
 import { getPreviousChats, postChatByDate } from '../../../utils/ApiHandlers';
 let socket;
 
-const ChatPageGroupContent = ({theme,currentUser,currentCategory}) =>  {
+const ChatPageGroupContent = ({theme,currentUser,currentCategory,chatNavOpen,setChatNavOpen}) =>  {
     const [messages,setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
     const [currentSkipCount,setCurrentSkipCount] = useState(0);
@@ -84,7 +86,10 @@ const ChatPageGroupContent = ({theme,currentUser,currentCategory}) =>  {
         <div className="chatPageGroupContentWrapper">
                 <div className="currentChatsWrapper">
                 <div className="currentChatsTopContent">
-                    <div className="ChatContentName">{currentCategory.categoryName}</div>
+                        <div className="hamburgerMenu" style={{borderColor : (chatNavOpen)?'var(--text-color)':'transparent'}} onClick={()=>{setChatNavOpen((prev)=>!prev)}}>
+                                                                <img src={(theme=='light')?menuLight: menuDark} alt="user" height={30} width={30} />
+                        </div>
+                        <div className="ChatContentName">{currentCategory.categoryName}</div>
                     {/* <div className="ChatContentDate"></div> */}
                 </div>
                     <div className="chatContentChats" ref={chatContentsBox}>

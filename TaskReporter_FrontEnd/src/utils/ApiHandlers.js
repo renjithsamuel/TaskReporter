@@ -1129,3 +1129,4 @@ function getPreviousDay(date = new Date()) {
     previous.setDate(date.getDate() - 1);
     return previous;
 }
+

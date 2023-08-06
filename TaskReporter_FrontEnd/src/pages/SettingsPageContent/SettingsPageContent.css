@@ -7,7 +7,6 @@
     z-index: 0;
 }
 
-
 .userBanners{
     width: 90%;
     height: 30vh;
@@ -278,4 +277,37 @@
     cursor: pointer;
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 5px 5px var(--shadow-color));
+}
+
+
+@media only screen and (max-width : 600px) {
+
+    .userBanners{
+        width: 90vw;
+        margin: 1vw;
+    }
+
+    .userAcheivements{
+        width: 80vw;
+        margin-left: 7vw;
+    }
+    .userStreaks{
+        width: 25vw;
+    }
+
+    .themeSwitcher{
+        flex-direction: column;
+        margin-left: 7vw;
+        width: 80vw;
+    }
+
+    .deleteUserWrapper{
+        margin-left: 20vw;
+    }
+
+    .themeSelectorsRight{
+        width: 5vw;
+        height: 5vw;
+    }
+
 }

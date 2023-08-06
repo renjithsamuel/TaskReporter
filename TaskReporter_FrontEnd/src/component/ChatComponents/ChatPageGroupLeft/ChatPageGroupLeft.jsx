@@ -2,7 +2,7 @@ import './ChatPageGroupLeft.css'
 import groupIconLight from '../../../assets/group-light.svg'
 import groupIconDark from '../../../assets/group-dark.svg'
 
-function chatPageGroupLeft({categoryList,setCurrentCategory,currentCategory,theme}) {
+function chatPageGroupLeft({categoryList,setCurrentCategory,currentCategory,theme,chatNavOpen,setChatNavOpen}) {
 
 
 

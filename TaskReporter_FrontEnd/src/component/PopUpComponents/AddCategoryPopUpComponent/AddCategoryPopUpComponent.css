@@ -126,7 +126,6 @@
 
 
 .colaboratorsInputComponentWrapper{
-    
     display: flex;
     margin-bottom: 1vh;
 }
@@ -142,10 +141,60 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    align-self: center;
 }
 
 .addBtnColaborator:hover {
     cursor: pointer;
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
+}
+
+
+
+@media only screen and (max-width : 600px) {
+    .popUpBackDropAddCategory{
+        left: 0;
+    }
+    .popUpContentAddCategoryWrapper{
+        width: 80vw;
+    }
+    .addCategoryName{
+        font-size: large !important;
+    }
+    .popUpContentAddCategoryWrapper  * {
+        font-size: small;
+    }
+
+    .cancelAddCategoryBtn , .submitAddCategoryBtn{
+        width: 25vw;
+    }
+
+    .addCategoryInputWrapper{
+        width: 95%  ;
+        flex-direction: column;
+    }
+
+    .addCategoryLabelLeft{
+        margin: 1vw;
+        text-align: start;
+        font-size: medium;
+        width: 90%;
+    }
+
+    .addCategoryInputRight{
+           width: 90%;
+           text-align: end;
+    }
+    .addCategoryInputs{
+        width: 90%;
+    }
+    .addBtnColaborator{
+        width: 5vw;
+        height: 5vw;
+        justify-self: center;
+        align-self: center;
+        background-color: transparent;
+    }
+
 }

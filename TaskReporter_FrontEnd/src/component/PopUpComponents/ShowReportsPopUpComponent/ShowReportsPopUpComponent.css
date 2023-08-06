@@ -11,8 +11,12 @@
     padding: 1vh;
     width: 5vw;
     width: 15vw;
+    animation: slide-right 0.3s forwards;
 }
 
+.showReportContentLeftWrapper * {
+    animation: slide-right 0.3s forwards;
+}
 .showReportContentLeftName{
     display: flex;
     justify-content: center;
@@ -172,3 +176,28 @@
 /* background-color: var(--hover-color);
 box-shadow: 1px 3px 7px 0 var(--hover-color);
 cursor: pointer; */
+
+
+@media only screen and (max-width : 600px) {
+    .showReportContentLeftWrapper{
+        width:35vw ;
+        margin: 1vh;
+    }
+
+    .showReportContentRightWrapper{
+        width: 95vw;
+        margin: 1.5vh;
+    }
+    .reportTabSwitch{
+        font-size: medium;
+    }
+
+    .closeShowReportsBtn{
+        top: -30px ;
+        right: -10px;
+        width: auto;
+        height: auto;
+        border-radius: 50%;
+    }   
+
+}

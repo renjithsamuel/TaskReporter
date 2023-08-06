@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import {  Link } from "react-router-dom";
 import './LeftNavComponent.css'
 // lottie
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
+import { UserContext } from '../../App';
 defineElement(lottie.loadAnimation);
 
 function LeftNavComponent({pathname,compName,compIcon,svgIcon,selectedNavElem , setSelectedNavElem,theme,setCurrentUser,setIsLoggedIn}) {
-
+    const {navOpen} = useContext(UserContext);
 
     return (
         <Link to={(compName=='logout')? '/': (compName!='tasks')?"/"+compName:'/'} style={{textDecoration:'none',color:'var(--text-color)'}}>
@@ -15,6 +16,7 @@ function LeftNavComponent({pathname,compName,compIcon,svgIcon,selectedNavElem , 
                 style={{backgroundColor:(selectedNavElem==pathname)?'var(--secondary-color)':'var(--primary-color)',borderColor:(selectedNavElem==pathname)?'var(--border-color)':'var(--primary-color)' }} 
                     onClick={   ()=>{
                             //  setSelectedNavElem(compName);
+                            navOpen.setNavOpen(false)
                              if(compName=='logout'){
                                 if(confirm("Are you sure want to logout?")){
                                     setCurrentUser({});

@@ -37,14 +37,15 @@ function DashBoardPageContent({theme,currentUser,categoryList,setCategoryList,ta
                     <div className="dashBoardReportsLabel">Reports</div>
                     <div className="DashBoardTaskElements">
                         {
-                        (tempCategoryList && tempCategoryList.length > 0) ?
+                            (tempCategoryList && tempCategoryList.length > 0) ?
                             tempCategoryList.map((category,index)=>{    
-                                    return <DashBoardTaskElement key={index} category={category} theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
-                                    })
-                                    :
-                                    <h3 style={{marginLeft: '40%'}}>No Data to Show</h3>
+                                return <DashBoardTaskElement key={index} category={category} theme={theme} setReportObject={setAddShowReportsComponentFromDashBoard} reportObject={addShowReportsComponentFromDashBoard} />
+                            })
+                            :
+                            <h3 style={{marginLeft: '40%'}}>No Data to Show</h3>
                         }
                     </div>
+                    <div className="mobileNotifications" ><div className="mobileNotificationsName">Notifications</div> <NotificationComponent theme={theme} fromPage={"Dashboard"} currentUser={currentUser} setCategoryList={setCategoryList}/></div>
                 </div>
                 <div className="dashBoardContentRight">
                     <NotificationComponent theme={theme} fromPage={"Dashboard"} currentUser={currentUser} setCategoryList={setCategoryList}/>

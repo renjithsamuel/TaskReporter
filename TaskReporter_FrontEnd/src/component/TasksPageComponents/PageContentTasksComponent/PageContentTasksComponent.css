@@ -8,10 +8,13 @@
 
 .PageContentTaskWrapper{
     z-index: 0;
+
 }
 .projectContentTop{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
 }
 
 .projectContentName{
@@ -249,4 +252,60 @@
     overflow: hidden;
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+
+@media only screen and (max-width : 600px){
+    .projectContentTop{
+        align-items: center;
+        margin: 2vw;
+        width: 99vw;
+        justify-content: space-around;
+    }
+
+    
+    .projectContentName{
+        /* font-size: larger; */
+    }
+
+    .sortByTime{
+        justify-content: space-between;
+        font-size: medium;
+    }
+
+    
+    .AddCategoryName{
+        font-size: small;
+        font-weight: 600;
+    }
+
+    .tasksCategoryWise{
+        width: 100vw;
+        justify-content: center;
+        row-gap: 2vh;
+        padding: 0;
+        margin-left: 3vw;
+    }
+
+    .tasklists{
+        margin-top: 0vh;
+    }
+
+    .singleCategoryWrapper{
+        width: 85%;
+    }
+
+    .switchCompletedOrPending   {
+        margin: 1vh;
+    }
+
+    .switchPending,.switchCompleted{
+        width: 28vw;
+        height: 5vh;
+    }
+
+    .showReportsPopUpBackDrop{
+        left: 0vw;
+    }
+
 }

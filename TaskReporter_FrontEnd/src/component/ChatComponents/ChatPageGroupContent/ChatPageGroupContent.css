@@ -23,6 +23,7 @@
     font-size: x-large;
     font-weight: 500;
     display: flex;
+    align-items: center;
     justify-content: start;
     position: fixed;
     top: 0;
@@ -183,4 +184,31 @@
 .loadMoreChatsButton:active{
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 1px 2px var(--shadow-color));
+}
+
+
+
+@media only screen and (max-width : 600px) {
+    .ChatContentName{
+        width: 100%;
+    }
+
+    .currentChatsWrapper{
+        width: 85vw;
+
+    }
+
+    #messageBoxInput{
+        width: 70vw;
+    }
+
+    
+    .messageSendButton{
+        width: 13vw;
+        height: 13vw;
+    }
+
+    .sendMessageBar{
+        width: auto;
+    }
 }

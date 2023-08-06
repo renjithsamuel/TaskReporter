@@ -93,3 +93,17 @@
     background-color: var(--shadow-color);
     filter: drop-shadow(1px 0.5px 5px var(--shadow-color));
 }
+
+
+
+@media only screen and (max-width : 600px) {
+        .removeReportPopUpBackDrop{
+            left : 0vw;
+        }
+        .removeReportContentWrapper{
+            width: 80vw;
+        }
+        .cancelRemoveReportBtn , .submitRemoveReportBtn{
+                width: 20vw;
+        }
+}

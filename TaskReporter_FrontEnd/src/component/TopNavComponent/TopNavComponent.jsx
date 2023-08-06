@@ -3,14 +3,16 @@ import notificationIcon from '../../assets/notification-light.svg'
 import userIcon from '../../assets/user-light.svg'
 import noInternetLight from '../../assets/noInternet-light.svg'
 import noInternetDark from '../../assets/noInternet-dark.svg'
+import menuDark from '../../assets/menu-dark.svg'
+import menuLight from '../../assets/menu-light.svg'
 import coinImage from '../../assets/coin.svg'
 import './TopNavComponent.css';
 import {  Link } from "react-router-dom";
 // lottie
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
-import { useState } from 'react';
-import { isOnline  } from '../../App';
+import { useContext, useState } from 'react';
+import { UserContext, isOnline  } from '../../App';
 import { disableScroll ,enableScroll , debounce } from '../../utils/ApiHandlers';
 import NotificationComponent from '../NotificationsComponent/NotificationComponent';
 
@@ -18,7 +20,9 @@ defineElement(lottie.loadAnimation);
 
 function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,setSearchText}) {
 
+    const {navOpen} = useContext(UserContext);
     const [isNotificationOpen , setIsNotificationOpen] = useState(false);
+    
 
     const scrollToTop = ()=>{
         window.scrollTo({
@@ -44,6 +48,9 @@ function TopNavComponent({currPage,theme,currentUser,fromPage,setCategoryList,se
                 }
                 <div className="TopNavComponent">
                     <div className="topNavLeft">
+                        <div className="hamburgerMenu" style={{borderColor : (navOpen.navOpen)?'var(--text-color)':'transparent'}} onClick={()=>{navOpen.setNavOpen((prev)=>!prev)}}>
+                               <img src={(theme=='light')?menuLight: menuDark} alt="user" height={30} width={30} />
+                        </div>
                         <div className="searchBox">
                             <div className="searchIconLeft">
                                 <lord-icon

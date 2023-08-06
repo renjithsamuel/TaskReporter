@@ -58,3 +58,14 @@
 .groupNameRight{
     max-width: 70%;
 }
+
+@media only screen and (max-width : 600px) {
+    .chatPageGroupLeftWrapper{
+        width: 35vw;
+        margin: 1vh;
+    }
+    .singleGroupWrapper{
+         width: 90%;
+    }
+
+}

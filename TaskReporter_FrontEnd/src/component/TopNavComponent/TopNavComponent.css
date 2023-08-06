@@ -11,10 +11,13 @@
     filter: drop-shadow(1px 2px 2px var(--shadow-color));
 }
 
+.topNavLeft{
+    display: flex;
+}
 
 .searchBox{
     display: flex;
-    width: 15vw;
+    width: auto;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     background-color: var(--primary-color);
@@ -46,6 +49,7 @@
 
 #searchBarInp:focus{
     outline: none;
+    width: 12vw;
     color: var(--text-color);
 }
 
@@ -143,4 +147,51 @@
 .notifications:hover , .userNameIcon:hover{
     cursor: pointer;
     box-shadow: 1px 2px 20px 0 var(--hover-color);
+}
+
+
+.hamburgerMenu{
+    display: none;
+    border-radius: var(--border-radius);
+    padding: 0.5vh;
+    border:  1px solid transparent;
+}
+
+@media only screen and (max-width : 600px){
+    .hamburgerMenu{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1vh;
+    }      
+    .searchBox{
+        border: none;
+        position: relative;
+        left: 70vw;
+        color: transparent;
+    }
+
+    .TopNavComponent{
+        width: 90vw;
+        margin-left: 4vh;
+    }
+    .topNavRight{
+        display: none;
+    }
+    .topNavMiddle{
+        position: relative;
+        left: -35vw;
+    }
+    
+    #searchBarInp{
+        width: 2vw;
+        color: transparent;
+    }
+    #searchBarInp::placeholder {
+        opacity: 0;
+    }
+    .searchBox:focus-within {
+        left: 60vw;
+        color: var(--text-color);
+    }
 }
