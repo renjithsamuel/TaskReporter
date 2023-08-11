@@ -34,9 +34,9 @@ function NotificationComponent({theme,currentUser,setIsNotificationOpen,fromPage
             </div>
             <div className="allNotifications">
                 {
-                    (currentUser && (Array.isArray(currentUser.invites) && currentUser.invites.length > 0))?(
-                        currentUser.invites.map((invite,index)=>{
-                           return <SingleNotificationComponent key={index} setCurrentUser={setCurrentUser} theme={theme} currentUser={currentUser} invitedCategoryId={invite._id} invitedBy={invite.createdBy.username} categoryName={invite.categoryName} setCategoryList={setCategoryList}/>
+                    (currentUser && (Array.isArray(currentUser?.invites) && currentUser?.invites.length > 0))?(
+                        currentUser?.invites?.map((invite,index)=>{
+                           return <SingleNotificationComponent key={index} setCurrentUser={setCurrentUser} theme={theme} currentUser={currentUser} invitedCategoryId={invite?._id} invitedBy={invite?.createdBy.username} categoryName={invite?.categoryName} setCategoryList={setCategoryList}/>
                         })
                     ):(<h3>No Notifications</h3>)
                 }
